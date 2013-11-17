@@ -24,6 +24,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 namespace Malenki;
 
+if(!extension_loaded('gd'))
+{
+    throw new \RuntimeException('GD is not available! Aleavatar uses GD to work!');
+}
+
 date_default_timezone_set('UTC'); //put that into CLI script
 
 /**
@@ -40,7 +45,10 @@ class Aleavatar
         $this->size = new \stdClass();
         $this->size->width = $width;
         $this->size->height = $height;
+        $this->image = imagecreatetruecolor($width, $height);
     }
+
+
 
     private function createColors()
     {
@@ -67,13 +75,25 @@ class Aleavatar
         }
     }
 
+
+
     public function setColors(array $colors)
     {
         $this->arr_colors = $colors;
     }
 
 
+
     public function create()
     {
     }
+    
+    
+    
+    public function __destruct ()
+    {
+        imagedestroy($this->image);
+        $this->image = null;
+    }
+
 }
