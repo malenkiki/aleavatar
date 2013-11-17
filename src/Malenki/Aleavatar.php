@@ -41,10 +41,14 @@ class Aleavatar
 
     protected $arr_colors = array();
     protected $int_amount_colors = 0;
+    protected $arr_selected_colors = array();
+    protected $int_current_color = 0;
+
     protected $size = null;
+    
     protected $image = null;
 
-    public function __construct($width, $height)
+    public function __construct($width, $height, $colors = 16)
     {
         $this->size = new \stdClass();
         $this->size->width = $width;
@@ -53,6 +57,7 @@ class Aleavatar
         $this->image = imagecreatetruecolor(12, 12);
 
         $this->createColors();
+        $this->amountOfColors($colors);
     }
 
 
@@ -83,6 +88,10 @@ class Aleavatar
 
     protected function squares()
     {
+        $image = imagecreatetruecolor(6, 6);
+        imagefill($image, 0, 0, $this->getColor($image));
+        /*
+        
         // Diagonals (1) or squares inside squares (2) or area (3)?
         $int_choice = rand(1,3);
 
@@ -113,6 +122,9 @@ class Aleavatar
         {
             $this->areaSquares();
         }
+        */
+
+        return $image;
     }
 
 
@@ -120,6 +132,15 @@ class Aleavatar
     protected function discs()
     {
         //TODO
+        $image = imagecreatetruecolor(6, 6);
+        return $image;
+    }
+
+
+
+    protected function randomShapes()
+    {
+        // TODO
     }
 
 
@@ -155,7 +176,7 @@ class Aleavatar
 
 
 
-    public function amountOfColors($int_amount = 16)
+    protected function amountOfColors($int_amount = 16)
     {
         if($int_amount < 2)
         {
@@ -167,7 +188,36 @@ class Aleavatar
             $this->int_amount_colors = $int_amount;
         }
 
+        $arr = array_rand($this->arr_colors, $this->int_amount_colors);
+
+        foreach($arr as $idx)
+        {
+            $this->arr_selected_colors[] = $this->arr_colors[$idx];
+        }
+
         return $this;
+    }
+
+
+
+    protected function getColor($image)
+    {
+        $str_current = $this->arr_selected_colors[$this->int_current_color];
+
+        $this->int_current_color++;
+
+        if($this->int_current_color >= $this->int_amount_colors)
+        {
+            $this->int_current_color = 0;
+        }
+
+        list($str_red, $str_green, $str_blue) = str_split($str_current, 2);
+
+        $int_red = hexdec($str_red);
+        $int_green = hexdec($str_green);
+        $int_blue = hexdec($str_blue);
+        
+        return imagecolorallocate($image, $int_red, $int_green, $int_blue);
     }
 
 
@@ -188,9 +238,69 @@ class Aleavatar
             throw new \InvalidArgumentException('Invalid type of generator given!');
         }
 
-        $this->$str_type();
+        if($str_type == self::TYPE_SQUARES || $str_type == self::TYPE_DISCS)
+        {
+            if(rand(1, 2) == 1)
+            {
+                //TODO repeat for 3 other quadrants by symetry
+                $img = $this->$str_type();
+                // imageflip only for php 5.5! need special method to do that if php version < 5.5!!!
+                //$img2 = imageflip($img,);
+                imagecopy($this->image, $img, 0, 0, 0, 0, 6, 6);
+                imagecopy($this->image, $img, 6, 0, 0, 0, 6, 6);
+                imagecopy($this->image, $img, 6, 6, 0, 0, 6, 6);
+                imagecopy($this->image, $img, 0, 6, 0, 0, 6, 6);
+                imagedestroy($img);
+            }
+            else
+            {
+                $img = $this->$str_type();
+                imagecopy($this->image, $img, 0, 0, 0, 0, 6, 6);
+                imagedestroy($img);
+                $img = $this->$str_type();
+                imagecopy($this->image, $img, 6, 0, 0, 0, 6, 6);
+                imagedestroy($img);
+                $img = $this->$str_type();
+                imagecopy($this->image, $img, 6, 6, 0, 0, 6, 6);
+                imagedestroy($img);
+                $img = $this->$str_type();
+                imagecopy($this->image, $img, 0, 6, 0, 0, 6, 6);
+                imagedestroy($img);
+            }
+        }
+        else
+        {
+            $img = $this->$str_type();
+            imagecopy($this->image, $img, 0, 0, 0, 0, 6, 6);
+            imagedestroy($img);
+            $img = $this->$str_type();
+            imagecopy($this->image, $img, 6, 0, 0, 0, 6, 6);
+            imagedestroy($img);
+            $img = $this->$str_type();
+            imagecopy($this->image, $img, 6, 6, 0, 0, 6, 6);
+            imagedestroy($img);
+            $img = $this->$str_type();
+            imagecopy($this->image, $img, 0, 6, 0, 0, 6, 6);
+            imagedestroy($img);
+        }
+
+        return $this;
     }
     
+
+
+    public function save($str_filename)
+    {
+        imagepng($this->image, $str_filename.'.png');
+    }
+
+
+
+    public function display()
+    {
+        header('Content-Type: image/png');
+        imagepng($this->image);
+    }
     
     
     public function __destruct ()
