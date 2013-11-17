@@ -157,6 +157,11 @@ class Aleavatar
 
     public function amountOfColors($int_amount = 16)
     {
+        if($int_amount < 2)
+        {
+            throw new \InvalidArgumentException('Minimal numbers of colors cannot be less than 2!');
+        }
+
         if($int_amount <= count($this->arr_colors))
         {
             $this->int_amount_colors = $int_amount;
