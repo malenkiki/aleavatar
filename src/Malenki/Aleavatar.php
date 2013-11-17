@@ -62,7 +62,7 @@ class Aleavatar
 
 
 
-    protected function diagonalSquares($int_way)
+    protected function diagonalSquares($image, $int_way)
     {
         //TODO
         printf("Diagonal squares selected way %d.\n", $int_way);
@@ -70,7 +70,7 @@ class Aleavatar
 
 
 
-    protected function squaresInsideSquares($int_amount)
+    protected function squaresInsideSquares($image, $int_amount)
     {
         //TODO
         printf("Squares inside squares selected way with %d squares to generate.\n", $int_amount);
@@ -78,10 +78,10 @@ class Aleavatar
 
 
 
-    protected function areaSquares()
+    protected function areaSquares($image)
     {
         //TODO
-        printf("Area squares selected.\n", $int_way);
+        printf("Area squares selected.\n");
     }
 
 
@@ -90,7 +90,7 @@ class Aleavatar
     {
         $image = imagecreatetruecolor(6, 6);
         imagefill($image, 0, 0, $this->getColor($image));
-        /*
+        
         
         // Diagonals (1) or squares inside squares (2) or area (3)?
         $int_choice = rand(1,3);
@@ -105,24 +105,24 @@ class Aleavatar
             if($int_amount == 1)
             {
                 $int_way = rand(1, 2);
-                $this->diagonalSquares($int_way);
+                $this->diagonalSquares($image, $int_way);
             }
             else
             {
-                $this->diagonalSquares(1);
-                $this->diagonalSquares(2);
+                $this->diagonalSquares($image, 1);
+                $this->diagonalSquares($image, 2);
             }
         }
         elseif($int_choice == 2)
         {
             $int_amount = rand(2, 5);
-            $this->squaresInsideSquares($int_amount);
+            $this->squaresInsideSquares($image, $int_amount);
         }
         else
         {
-            $this->areaSquares();
+            $this->areaSquares($image);
         }
-        */
+        
 
         return $image;
     }
