@@ -14,7 +14,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "Malenki": "src/"
+            "Malenki\\Aleavatar": "src/"
         }
     }
 }
