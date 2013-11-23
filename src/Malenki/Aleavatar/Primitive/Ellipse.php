@@ -40,16 +40,24 @@ class Ellipse
     protected $color = null;
 
 
-    public function __construct()
-    {
-        $this->point = new \stdClass();
-        $this->radius = new \stdClass();
-    }
 
-
-
+    /**
+     * Give the center point of the ellipse or the circle. 
+     * 
+     * @param integer $x 
+     * @param integer $y 
+     * @throws InvalidArgumentException If coordinates are not positive numbers.
+     * @access public
+     * @return void
+     */
     public function point($x, $y)
     {
+        if((!is_integer($int_rx) || !is_integer($int_ry)) || $int_rx < 0 || $int_ry < 0)
+        {
+            throw new \InvalidArgumentException('Coordinates must be composed of two integers!');
+        }
+
+        $this->point = new \stdClass();
         $this->point->x = $x;
         $this->point->y = $y;
     }
@@ -63,32 +71,78 @@ class Ellipse
 
 
 
-    public function radius($int_rx, $int_ry = null)
+    /**
+     * Sets radius.
+     *
+     * If two values are provided, then n ellipse is defined.
+     *
+     * If only one value is given, then you get a circle. 
+     * 
+     * @param integer $int_rx 
+     * @param integer $int_ry 
+     * @throws InvalidArgumentException If radius is not an integer.
+     * @access public
+     * @return void
+     */
+    public function radius($int_rx, $int_ry = 0)
     {
-        if(is_null($int_ry))
+        if(!is_integer($int_rx) || !is_integer($int_ry))
+        {
+            throw new \InvalidArgumentException('Radius must be integer value!');
+        }
+
+        $this->radius = new \stdClass();
+
+        if($int_ry == 0)
         {
             $this->radius->r = $int_rx;
-            $this->radius->isCircle = true;
+            $this->radius->is_circle = true;
         }
         else
         {
             $this->radius->rx = $int_rx;
             $this->radius->ry = $int_ry;
-            $this->radius->isCircle = false;
+            $this->radius->is_circle = false;
         }
     }
 
 
 
+    /**
+     * Tests whether the current object is a circle.
+     *
+     * Note: if radius and/or center are not given, then this method returns `false`. 
+     * 
+     * @access public
+     * @return boolean
+     */
     public function isCircle()
     {
-        return $this->radius->isCircle;
+        if(is_null($this->radius))
+        {
+            return false;
+        }
+
+        return $this->radius->is_circle;
     }
     
 
 
+    /**
+     * Tests whether the current object is an ellipse.
+     *
+     * Note: if radius and/or center are not given, then this method returns `false`. 
+     * 
+     * @access public
+     * @return boolean
+     */
     public function isEllipse()
     {
+        if(is_null($this->radius))
+        {
+            return false;
+        }
+
         return !$this->isCircle();
     }
 
@@ -96,17 +150,41 @@ class Ellipse
 
     public function png()
     {
+        if(is_null($this->point) || is_null($this->radius))
+        {
+            throw new \RuntimeException('Before exporting to PNG, you must give center and radius!');
+        }
+
     }
 
 
 
     public function svg()
     {
+        if(is_null($this->point) || is_null($this->radius))
+        {
+            throw new \RuntimeException('Before exporting to SVG, you must give center and radius!');
+        }
 
-        $str_attr_points = implode(' ', $arr);
-        // <ellipse cx="300" cy="80" rx="100" ry="50" style="fill:yellow;stroke:purple;stroke-width:2"/>
-        //<circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>
-        return sprintf('<polygon points="%s" style="fill:%s" />', $str_attr_points, $this->color);
+        if($this->isCircle())
+        {
+            return sprintf(
+                '<circle cx="%d" cy="%d" r="%d" fill="%s" />',
+                $this->point->x,
+                $this->point->y,
+                $this->radius->r,
+                $this->color
+            );
+        }
+        
+        return sprintf(
+            '<ellipse cx="%d" cy="%d" rx="%d" ry="%d" fill="%s" />',
+            $this->point->x,
+            $this->point->y,
+            $this->radius->rx,
+            $this->radius->ry,
+            $this->color
+        );
     }
 
 
