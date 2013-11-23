@@ -79,6 +79,13 @@ class Color
     }
 
 
+    /**
+     * Defined an exported color for GD image.
+     * 
+     * @param resource $img Image resource GD 
+     * @access public
+     * @return integer Color image allocation
+     */
     public function gd(&$img)
     {
         return imagecolorallocate($img, $this->r, $this->g, $this->b);
