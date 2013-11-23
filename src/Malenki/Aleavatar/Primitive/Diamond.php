@@ -35,6 +35,15 @@ namespace Malenki\Aleavatar\Primitive;
  */
 class Diamond extends Polygon
 {
+    /**
+     * Set one point by giving its coordinates. 
+     * 
+     * @param integer $int_x 
+     * @param integer $int_y 
+     * @throws RuntimeException In you try to set fifth point.
+     * @access public
+     * @return void
+     */
     public function point($x, $y)
     {
         if(count($this->arr_points) >= 4)

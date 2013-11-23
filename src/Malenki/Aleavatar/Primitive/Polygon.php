@@ -37,14 +37,27 @@ class Polygon
     protected $arr_points = array();
     protected $color = null;
 
-    public function __construct()
+    
+    
+    /**
+     * Add one point by giving it x and y coordinates. 
+     * 
+     * @param integer $int_x 
+     * @param integer $int_y 
+     * @throws InvalidArgumentException If coordinates are not positive integers.
+     * @access public
+     * @return void
+     */
+    public function point($int_x, $int_y)
     {
+        if((!is_integer($int_x) || !is_integer($int_y)) || $int_x < 0 || $int_y < 0)
+        {
+            throw new \InvalidArgumentException('Coordinates must be composed of two positive integers!');
+        }
+
+        $this->arr_points[] = array($int_x, $int_y);
     }
 
-    public function point($x, $y)
-    {
-        $this->arr_points[] = array($x, $y);
-    }
 
 
     public function color($color)
@@ -55,6 +68,11 @@ class Polygon
 
     public function svg()
     {
+        if(count($this->arr_points) == 0)
+        {
+            throw new \RuntimeException('Before exporting to SVG, you must give at least 3 points!');
+        }
+
         $arr = array();
         
         foreach($this->arr_points as $point)

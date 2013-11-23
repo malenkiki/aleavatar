@@ -34,13 +34,22 @@ namespace Malenki\Aleavatar\Primitive;
  */
 class Triangle extends Polygon
 {
-    public function point($x, $y)
+    /**
+     * Set one point by giving its coordinates. 
+     * 
+     * @param integer $int_x 
+     * @param integer $int_y 
+     * @throws RuntimeException In you try to set fourth point.
+     * @access public
+     * @return void
+     */
+    public function point($int_x, $int_y)
     {
         if(count($this->arr_points) >= 3)
         {
             throw new \RuntimeException('Triangle has only three points!');
         }
-        parent::point($x, $y);
+        parent::point($int_x, $int_y);
     }
 
 }

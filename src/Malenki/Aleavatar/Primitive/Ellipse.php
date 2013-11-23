@@ -44,22 +44,22 @@ class Ellipse
     /**
      * Give the center point of the ellipse or the circle. 
      * 
-     * @param integer $x 
-     * @param integer $y 
-     * @throws InvalidArgumentException If coordinates are not positive numbers.
+     * @param integer $int_x 
+     * @param integer $int_y 
+     * @throws InvalidArgumentException If coordinates are not positive integers.
      * @access public
      * @return void
      */
-    public function point($x, $y)
+    public function point($int_x, $int_y)
     {
-        if((!is_integer($int_rx) || !is_integer($int_ry)) || $int_rx < 0 || $int_ry < 0)
+        if((!is_integer($int_x) || !is_integer($int_y)) || $int_x < 0 || $int_y < 0)
         {
-            throw new \InvalidArgumentException('Coordinates must be composed of two integers!');
+            throw new \InvalidArgumentException('Coordinates must be composed of two positive integers!');
         }
 
         $this->point = new \stdClass();
-        $this->point->x = $x;
-        $this->point->y = $y;
+        $this->point->x = $int_x;
+        $this->point->y = $int_y;
     }
 
 
