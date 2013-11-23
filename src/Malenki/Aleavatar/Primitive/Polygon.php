@@ -84,4 +84,10 @@ class Polygon
 
         return sprintf('<polygon points="%s" style="fill:%s" />', $str_attr_points, $this->color);
     }
+
+
+    public function __toString()
+    {
+        return $this->svg();
+    }
 }

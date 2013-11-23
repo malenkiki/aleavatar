@@ -96,12 +96,16 @@ class Ellipse
         if($int_ry == 0)
         {
             $this->radius->r = $int_rx;
+            $this->radius->w = 2 * $int_rx;
+            $this->radius->h = 2 * $int_rx;
             $this->radius->is_circle = true;
         }
         else
         {
             $this->radius->rx = $int_rx;
             $this->radius->ry = $int_ry;
+            $this->radius->w = 2 * $int_rx;
+            $this->radius->h = 2 * $int_ry;
             $this->radius->is_circle = false;
         }
     }
@@ -148,13 +152,21 @@ class Ellipse
 
 
 
-    public function png()
+    public function png(&$img)
     {
         if(is_null($this->point) || is_null($this->radius))
         {
             throw new \RuntimeException('Before exporting to PNG, you must give center and radius!');
         }
 
+        imagefilledellipse(
+            $img,
+            $this->point->x,
+            $this->point->y,
+            $this->radius->w,
+            $this->radius->h,
+            $this->color
+        );
     }
 
 
