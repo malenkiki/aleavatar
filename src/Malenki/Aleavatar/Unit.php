@@ -25,35 +25,37 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 namespace Malenki\Aleavatar;
 
 
-class Circle extends Unit
+/**
+ * Define one of the sixteen areas of the final avatar picture.
+ * 
+ * @copyright 2013 Michel Petit
+ * @author Michel Petit <petit.michel@gmail.com> 
+ * @license MIT
+ */
+class Unit
 {
+    const SIZE = 32;
+    
+    protected $arr_colors = array();
+    protected $img = null;
 
-    public function generate($int_type)
+
+
+    public function background(\Malenki\Aleavatar\Primitive\Color $color)
     {
-        if($int_type == 0)
-        {
-        }
-
-        return $this;
+        $this->arr_colors[0] = $color;
     }
 
 
 
-
-    public function png()
+    public function foreground(\Malenki\Aleavatar\Primitive\Color $color)
     {
-        /*
-        $img = imagecreatetruecolor(self::SIZE, self::SIZE);
-        $c1 = imagecolorallocate($img, 100, 10, 10);
-        $c2 = imagecolorallocate($img, 10, 10, 100);
-        imagefill($img, 0, 0, $c1);
-        imagefilledarc($img , 0, 0, 48 , 48 , 0 , 90 , $c2 , IMG_ARC_PIE );
-        imagefilledarc($img , 0, 0, 32 , 32 , 0 , 90 , $c1 , IMG_ARC_PIE );
-        imagepng($img, 'test.png');
-         */
+        $this->arr_colors[1] = $color;
     }
 
-    public function svg()
-    {
-    }
+
+
+    abstract public function png();
+
+    abstract public function svg();
 }
