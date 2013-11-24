@@ -165,7 +165,7 @@ class Ellipse
             $this->point->y,
             $this->radius->w,
             $this->radius->h,
-            $this->color
+            $this->color->gd($img)
         );
     }
 

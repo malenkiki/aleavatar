@@ -37,9 +37,19 @@ class Unit
     const SIZE = 32;
     
     protected $arr_colors = array();
+    protected $arr_primitives = array();
     protected $img = null;
 
 
+    protected function bg()
+    {
+        return $this->arr_colors[0];
+    }
+
+    protected function fg()
+    {
+        return $this->arr_colors[1];
+    }
 
     public function background(\Malenki\Aleavatar\Primitive\Color $color)
     {
@@ -55,7 +65,11 @@ class Unit
 
 
 
-    abstract public function png();
+    public function png()
+    {
+    }
 
-    abstract public function svg();
+    public function svg()
+    {
+    }
 }
