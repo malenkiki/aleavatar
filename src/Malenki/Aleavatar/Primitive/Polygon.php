@@ -66,6 +66,26 @@ class Polygon
     }
 
 
+
+    public function png(&$img)
+    {
+        if(count($this->arr_points) == 0)
+        {
+            throw new \RuntimeException('Before exporting to PNG, you must give at least 3 points!');
+        }
+
+        $arr= array();
+
+        foreach($this->arr_points as $xy)
+        {
+            $arr[] = $xy[0];
+            $arr[] = $xy[1];
+        }
+
+        imagefilledpolygon($img, $arr, count($this->arr_points), $this->color->gd($img));
+    }
+    
+
     public function svg()
     {
         if(count($this->arr_points) == 0)

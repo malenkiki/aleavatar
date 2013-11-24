@@ -54,6 +54,8 @@ class Quarter
     {
         $q = new self(self::TOP_RIGHT);
         $q->units($this->arr_units);
+
+        return $q;
     }
 
 
@@ -62,6 +64,8 @@ class Quarter
     {
         $q = new self(self::BOTTOM_RIGHT);
         $q->units($this->arr_units);
+
+        return $q;
     }
 
 
@@ -70,6 +74,8 @@ class Quarter
     {
         $q = new self(self::BOTTOM_LEFT);
         $q->units($this->arr_units);
+
+        return $q;
     }
 
 
@@ -80,6 +86,10 @@ class Quarter
     }
 
 
+    public function add($unit)
+    {
+        $this->arr_units[] = $unit;
+    }
 
     public function png()
     {
@@ -92,33 +102,45 @@ class Quarter
             imageantialias($img, true);
         }
         
-        foreach($this->arr_units as $u)
+        $this->arr_units[0]->bg()->gd($img);
+        $this->arr_units[0]->fg()->gd($img);
+        
+        foreach($this->arr_units as $k => $u)
         {
             $img_u = $u->png();
             
             $dst_x = 0;
             $dst_y = 0;
 
-            if($k = 1)
+            if($k == 1)
             {
                 $dst_x = Unit::SIZE;
                 $dst_y = 0;
             }
-            if($k = 2)
+            if($k == 2)
             {
                 $dst_x = Unit::SIZE;
                 $dst_y = Unit::SIZE;
             }
-            if($k = 3)
+            if($k == 3)
             {
                 $dst_x = 0;
                 $dst_y = Unit::SIZE;
             }
             imagecopy($img, $img_u, $dst_x, $dst_y, 0, 0, Unit::SIZE, Unit::SIZE);
+            imagedestroy($img_u);
         }
 
-        //imagepng($img, 'test.png');//DEBUG
-        return $img;
+        if($this->type != self::TOP_LEFT)
+        {
+            $img2 =  imagerotate($img, $this->type * 90, 0);
+            imagedestroy($img);
+            return $img2;
+        }
+        else
+        {
+            return $img;
+        }
     }
 
 

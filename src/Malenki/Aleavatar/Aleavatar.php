@@ -129,7 +129,7 @@ class Aleavatar
 
 
 
-    protected function generate($width = null, $height = null)
+    public function generate($width = null, $height = null)
     {
         $this->size->width = $width;
         $this->size->height = $height;
@@ -146,12 +146,15 @@ class Aleavatar
         }
 
         $arr_base = str_split($str_base, 2);
-        $arr_order = $this->getFillOrder($arr_base[7][0]);
+        $arr_order = $this->getFillOrder(hexdec($arr_base[7][0]));
         
         $q = new Quarter(1);
         
         $color_bg = new Primitive\Color('FFFFFF');
         $color_fg = new Primitive\Color($arr_base[4].$arr_base[5].$arr_base[6]);
+
+        $this->arr_colors[0] = $color_bg;
+        $this->arr_colors[1] = $color_fg;
 
         foreach($arr_order as $o)
         {
@@ -160,7 +163,8 @@ class Aleavatar
             $u = new Unit($o);
             $u->background($color_bg);
             $u->foreground($color_fg);
-            $u->generate($rank1, $rank2);
+            //$u->generate(hexdec($rank1), hexdec($rank2));
+            $u->generate(0, 6); //DEBUG
 
             $q->add($u);
         }
@@ -176,12 +180,6 @@ class Aleavatar
     
     public function png()
     {
-    } 
-
-
-
-    public function svg()
-    {
         $img = imagecreatetruecolor(self::SIZE, self::SIZE);
         // Even if GD is installed, some systems have not this function
         // See http://stackoverflow.com/questions/5756144/imageantialias-call-to-undefined-function-error-with-gd-installed
@@ -190,33 +188,45 @@ class Aleavatar
             imageantialias($img, true);
         }
         
+        $this->arr_colors[0]->gd($img);    
+        $this->arr_colors[1]->gd($img);    
+        
         foreach($this->arr_quarters as $k => $q)
         {
             $img_q = $q->png();
+            $this->arr_colors[0]->gd($img_q);    
+            $this->arr_colors[1]->gd($img_q);    
             
             $dst_x = 0;
             $dst_y = 0;
 
-            if($k = 1)
+            if($k == 1)
             {
                 $dst_x = Quarter::SIZE;
                 $dst_y = 0;
             }
-            if($k = 2)
+            if($k == 2)
             {
                 $dst_x = Quarter::SIZE;
                 $dst_y = Quarter::SIZE;
             }
-            if($k = 3)
+            if($k == 3)
             {
                 $dst_x = 0;
                 $dst_y = Quarter::SIZE;
             }
             imagecopy($img, $img_q, $dst_x, $dst_y, 0, 0, Quarter::SIZE, Quarter::SIZE);
+            imagedestroy($img_q);
         }
 
         imagepng($img, 'test.png');//DEBUG
         //return $img; //DEBUG
+    } 
+
+
+
+    public function svg()
+    {
     }
 
 

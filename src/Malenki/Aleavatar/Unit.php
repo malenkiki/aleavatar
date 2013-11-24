@@ -40,12 +40,17 @@ class Unit
     protected $arr_primitives = array();
 
 
-    protected function bg()
+    protected function add($p)
+    {
+        $this->arr_primitives[] = $p;
+    }
+
+    public function bg()
     {
         return $this->arr_colors[0];
     }
 
-    protected function fg()
+    public function fg()
     {
         return $this->arr_colors[1];
     }
@@ -71,19 +76,112 @@ class Unit
         $this->arr_colors[1] = $color;
     }
 
+
+
     public function generate($rank1, $rank2)
     {
-        if($rank == 5)
+        if($rank1 == 0)
+        {
+            // As void, so, square take all place and take background color.
+            if($rank2 == 0)
+            {
+                $c = new Primitive\Rectangle();
+                $c->point(0, 0);
+                $c->point(Unit::SIZE, 0);
+                $c->point(Unit::SIZE, Unit::SIZE);
+                $c->point(0, Unit::SIZE);
+                $c->color($this->bg());
+                $this->add($c);
+            }
+            // As plain square
+            if($rank2 == 1)
+            {
+                $c = new Primitive\Rectangle();
+                $c->point(0, 0);
+                $c->point(Unit::SIZE, 0);
+                $c->point(Unit::SIZE, Unit::SIZE);
+                $c->point(0, Unit::SIZE);
+                $c->color($this->fg());
+                $this->add($c);
+            }
+            if($rank2 == 2)
+            {
+                $c = new Primitive\Rectangle();
+                $c->point(0, 0);
+                $c->point(Unit::SIZE / 2, 0);
+                $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
+                $c->point(0, Unit::SIZE / 2);
+                $c->color($this->fg());
+                $this->add($c);
+            }
+            if($rank2 == 3)
+            {
+                /*
+                $c = new Primitive\Rectangle();
+                $c->point(Unit::SIZE / 2, 0);
+                $c->point(Unit::SIZE / 2, 0);
+                $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
+                $c->point(0, Unit::SIZE / 2);
+                $c->color($this->fg());
+                $this->add($c);
+                 */
+            }
+            if($rank2 == 4)
+            {
+                /*
+                $c = new Primitive\Rectangle();
+                $c->point(Unit::SIZE / 2, 0);
+                $c->point(Unit::SIZE / 2, 0);
+                $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
+                $c->point(0, Unit::SIZE / 2);
+                $c->color($this->fg());
+                $this->add($c);
+                 */
+            }
+            if($rank2 == 5)
+            {
+                /*
+                $c = new Primitive\Rectangle();
+                $c->point(Unit::SIZE / 2, 0);
+                $c->point(Unit::SIZE / 2, 0);
+                $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
+                $c->point(0, Unit::SIZE / 2);
+                $c->color($this->fg());
+                $this->add($c);
+                 */
+            }
+            if($rank2 == 6)
+            {
+                $c = new Primitive\Rectangle();
+                $c->point(0, 0);
+                $c->point(Unit::SIZE / 2, 0);
+                $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
+                $c->point(0, Unit::SIZE / 2);
+                $c->color($this->fg());
+                $this->add($c);
+                
+                $c = new Primitive\Rectangle();
+                $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
+                $c->point(Unit::SIZE, Unit::SIZE / 2);
+                $c->point(Unit::SIZE, Unit::SIZE);
+                $c->point(Unit::SIZE / 2, Unit::SIZE);
+                $c->color($this->fg());
+                $this->add($c);
+            }
+        }
+
+        if($rank1 == 5)
         {
             $el = new Primitive\Ellipse();
             $el->point(0, 0);
             $el->radius(self::SIZE / 2);
             $el->color($this->fg());
-            $this->arr_primitives[] = $el;
+            $this->add($el);
         }
 
         return $this;
     }
+
 
 
     public function png()
@@ -97,6 +195,9 @@ class Unit
             imageantialias($img, true);
         }
 
+        $this->bg()->gd($img);
+        $this->fg()->gd($img);
+        
         imagefill($img, 0, 0, $this->bg()->gd($img));
         
         foreach($this->arr_primitives as $p)
