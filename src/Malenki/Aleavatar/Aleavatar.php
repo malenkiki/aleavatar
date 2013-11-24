@@ -24,271 +24,152 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 namespace Malenki\Aleavatar;
 
+
+
 if(!extension_loaded('gd'))
 {
     throw new \RuntimeException('GD is not available! Aleavatar uses GD to work!');
 }
 
 
+
 /**
  * Generate random avatar(s) to populate your websites!
+ *
+ * @property-read string $seed Seed used to create avatar
+ * @property-read string $hash Hash of the seed
+ * @copyright 2013 Michel Petit
+ * @author Michel Petit <petit.michel@gmail.com> 
+ * @license MIT
  */
 class Aleavatar
 {
-    const TYPE_SQUARES = 'squares';
-    const TYPE_DISCS = 'discs';
-    const TYPE_RANDOM_SHAPES = 'randomShapes';
-
     protected $arr_colors = array();
-    protected $int_amount_colors = 0;
-    protected $arr_selected_colors = array();
-    protected $int_current_color = 0;
-
+    protected $arr_quaters = array();
     protected $size = null;
+    protected $seed = null;
     
-    protected $image = null;
 
-    public function __construct($width, $height, $colors = 16)
+    public function __get($name)
+    {
+        if($name == 'seed')
+        {
+            return $this->seed->str;
+        }
+        
+        if($name == 'hash')
+        {
+            return $this->seed->hash;
+        }
+    }
+
+
+
+    private function getFillOrder($code)
+    {
+        $arr = array(
+            array(1,2,3,4),
+            array(4,1,2,3),
+            array(3,4,1,2),
+            array(2,3,4,1),
+            array(1,3,2,4),
+            array(4,1,3,2),
+            array(2,4,1,3),
+            array(3,2,4,1),
+            array(1,4,3,2),
+            array(2,1,4,3),
+            array(3,2,1,4),
+            array(4,3,2,1),
+            array(4,2,1,3),
+            array(3,4,2,1),
+            array(1,3,4,2),
+            array(2,1,3,4)
+        );
+
+        return $arr[$code];
+    }
+
+
+    public function __construct($str_seed = null)
     {
         $this->size = new \stdClass();
-        $this->size->width = $width;
-        $this->size->height = $height;
+        $this->size->width = 128;
+        $this->size->height = 128;
 
-        $this->image = imagecreatetruecolor(12, 12);
+        $this->seed = new \stdClass();
 
-        $this->createColors();
-        $this->amountOfColors($colors);
-    }
-
-
-
-    protected function diagonalSquares($image, $int_way)
-    {
-        //TODO
-        printf("Diagonal squares selected way %d.\n", $int_way);
-    }
-
-
-
-    protected function squaresInsideSquares($image, $int_amount)
-    {
-        //TODO
-        printf("Squares inside squares selected way with %d squares to generate.\n", $int_amount);
-    }
-
-
-
-    protected function areaSquares($image)
-    {
-        //TODO
-        printf("Area squares selected.\n");
-    }
-
-
-
-    protected function squares()
-    {
-        $image = imagecreatetruecolor(6, 6);
-        imagefill($image, 0, 0, $this->getColor($image));
-        
-        
-        // Diagonals (1) or squares inside squares (2) or area (3)?
-        $int_choice = rand(1,3);
-
-        // Diagonal squares choices…
-        if($int_choice == 1)
+        if(is_null($str_seed))
         {
-            // 1 or 2 diagonals?
-            $int_amount = rand(1, 2);
+            date_default_timezone_set('UTC');
 
-            // If only one, what way to choose?
-            if($int_amount == 1)
-            {
-                $int_way = rand(1, 2);
-                $this->diagonalSquares($image, $int_way);
-            }
-            else
-            {
-                $this->diagonalSquares($image, 1);
-                $this->diagonalSquares($image, 2);
-            }
-        }
-        elseif($int_choice == 2)
-        {
-            $int_amount = rand(2, 5);
-            $this->squaresInsideSquares($image, $int_amount);
+            $this->seed->str = date('YmdHis').uniqid();
+            $this->seed->hash = md5($this->seed->str);
         }
         else
         {
-            $this->areaSquares($image);
-        }
-        
-
-        return $image;
-    }
-
-
-
-    protected function discs()
-    {
-        //TODO
-        $image = imagecreatetruecolor(6, 6);
-        return $image;
-    }
-
-
-
-    protected function randomShapes()
-    {
-        // TODO
-    }
-
-
-
-    protected function createColors()
-    {
-        date_default_timezone_set('UTC'); //TODO: put that into CLI script
-
-        $str_32 = md5(date('YmdHis') . rand() . sqrt(rand(0, 9)));
-        $str_32_rev = strrev($str_32);
-        $str_32_rand1 = str_shuffle($str_32);
-        $str_32_rand2 = str_shuffle($str_32_rev);
-
-        foreach(array($str_32, $str_32_rev, $str_32_rand1, $str_32_rand2) as $str)
-        {
-            $arr_sub_1 = str_split($str, 6);
-            $arr_sub_2 = str_split(substr($str, 2), 6);
-            $arr_sub_3 = str_split(substr($str, 1, 30), 6);
-            $arr = array(array_pop($arr_sub_1), substr($str,0, 2), $str[0] . $str[31]);
-            $arr_sub_4 = array(
-                join($arr),
-                $arr[0].$arr[2].$arr[1],
-                $arr[1].$arr[2].$arr[0],
-                $arr[1].$arr[0].$arr[2],
-                $arr[2].$arr[1].$arr[0],
-                $arr[2].$arr[0].$arr[1]
-            );
-            $this->arr_colors = array_unique(array_merge($this->arr_colors, $arr_sub_1, $arr_sub_2, $arr_sub_3, $arr_sub_4));
-        }
-
-        $this->int_amount_colors = count($this->arr_colors);
-    }
-
-
-
-    protected function amountOfColors($int_amount = 16)
-    {
-        if($int_amount < 2)
-        {
-            throw new \InvalidArgumentException('Minimal numbers of colors cannot be less than 2!');
-        }
-
-        if($int_amount <= count($this->arr_colors))
-        {
-            $this->int_amount_colors = $int_amount;
-        }
-
-        $arr = array_rand($this->arr_colors, $this->int_amount_colors);
-
-        foreach($arr as $idx)
-        {
-            $this->arr_selected_colors[] = $this->arr_colors[$idx];
-        }
-
-        return $this;
-    }
-
-
-
-    protected function getColor($image)
-    {
-        $str_current = $this->arr_selected_colors[$this->int_current_color];
-
-        $this->int_current_color++;
-
-        if($this->int_current_color >= $this->int_amount_colors)
-        {
-            $this->int_current_color = 0;
-        }
-
-        list($str_red, $str_green, $str_blue) = str_split($str_current, 2);
-
-        $int_red = hexdec($str_red);
-        $int_green = hexdec($str_green);
-        $int_blue = hexdec($str_blue);
-        
-        return imagecolorallocate($image, $int_red, $int_green, $int_blue);
-    }
-
-
-
-    public function create($str_type = self::TYPE_SQUARES)
-    {
-        if(
-            !in_array(
-                $str_type,
-                array(
-                    self::TYPE_SQUARES,
-                    self::TYPE_DISCS,
-                    self::TYPE_RANDOM_SHAPES
-                )
-            )
-        )
-        {
-            throw new \InvalidArgumentException('Invalid type of generator given!');
-        }
-
-        if($str_type == self::TYPE_SQUARES || $str_type == self::TYPE_DISCS)
-        {
-            if(rand(1, 2) == 1)
+            if(!is_string($str_seed))
             {
-                //TODO repeat for 3 other quadrants by symetry
-                $img = $this->$str_type();
-                // imageflip only for php 5.5! need special method to do that if php version < 5.5!!!
-                //$img2 = imageflip($img,);
-                imagecopy($this->image, $img, 0, 0, 0, 0, 6, 6);
-                imagecopy($this->image, $img, 6, 0, 0, 0, 6, 6);
-                imagecopy($this->image, $img, 6, 6, 0, 0, 6, 6);
-                imagecopy($this->image, $img, 0, 6, 0, 0, 6, 6);
-                imagedestroy($img);
+                throw new \InvalidArgumentException('The seed must be a valid string.');
             }
-            else
+
+            $str_seed = trim($str_seed);
+
+            if(strlen($str_seed) == 0)
             {
-                $img = $this->$str_type();
-                imagecopy($this->image, $img, 0, 0, 0, 0, 6, 6);
-                imagedestroy($img);
-                $img = $this->$str_type();
-                imagecopy($this->image, $img, 6, 0, 0, 0, 6, 6);
-                imagedestroy($img);
-                $img = $this->$str_type();
-                imagecopy($this->image, $img, 6, 6, 0, 0, 6, 6);
-                imagedestroy($img);
-                $img = $this->$str_type();
-                imagecopy($this->image, $img, 0, 6, 0, 0, 6, 6);
-                imagedestroy($img);
+                throw new \InvalidArgumentException('String seed must not null string.');
+            }
+
+            $this->seed->str = $str_seed;
+            $this->seed->hash = md5($str_seed);
+        }
+    }
+
+
+
+
+    protected function generate($width = null, $height = null)
+    {
+        $str_base = '';
+
+        // take 1 chars on 2
+        foreach(str_split($this->seed->hash) as $k => $c)
+        {
+            if($k % 2)
+            {
+                $str_base .= $c;
             }
         }
-        else
-        {
-            $img = $this->$str_type();
-            imagecopy($this->image, $img, 0, 0, 0, 0, 6, 6);
-            imagedestroy($img);
-            $img = $this->$str_type();
-            imagecopy($this->image, $img, 6, 0, 0, 0, 6, 6);
-            imagedestroy($img);
-            $img = $this->$str_type();
-            imagecopy($this->image, $img, 6, 6, 0, 0, 6, 6);
-            imagedestroy($img);
-            $img = $this->$str_type();
-            imagecopy($this->image, $img, 0, 6, 0, 0, 6, 6);
-            imagedestroy($img);
-        }
 
-        return $this;
+        $arr_base = str_split($str_base, 2);
+        $arr_order = $this->getFillOrder($arr_base[7][0]);
+        
+        $color = new Primitive\Color($arr_base[4].$arr_base[5].$arr_base[6]);
+
+        foreach($arr_order as $o)
+        {
+            list($type, $subtype) = str_split($arr_base[$o - 1], 2);
+        }
     }
+
+
     
+    public function png()
+    {
+    } 
 
 
+
+    public function svg()
+    {
+    }
+
+
+    public function __toString()
+    {
+        return $this->svg();
+    }
+
+/*
     public function save($str_filename)
     {
         imagepng($this->image, $str_filename.'.png');
@@ -299,6 +180,7 @@ class Aleavatar
     public function display()
     {
         header('Content-Type: image/png');
+        $this->image = imagecreatetruecolor(12, 12);
         imagepng($this->image);
     }
     
@@ -308,5 +190,5 @@ class Aleavatar
         imagedestroy($this->image);
         $this->image = null;
     }
-
+ */
 }
