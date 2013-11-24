@@ -34,19 +34,91 @@ namespace Malenki\Aleavatar;
  */
 class Quarter
 {
-    protected $id = null;
+    const TOP_LEFT = 0;
+    const TOP_RIGHT = 1;
+    const BOTTOM_RIGHT = 2;
+    const BOTTOM_LEFT = 3;
+    const SIZE = 64;
+    
+    protected $type = self::TOP_LEFT;
+    protected $arr_units = array();
 
 
-
-    public function __construct($id)
+    public function __construct($type = self::TOP_LEFT)
     {
-        $this->id = $id;
+        $this->type = $type;
+    }
+
+
+    public function tr()
+    {
+        $q = new self(self::TOP_RIGHT);
+        $q->units($this->arr_units);
+    }
+
+
+
+    public function br()
+    {
+        $q = new self(self::BOTTOM_RIGHT);
+        $q->units($this->arr_units);
+    }
+
+
+
+    public function bl()
+    {
+        $q = new self(self::BOTTOM_LEFT);
+        $q->units($this->arr_units);
+    }
+
+
+
+    public function units($arr)
+    {
+        $this->arr_units = $arr;
     }
 
 
 
     public function png()
     {
+        $img = imagecreatetruecolor(self::SIZE, self::SIZE);
+
+        // Even if GD is installed, some systems have not this function
+        // See http://stackoverflow.com/questions/5756144/imageantialias-call-to-undefined-function-error-with-gd-installed
+        if(function_exists('imageantialias'))
+        {
+            imageantialias($img, true);
+        }
+        
+        foreach($this->arr_units as $u)
+        {
+            $img_u = $u->png();
+            
+            $dst_x = 0;
+            $dst_y = 0;
+
+            if($k = 1)
+            {
+                $dst_x = Unit::SIZE;
+                $dst_y = 0;
+            }
+            if($k = 2)
+            {
+                $dst_x = Unit::SIZE;
+                $dst_y = Unit::SIZE;
+            }
+            if($k = 3)
+            {
+                $dst_x = 0;
+                $dst_y = Unit::SIZE;
+            }
+            imagecopy($img, $img_u, $dst_x, $dst_y, 0, 0, Unit::SIZE, Unit::SIZE);
+        }
+
+        //imagepng($img, 'test.png');//DEBUG
+        return $img;
     }
 
 
@@ -60,6 +132,23 @@ class Quarter
             $str_g .= $u->svg();
         }
 
-        return sprintf('<g id="quarter-%d">%s</g>', $str_g, $this->id);
+        $str_attr_rotate = '';
+
+        if($this->type != self::TOP_LEFT)
+        {
+            $str_attr_rotate = sprintf(
+                ' style="rotate(%d, %d, %d);"',
+                $this->type * 90,
+                Unit::SIZE,
+                Unit::SIZE
+            );
+        }
+
+        return sprintf(
+            '<g id="quarter-%d"%s>%s</g>',
+            $str_g,
+            $str_attr_rotate,
+            $this->type
+        );
     }
 }

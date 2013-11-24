@@ -44,8 +44,10 @@ if(!extension_loaded('gd'))
  */
 class Aleavatar
 {
+    const SIZE = 128;
+
     protected $arr_colors = array();
-    protected $arr_quaters = array();
+    protected $arr_quarters = array();
     protected $size = null;
     protected $seed = null;
     
@@ -93,8 +95,8 @@ class Aleavatar
     public function __construct($str_seed = null)
     {
         $this->size = new \stdClass();
-        $this->size->width = 128;
-        $this->size->height = 128;
+        $this->size->width = self::SIZE;
+        $this->size->height = self::SIZE;
 
         $this->seed = new \stdClass();
 
@@ -129,6 +131,9 @@ class Aleavatar
 
     protected function generate($width = null, $height = null)
     {
+        $this->size->width = $width;
+        $this->size->height = $height;
+
         $str_base = '';
 
         // take 1 chars on 2
@@ -143,12 +148,28 @@ class Aleavatar
         $arr_base = str_split($str_base, 2);
         $arr_order = $this->getFillOrder($arr_base[7][0]);
         
-        $color = new Primitive\Color($arr_base[4].$arr_base[5].$arr_base[6]);
+        $q = new Quarter(1);
+        
+        $color_bg = new Primitive\Color('FFFFFF');
+        $color_fg = new Primitive\Color($arr_base[4].$arr_base[5].$arr_base[6]);
 
         foreach($arr_order as $o)
         {
-            list($type, $subtype) = str_split($arr_base[$o - 1], 2);
+            list($rank1, $rank2) = str_split($arr_base[$o - 1]);
+
+            $u = new Unit($o);
+            $u->background($color_bg);
+            $u->foreground($color_fg);
+            $u->generate($rank1, $rank2);
+
+            $q->add($u);
         }
+
+        // OK, first quarter is filled, so, let’s create the others!
+        $this->arr_quarters[] = $q;
+        $this->arr_quarters[] = $q->tr();
+        $this->arr_quarters[] = $q->br();
+        $this->arr_quarters[] = $q->bl();
     }
 
 
@@ -161,6 +182,41 @@ class Aleavatar
 
     public function svg()
     {
+        $img = imagecreatetruecolor(self::SIZE, self::SIZE);
+        // Even if GD is installed, some systems have not this function
+        // See http://stackoverflow.com/questions/5756144/imageantialias-call-to-undefined-function-error-with-gd-installed
+        if(function_exists('imageantialias'))
+        {
+            imageantialias($img, true);
+        }
+        
+        foreach($this->arr_quarters as $k => $q)
+        {
+            $img_q = $q->png();
+            
+            $dst_x = 0;
+            $dst_y = 0;
+
+            if($k = 1)
+            {
+                $dst_x = Quarter::SIZE;
+                $dst_y = 0;
+            }
+            if($k = 2)
+            {
+                $dst_x = Quarter::SIZE;
+                $dst_y = Quarter::SIZE;
+            }
+            if($k = 3)
+            {
+                $dst_x = 0;
+                $dst_y = Quarter::SIZE;
+            }
+            imagecopy($img, $img_q, $dst_x, $dst_y, 0, 0, Quarter::SIZE, Quarter::SIZE);
+        }
+
+        imagepng($img, 'test.png');//DEBUG
+        //return $img; //DEBUG
     }
 
 

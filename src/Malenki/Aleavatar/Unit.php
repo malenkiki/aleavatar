@@ -1,5 +1,4 @@
 <?php
-
 /*
 Copyright (c) 2013 Michel Petit <petit.michel@gmail.com>
 
@@ -22,6 +21,7 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 namespace Malenki\Aleavatar;
 
 
@@ -38,7 +38,6 @@ class Unit
     
     protected $arr_colors = array();
     protected $arr_primitives = array();
-    protected $img = null;
 
 
     protected function bg()
@@ -50,6 +49,15 @@ class Unit
     {
         return $this->arr_colors[1];
     }
+
+
+
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
+
 
     public function background(\Malenki\Aleavatar\Primitive\Color $color)
     {
@@ -63,13 +71,52 @@ class Unit
         $this->arr_colors[1] = $color;
     }
 
+    public function generate($rank1, $rank2)
+    {
+        if($rank == 5)
+        {
+            $el = new Primitive\Ellipse();
+            $el->point(0, 0);
+            $el->radius(self::SIZE / 2);
+            $el->color($this->fg());
+            $this->arr_primitives[] = $el;
+        }
+
+        return $this;
+    }
 
 
     public function png()
     {
+        $img = imagecreatetruecolor(self::SIZE, self::SIZE);
+
+        // Even if GD is installed, some systems have not this function
+        // See http://stackoverflow.com/questions/5756144/imageantialias-call-to-undefined-function-error-with-gd-installed
+        if(function_exists('imageantialias'))
+        {
+            imageantialias($img, true);
+        }
+
+        imagefill($img, 0, 0, $this->bg()->gd($img));
+        
+        foreach($this->arr_primitives as $p)
+        {
+            $p->png($img);
+        }
+
+        //imagepng($img, 'test.png');//DEBUG
+        return $img;
     }
 
     public function svg()
     {
+        $str_g = '';
+        
+        foreach($this->arr_primitives as $p)
+        {
+            $str_g .= $p->svg();
+        }
+
+        return sprintf('<g id="unit-%d">%s</g>', $str_g, $this->id);
     }
 }
