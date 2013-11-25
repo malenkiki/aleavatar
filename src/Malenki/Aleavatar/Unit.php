@@ -493,11 +493,21 @@ class Unit
     {
         $str_g = '';
         
+        $bg = new Primitive\Rectangle();
+        $bg->point(0, 0);
+        $bg->point(self::SIZE, 0);
+        $bg->point(self::SIZE, self::SIZE);
+        $bg->point(0, self::SIZE);
+        $bg->color($this->bg());
+
+        $str_g .= $bg->svg();
+
         foreach($this->arr_primitives as $p)
         {
             $str_g .= $p->svg();
         }
 
-        return sprintf('<g>%s</g>', $str_g);
+        //return sprintf('<g>%s</g>', $str_g);
+        return $str_g;
     }
 }

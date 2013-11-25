@@ -42,12 +42,15 @@ class Quarter
     
     protected $type = self::TOP_LEFT;
     protected $arr_units = array();
+    protected $bool_rotate_way = true;
 
 
-    public function __construct($type = self::TOP_LEFT)
+    public function __construct($type = self::TOP_LEFT, $bool_rotate_way)
     {
         $this->type = $type;
+        $this->bool_rotate_way = $bool_rotate_way;
     }
+
 
 
     /**
@@ -58,7 +61,7 @@ class Quarter
      */
     public function tr()
     {
-        $q = new self(self::TOP_RIGHT);
+        $q = new self(self::TOP_RIGHT, $this->bool_rotate_way);
         $q->units($this->arr_units);
 
         return $q;
@@ -74,7 +77,7 @@ class Quarter
      */
     public function br()
     {
-        $q = new self(self::BOTTOM_RIGHT);
+        $q = new self(self::BOTTOM_RIGHT, $this->bool_rotate_way);
         $q->units($this->arr_units);
 
         return $q;
@@ -90,7 +93,7 @@ class Quarter
      */
     public function bl()
     {
-        $q = new self(self::BOTTOM_LEFT);
+        $q = new self(self::BOTTOM_LEFT, $this->bool_rotate_way);
         $q->units($this->arr_units);
 
         return $q;
@@ -168,7 +171,8 @@ class Quarter
 
         if($this->type != self::TOP_LEFT)
         {
-            $img2 =  imagerotate($img, $this->type * 90, 0);
+            $int_way = $this->bool_rotate_way ? 1 : -1;
+            $img2 =  imagerotate($img, $this->type * 90 * $int_way, 0);
             imagedestroy($img);
             return $img2;
         }
@@ -184,27 +188,77 @@ class Quarter
     {
         $str_g = '';
         
-        foreach($this->arr_units as $u)
+        foreach($this->arr_units as $k => $u)
         {
-            $str_g .= $u->svg();
+            $int_dx = 0;
+            $int_dy = 0;
+
+            if($k == self::TOP_RIGHT)
+            {
+                $int_dx = Unit::SIZE;
+            }
+            elseif($k == self::BOTTOM_RIGHT)
+            {
+                $int_dx = Unit::SIZE;
+                $int_dy = Unit::SIZE;
+            }
+            elseif($k == self::BOTTOM_LEFT)
+            {
+                $int_dy = Unit::SIZE;
+            }
+
+            $str_attr_translate = sprintf(
+                ' transform="translate(%d, %d)"',
+                $int_dx,
+                $int_dy
+            );
+
+            if($int_dx || $int_dy)
+            {
+                $str_g .= sprintf('<g%s>%s</g>', $str_attr_translate, $u->svg()) . "\n";
+            }
+            else
+            {
+                $str_g .= $u->svg() . "\n";
+            }
         }
 
-        $str_attr_rotate = '';
+        $str_attr = '';
 
         if($this->type != self::TOP_LEFT)
         {
-            $str_attr_rotate = sprintf(
-                ' style="rotate(%d, %d, %d);"',
-                $this->type * 90,
+            $int_dx = 0;
+            $int_dy = 0;
+
+            if($this->type == self::TOP_RIGHT)
+            {
+                $int_dx = self::SIZE;
+            }
+            elseif($this->type == self::BOTTOM_RIGHT)
+            {
+                $int_dx = self::SIZE;
+                $int_dy = self::SIZE;
+            }
+            elseif($this->type == self::BOTTOM_LEFT)
+            {
+                $int_dy = self::SIZE;
+            }
+
+            $int_way = $this->bool_rotate_way ? -1 : 1;
+            $str_attr = sprintf(
+                ' transform="translate(%d, %d) rotate(%d, %d, %d)"',
+                $int_dx,
+                $int_dy,
+                $this->type * 90 * $int_way,
                 Unit::SIZE,
                 Unit::SIZE
             );
         }
 
         return sprintf(
-            '<g id="quarter-%d"%s>%s</g>',
+            '<g id="quarter-%d"%s>%s</g>'."\n",
             $this->type,
-            $str_attr_rotate,
+            $str_attr,
             $str_g
         );
     }
