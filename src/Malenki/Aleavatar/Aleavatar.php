@@ -148,7 +148,7 @@ class Aleavatar
         $arr_base = str_split($str_base, 2);
         $arr_order = $this->getFillOrder(hexdec($arr_base[7][0]));
         
-        $q = new Quarter(1);
+        $q = new Quarter();
         
         $color_bg = new Primitive\Color('FFFFFF');
         $color_fg = new Primitive\Color($arr_base[4].$arr_base[5].$arr_base[6]);
@@ -164,7 +164,7 @@ class Aleavatar
             $u->background($color_bg);
             $u->foreground($color_fg);
             //$u->generate(hexdec($rank1), hexdec($rank2));
-            $u->generate(0, 6); //DEBUG
+            $u->generate(2, rand(0, 3)); //DEBUG
 
             $q->add($u);
         }
@@ -227,6 +227,19 @@ class Aleavatar
 
     public function svg()
     {
+        $str_svg = '<?xml version="1.0" encoding="utf-8"?>';
+        $str_svg .= sprintf('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="%1$d" height="%1$d">', self::SIZE);
+        $str_svg .= sprintf('<title>Identicon of %s</title>', $this->seed->str);
+        $str_svg .= sprintf('<desc>The hash string used to generate this identicon is %s.</desc>', $this->seed->hash);
+
+        foreach($this->arr_quarters as $k => $q)
+        {
+            $str_svg .= $q->svg();
+        }
+
+        $str_svg .= '</svg>';
+
+        file_put_contents('test.svg', $str_svg);
     }
 
 

@@ -50,6 +50,12 @@ class Quarter
     }
 
 
+    /**
+     * Returns new quarter copied from current one and rotated for the top right corner. 
+     * 
+     * @access public
+     * @return Quarter
+     */
     public function tr()
     {
         $q = new self(self::TOP_RIGHT);
@@ -60,6 +66,12 @@ class Quarter
 
 
 
+    /**
+     * Returns new quarter copied from current one and rotated for the bottom right corner. 
+     * 
+     * @access public
+     * @return Quarter
+     */
     public function br()
     {
         $q = new self(self::BOTTOM_RIGHT);
@@ -70,6 +82,12 @@ class Quarter
 
 
 
+    /**
+     * Returns new quarter copied from current one and rotated for the bottom left corner. 
+     * 
+     * @access public
+     * @return Quarter
+     */
     public function bl()
     {
         $q = new self(self::BOTTOM_LEFT);
@@ -80,16 +98,33 @@ class Quarter
 
 
 
+    /**
+     * Set all unit parts of the current quarter using an array.
+     * 
+     * @param array $arr 
+     * @access public
+     * @return void
+     */
     public function units($arr)
     {
         $this->arr_units = $arr;
     }
 
 
+    /**
+     * Adds one unit to the current quarter. 
+     * 
+     * @param Unit $unit 
+     * @access public
+     * @return void
+     */
     public function add($unit)
     {
         $this->arr_units[] = $unit;
     }
+
+
+
 
     public function png()
     {
@@ -168,9 +203,9 @@ class Quarter
 
         return sprintf(
             '<g id="quarter-%d"%s>%s</g>',
-            $str_g,
+            $this->type,
             $str_attr_rotate,
-            $this->type
+            $str_g
         );
     }
 }
