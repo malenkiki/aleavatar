@@ -50,7 +50,8 @@ class Diamond extends Polygon
         {
             throw new \RuntimeException('Diamond has only four points!');
         }
-        parent::point($x, $y);
+        
+        return parent::point($x, $y);
     }
 
 }

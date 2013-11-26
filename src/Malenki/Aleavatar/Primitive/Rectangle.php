@@ -33,24 +33,89 @@ namespace Malenki\Aleavatar\Primitive;
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
-class Rectangle extends Polygon
+class Rectangle
 {
+    protected $point = null;
+    protected $size = null;
+    protected $color = null;
+
+    public function __construct()
+    {
+        $this->point = new \stdClass();
+        $this->point->x = 0;
+        $this->point->y = 0;
+        $this->size = new \stdClass();
+        $this->size->w = 0;
+        $this->size->h = 0;
+    }
+
+
     /**
      * Set one point by giving its coordinates. 
      * 
      * @param integer $int_x 
      * @param integer $int_y 
-     * @throws RuntimeException In you try to set fifth point.
      * @access public
      * @return void
      */
-    public function point($x, $y)
+    public function point($int_x, $int_y)
     {
-        if(count($this->arr_points) >= 4)
-        {
-            throw new \RuntimeException('Rectangle has only four points!');
-        }
-        parent::point($x, $y);
+        $this->point->x = $int_x;
+        $this->point->y = $int_y;
+
+        return $this;
+    }
+
+
+
+    public function size($int_width, $int_height)
+    {
+        $this->size->w = $int_width;
+        $this->size->h = $int_height;
+
+        return $this;
+    }
+    
+    
+    
+    public function color($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    
+    
+    public function png(&$img)
+    {
+        imagefilledrectangle(
+            $img,
+            $this->point->x,
+            $this->point->y, 
+            $this->point->x + $this->size->w - 1, 
+            $this->point->y + $this->size->h - 1, 
+            $this->color->gd($img)
+        );
+    }
+    
+
+    public function svg()
+    {
+        return sprintf(
+            '<rect x="%d" y="%d" width="%d" height="%d" fill="%s" />',
+            $this->point->x,
+            $this->point->y,
+            $this->size->w,
+            $this->size->h,
+            $this->color
+        );
+    }
+
+
+    public function __toString()
+    {
+        return $this->svg();
     }
 
 }

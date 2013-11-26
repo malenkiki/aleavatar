@@ -56,6 +56,8 @@ class Polygon
         }
 
         $this->arr_points[] = array($int_x, $int_y);
+
+        return $this;
     }
 
 
@@ -63,6 +65,8 @@ class Polygon
     public function color($color)
     {
         $this->color = $color;
+
+        return $this;
     }
 
 

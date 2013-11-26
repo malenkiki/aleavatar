@@ -60,6 +60,8 @@ class Ellipse
         $this->point = new \stdClass();
         $this->point->x = $int_x;
         $this->point->y = $int_y;
+
+        return $this;
     }
 
 
@@ -67,6 +69,8 @@ class Ellipse
     public function color($color)
     {
         $this->color = $color;
+
+        return $this;
     }
 
 
@@ -108,6 +112,8 @@ class Ellipse
             $this->radius->h = 2 * $int_ry;
             $this->radius->is_circle = false;
         }
+
+        return $this;
     }
 
 

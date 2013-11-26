@@ -90,143 +90,140 @@ class Unit
         // As void, so, square take all place and take background color.
         if($rank2 == 0)
         {
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(0, 0);
-            $c->point(Unit::SIZE, 0);
-            $c->point(Unit::SIZE, Unit::SIZE);
-            $c->point(0, Unit::SIZE);
+            $c->size(Unit::SIZE);
             $c->color($this->bg());
             $this->add($c);
         }
         // As plain square
         if($rank2 == 1)
         {
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(0, 0);
-            $c->point(Unit::SIZE, 0);
-            $c->point(Unit::SIZE, Unit::SIZE);
-            $c->point(0, Unit::SIZE);
+            $c->size(Unit::SIZE);
             $c->color($this->fg());
             $this->add($c);
         }
         // Mid sized suare TL
         if($rank2 == 2)
         {
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(0, 0);
-            $c->point(Unit::SIZE / 2, 0);
-            $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
-            $c->point(0, Unit::SIZE / 2);
+            $c->size(Unit::SIZE / 2);
             $c->color($this->fg());
             $this->add($c);
         }
         // Mid sized suare TR
         if($rank2 == 3)
         {
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(Unit::SIZE / 2, 0);
-            $c->point(Unit::SIZE, 0);
-            $c->point(Unit::SIZE, Unit::SIZE / 2);
-            $c->point(0, Unit::SIZE / 2);
+            $c->size(Unit::SIZE / 2);
             $c->color($this->fg());
             $this->add($c);
         }
         // Mid sized suare BR
         if($rank2 == 4)
         {
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
-            $c->point(Unit::SIZE, Unit::SIZE / 2);
-            $c->point(Unit::SIZE, Unit::SIZE);
-            $c->point(Unit::SIZE / 2, Unit::SIZE);
+            $c->size(Unit::SIZE / 2);
             $c->color($this->fg());
             $this->add($c);
         }
         // Mid sized suare BL
         if($rank2 == 5)
         {
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(0, Unit::SIZE / 2);
-            $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
-            $c->point(Unit::SIZE / 2, Unit::SIZE);
-            $c->point(0, Unit::SIZE);
+            $c->size(Unit::SIZE / 2);
             $c->color($this->fg());
             $this->add($c);
         }
         // Mid sized squares TL + BR
         if($rank2 == 6)
         {
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(0, 0);
-            $c->point(Unit::SIZE / 2, 0);
-            $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
-            $c->point(0, Unit::SIZE / 2);
+            $c->size(Unit::SIZE / 2);
             $c->color($this->fg());
             $this->add($c);
 
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
-            $c->point(Unit::SIZE, Unit::SIZE / 2);
-            $c->point(Unit::SIZE, Unit::SIZE);
-            $c->point(Unit::SIZE / 2, Unit::SIZE);
+            $c->size(Unit::SIZE / 2);
             $c->color($this->fg());
             $this->add($c);
         }
         // Mid sized squares TR + BL
         if($rank2 == 7)
         {
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(Unit::SIZE / 2, 0);
-            $c->point(Unit::SIZE, 0);
-            $c->point(Unit::SIZE, Unit::SIZE / 2);
-            $c->point(0, Unit::SIZE / 2);
+            $c->size(Unit::SIZE / 2);
             $c->color($this->fg());
             $this->add($c);
             
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(0, Unit::SIZE / 2);
-            $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
-            $c->point(Unit::SIZE / 2, Unit::SIZE);
-            $c->point(0, Unit::SIZE);
+            $c->size(Unit::SIZE / 2);
             $c->color($this->fg());
             $this->add($c);
         }
         // Little small square diagonal TL BR
         if($rank2 == 8)
         {
-            /*
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(0, 0);
-            $c->point((Unit::SIZE / 4) - 1, 0);
-            $c->point((Unit::SIZE / 4) - 1, (Unit::SIZE / 4) - 1);
-            $c->point(0, (Unit::SIZE / 4) - 1);
+            $c->size(Unit::SIZE / 4);
             $c->color($this->fg());
             $this->add($c);
             
-            $c = new Primitive\Rectangle();
+            $c = new Primitive\Square();
             $c->point(Unit::SIZE / 4, Unit::SIZE / 4);
-            $c->point((Unit::SIZE / 2)- 1, Unit::SIZE / 4);
-            $c->point((Unit::SIZE / 2) - 1, Unit::SIZE / 2);
-            $c->point(Unit::SIZE / 4, (Unit::SIZE / 2) - 1);
+            $c->size(Unit::SIZE / 4);
             $c->color($this->fg());
             $this->add($c);
-            
-            $c = new Primitive\Rectangle();
+
+            $c = new Primitive\Square();
             $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
-            $c->point((3 / 4) * Unit::SIZE, Unit::SIZE / 2);
-            $c->point((3 / 4) * Unit::SIZE, (3 / 4) * Unit::SIZE);
-            $c->point(Unit::SIZE / 2, (3 / 4) * Unit::SIZE);
+            $c->size(Unit::SIZE / 4);
             $c->color($this->fg());
             $this->add($c);
             
-            $c = new Primitive\Rectangle();
-            $c->point((3 / 4) * Unit::SIZE, (3 / 4) * Unit::SIZE);
-            $c->point(Unit::SIZE, (3 / 4) * Unit::SIZE);
-            $c->point(Unit::SIZE, Unit::SIZE);
-            $c->point((3 / 4) * Unit::SIZE, Unit::SIZE);
+            $c = new Primitive\Square();
+            $c->point((int)((3 / 4) * Unit::SIZE), (int)((3 / 4) * Unit::SIZE));
+            $c->size(Unit::SIZE / 4);
             $c->color($this->fg());
             $this->add($c);
-             */
+        }
+        // Little small square diagonal BL TR
+        if($rank2 == 9)
+        {
+            $c = new Primitive\Square();
+            $c->point(0, (3 / 4) * Unit::SIZE);
+            $c->size(Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+            
+            $c = new Primitive\Square();
+            $c->point(Unit::SIZE / 4, Unit::SIZE / 2);
+            $c->size(Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+
+            $c = new Primitive\Square();
+            $c->point(Unit::SIZE / 2, Unit::SIZE / 4);
+            $c->size(Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+            
+            $c = new Primitive\Square();
+            $c->point((3 / 4) * Unit::SIZE, 0);
+            $c->size(Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
         }
     }
 
@@ -493,11 +490,8 @@ class Unit
     {
         $str_g = '';
         
-        $bg = new Primitive\Rectangle();
-        $bg->point(0, 0);
-        $bg->point(self::SIZE, 0);
-        $bg->point(self::SIZE, self::SIZE);
-        $bg->point(0, self::SIZE);
+        $bg = new Primitive\Square();
+        $bg->point(0, 0)->size(self::SIZE);
         $bg->color($this->bg());
 
         $str_g .= $bg->svg();
@@ -507,7 +501,6 @@ class Unit
             $str_g .= $p->svg();
         }
 
-        //return sprintf('<g>%s</g>', $str_g);
         return $str_g;
     }
 }

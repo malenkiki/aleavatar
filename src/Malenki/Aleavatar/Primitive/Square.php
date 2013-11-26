@@ -25,32 +25,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 namespace Malenki\Aleavatar\Primitive;
 
 
+
 /**
- * Define diamond shapes. 
+ * Define square shapes. 
  * 
  * @copyright 2013 Michel Petit
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
-class Triangle extends Polygon
+class Square extends Rectangle
 {
-    /**
-     * Set one point by giving its coordinates. 
-     * 
-     * @param integer $int_x 
-     * @param integer $int_y 
-     * @throws RuntimeException In you try to set fourth point.
-     * @access public
-     * @return void
-     */
-    public function point($int_x, $int_y)
+    public function size($int_size)
     {
-        if(count($this->arr_points) >= 3)
-        {
-            throw new \RuntimeException('Triangle has only three points!');
-        }
-        
-        return parent::point($int_x, $int_y);
+        return parent::size($int_size, $int_size);
     }
-
 }
