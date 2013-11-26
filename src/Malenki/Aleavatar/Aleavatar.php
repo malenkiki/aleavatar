@@ -181,54 +181,94 @@ class Aleavatar
 
 
     
-    public function png()
+    public function png($str_filename = null)
     {
-        $img = imagecreatetruecolor(self::SIZE, self::SIZE);
-        // Even if GD is installed, some systems have not this function
-        // See http://stackoverflow.com/questions/5756144/imageantialias-call-to-undefined-function-error-with-gd-installed
-        if(function_exists('imageantialias'))
+        if(extension_loaded('imagick'))
         {
-            imageantialias($img, true);
-        }
-        
-        $this->arr_colors[0]->gd($img);    
-        $this->arr_colors[1]->gd($img);    
-        
-        foreach($this->arr_quarters as $k => $q)
-        {
-            $img_q = $q->png();
-            $this->arr_colors[0]->gd($img_q);    
-            $this->arr_colors[1]->gd($img_q);    
+            $img = new \Imagick();
+            $img->readImageBlob($this->svg());
+            $img->setImageFormat("png24");
             
-            $dst_x = 0;
-            $dst_y = 0;
-
-            if($k == 1)
+            if(!is_null($str_filename))
             {
-                $dst_x = Quarter::SIZE;
-                $dst_y = 0;
+                $img->writeImage($str_filename);
+                $img->clear();
+                $img->destroy();
             }
-            if($k == 2)
+            else
             {
-                $dst_x = Quarter::SIZE;
-                $dst_y = Quarter::SIZE;
+                ob_start();
+                echo $img->getImageBlob();
+                $contents =  ob_get_contents();
+                ob_end_clean();
+                $img->clear();
+                $img->destroy();
+                return $contents;
             }
-            if($k == 3)
-            {
-                $dst_x = 0;
-                $dst_y = Quarter::SIZE;
-            }
-            imagecopy($img, $img_q, $dst_x, $dst_y, 0, 0, Quarter::SIZE, Quarter::SIZE);
-            imagedestroy($img_q);
         }
+        elseif(extension_loaded('gd'))
+        {
+            $img = imagecreatetruecolor(self::SIZE, self::SIZE);
+            // Even if GD is installed, some systems have not this function
+            // See http://stackoverflow.com/questions/5756144/imageantialias-call-to-undefined-function-error-with-gd-installed
+            if(function_exists('imageantialias'))
+            {
+                imageantialias($img, true);
+            }
 
-        imagepng($img, 'test.png');//DEBUG
-        //return $img; //DEBUG
+            $this->arr_colors[0]->gd($img);    
+            $this->arr_colors[1]->gd($img);    
+
+            foreach($this->arr_quarters as $k => $q)
+            {
+                $img_q = $q->png();
+                $this->arr_colors[0]->gd($img_q);    
+                $this->arr_colors[1]->gd($img_q);    
+
+                $dst_x = 0;
+                $dst_y = 0;
+
+                if($k == 1)
+                {
+                    $dst_x = Quarter::SIZE;
+                    $dst_y = 0;
+                }
+                if($k == 2)
+                {
+                    $dst_x = Quarter::SIZE;
+                    $dst_y = Quarter::SIZE;
+                }
+                if($k == 3)
+                {
+                    $dst_x = 0;
+                    $dst_y = Quarter::SIZE;
+                }
+                imagecopy($img, $img_q, $dst_x, $dst_y, 0, 0, Quarter::SIZE, Quarter::SIZE);
+                imagedestroy($img_q);
+            }
+
+            if(!is_null($str_filename))
+            {
+                imagepng($img, $str_filename);
+                imagedestroy($img);
+            }
+            else
+            {
+                ob_start();
+                imagepng($img);
+                $contents =  ob_get_contents();
+                ob_end_clean();
+                
+                imagedestroy($img);
+                
+                return $content;
+            }
+        }
     } 
 
 
 
-    public function svg()
+    public function svg($str_filename = null)
     {
         $arr_svg = array();
         $arr_svg[] = '<?xml version="1.0" encoding="utf-8"?>';
@@ -243,7 +283,14 @@ class Aleavatar
 
         $arr_svg[] = '</svg>';
 
-        file_put_contents('test.svg', implode("\n", $arr_svg));
+        $str_svg = implode("\n", $arr_svg);
+
+        if(!is_null($str_filename))
+        {
+            file_put_contents($str_filename, $str_svg);
+        }
+
+        return $str_svg;
     }
 
 
@@ -252,26 +299,4 @@ class Aleavatar
         return $this->svg();
     }
 
-/*
-    public function save($str_filename)
-    {
-        imagepng($this->image, $str_filename.'.png');
-    }
-
-
-
-    public function display()
-    {
-        header('Content-Type: image/png');
-        $this->image = imagecreatetruecolor(12, 12);
-        imagepng($this->image);
-    }
-    
-    
-    public function __destruct ()
-    {
-        imagedestroy($this->image);
-        $this->image = null;
-    }
- */
 }
