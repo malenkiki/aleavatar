@@ -231,13 +231,15 @@ class Unit
     
     /**
      * Shapes with arcs 
-     * 
+     *
+     * @todo Create true Arc primitive!
      * @param integer $rank2 
      * @access protected
      * @return void
      */
     protected function row1($rank2)
     {
+        /*
         // Mid sizes arc TL
         if($rank2 == 0)
         {
@@ -367,6 +369,7 @@ class Unit
             $el->color($this->bg());
             $this->add($el);
         }
+         */
     }
 
 
@@ -417,6 +420,151 @@ class Unit
             $c->point(0, 0);
             $c->point(Unit::SIZE, Unit::SIZE);
             $c->point(0, Unit::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+    }
+
+
+    public function row3($rank2)
+    {
+        // Big rectangle TOP
+        if($rank2 == 0)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(0, 0);
+            $c->size(Unit::SIZE, Unit::SIZE / 2);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // Big rectangle BOTTOM
+        if($rank2 == 1)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(0, Unit::SIZE / 2);
+            $c->size(Unit::SIZE, Unit::SIZE / 2);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // Big rectangle LEFT
+        if($rank2 == 2)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(0, 0);
+            $c->size(Unit::SIZE / 2, Unit::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // Big rectangle RIGHT
+        if($rank2 == 3)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(Unit::SIZE / 2, 0);
+            $c->size(Unit::SIZE / 2, Unit::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // Big rectangle MIDDLE
+        if($rank2 == 4)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(0, Unit::SIZE / 4);
+            $c->size(Unit::SIZE, Unit::SIZE / 2);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // Big rectangle MIDDLE HORIZONTALY
+        if($rank2 == 5)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(Unit::SIZE / 4, 0);
+            $c->size(Unit::SIZE / 2, Unit::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // Long rectangle DIAGONAL BL TR
+        if($rank2 == 6)
+        {
+            $c = new Primitive\Polygon();
+            $c->point((int) (Unit::SIZE * (3/4)), 0);
+            $c->point(Unit::SIZE, (int) (Unit::SIZE * (1/4)));
+            $c->point((int)(Unit::SIZE * (1/4)), Unit::SIZE);
+            $c->point(0, (int)(Unit::SIZE * (3/4)));
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // Long rectangle DIAGONAL TL BR
+        if($rank2 == 7)
+        {
+            $c = new Primitive\Polygon();
+            $c->point((int) (Unit::SIZE * (1/4)), 0);
+            $c->point(Unit::SIZE, (int) (Unit::SIZE * (3/4)));
+            $c->point((int)(Unit::SIZE * (3/4)), Unit::SIZE);
+            $c->point(0, (int)(Unit::SIZE * (1/4)));
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // Long rectangle TOP
+        if($rank2 == 8)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(0, 0);
+            $c->size(Unit::SIZE, Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // Long rectangle BOTTOM
+        if($rank2 == 9)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(0, Unit::SIZE * (3/4));
+            $c->size(Unit::SIZE, Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // Long rectangle LEFT
+        if($rank2 == 10)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(0, 0);
+            $c->size(Unit::SIZE / 4, Unit::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // Long rectangle RIGHT
+        if($rank2 == 11)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(Unit::SIZE * (3/4), 0);
+            $c->size(Unit::SIZE / 4, Unit::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // 2 Long rectangles TOP and BOTTOM
+        if($rank2 == 12)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(0, 0);
+            $c->size(Unit::SIZE, Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+            $c = new Primitive\Rectangle();
+            $c->point(0, Unit::SIZE * (3/4));
+            $c->size(Unit::SIZE, Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // 2 long rectangles LEFT and RIGHT
+        if($rank2 == 13)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(0, 0);
+            $c->size(Unit::SIZE / 4, Unit::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
+            $c = new Primitive\Rectangle();
+            $c->point(Unit::SIZE * (3/4), 0);
+            $c->size(Unit::SIZE / 4, Unit::SIZE);
             $c->color($this->fg());
             $this->add($c);
         }
