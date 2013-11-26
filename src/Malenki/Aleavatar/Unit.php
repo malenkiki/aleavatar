@@ -554,6 +554,7 @@ class Unit
             $c->color($this->fg());
             $this->add($c);
         }
+
         // 2 long rectangles LEFT and RIGHT
         if($rank2 == 13)
         {
