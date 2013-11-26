@@ -131,8 +131,8 @@ class Arc
             $this->center->y ,
             $this->radius->w ,
             $this->radius->h ,
-            $this->start - 90,
-            $this->start - 90 - $this->angle,
+            -1 * ($this->angle + $this->start),
+            -1 * $this->start, 
             $this->color,
             IMG_ARC_PIE
         );
