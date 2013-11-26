@@ -34,7 +34,117 @@ namespace Malenki\Aleavatar\Primitive;
  */
 class Arc
 {
-    protected $arr_points = array();
+    protected $center = null;
+    protected $radius = null;
+    protected $start = null;
+    protected $angle = null;
     protected $color = null;
+
+
+
+    public function __construct($int_x = 0, $int_y = 0)
+    {
+        $this->center = new \stdClass();
+        $this->center->x = $int_x;
+        $this->center->y = $int_y;
+        
+        $this->radius = new \stdClass();
+
+        $this->angle = new \stdClass();
+    }
+
+
+    /**
+     * Sets radius.
+     *
+     * If two values are provided, then n ellipse is defined.
+     *
+     * If only one value is given, then you get a circle. 
+     * 
+     * @param integer $int_rx 
+     * @param integer $int_ry 
+     * @throws InvalidArgumentException If radius is not an integer.
+     * @access public
+     * @return void
+     */
+    public function radius($int_rx, $int_ry = 0)
+    {
+        if(!is_integer($int_rx) || !is_integer($int_ry))
+        {
+            throw new \InvalidArgumentException('Radius must be integer value!');
+        }
+
+
+        if($int_ry == 0)
+        {
+            $this->radius->r = $int_rx;
+            $this->radius->w = 2 * $int_rx;
+            $this->radius->h = 2 * $int_rx;
+            $this->radius->is_circle = true;
+        }
+        else
+        {
+            $this->radius->rx = $int_rx;
+            $this->radius->ry = $int_ry;
+            $this->radius->w = 2 * $int_rx;
+            $this->radius->h = 2 * $int_ry;
+            $this->radius->is_circle = false;
+        }
+
+        return $this;
+    }
+
+
+
+    public function start($int_angle = 0)
+    {
+        if($int_angle > 360 || $int_angle < -360)
+        {
+            throw new \InvalidArgumentException(
+                'Angle must be value from -360 to 360'
+            );
+        }
+
+        $this->start = $int_angle;
+    }
+
+
+
+    public function angle($int_angle = 90)
+    {
+        if($int_angle > 360 || $int_angle < -360)
+        {
+            throw new \InvalidArgumentException(
+                'Angle must be value from -360 to 360'
+            );
+        }
+        
+        $this->start = $int_angle;
+    }
+
+
+    public function png(&$img)
+    {
+        imagefilledarc(
+            $img ,
+            $this->center->x ,
+            $this->center->y ,
+            $this->radius->w ,
+            $this->radius->h ,
+            $this->start - 90,
+            $this->start - 90 - $this->angle,
+            $this->color,
+            IMG_ARC_PIE
+        );
+    }
+
+
+
+    public function svg()
+    {
+        // quarter TL
+        //<path d="M32,32 L0,32 A32,32 0 0,1 32,0 z" fill="#ff0000" />
+    }
+
 
 }
