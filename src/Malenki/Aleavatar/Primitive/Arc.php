@@ -28,6 +28,10 @@ namespace Malenki\Aleavatar\Primitive;
 /**
  * Define Pie shapes. 
  * 
+ * See as soon as possible THAT: 
+ * http://commons.oreilly.com/wiki/index.php/SVG_Essentials/Paths the perl 
+ * script to create arc from ellipse is a must have!
+ * @todo do it!!
  * @copyright 2013 Michel Petit
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
