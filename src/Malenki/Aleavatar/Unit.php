@@ -1094,6 +1094,197 @@ class Unit
     }
 
 
+    public function row6($rank2)
+    {
+        // Big long triangle LEFT
+        if($rank2 == 0)
+        {
+            $t = new Primitive\Triangle();
+            $t->point(0, 0);
+            $t->point(self::SIZE / 2, self::SIZE);
+            $t->point(0 , self::SIZE);
+            $t->color($this->fg());
+            $this->add($t);
+        }
+        // Big long triangle TOP
+        if($rank2 == 1)
+        {
+            $t = new Primitive\Triangle();
+            $t->point(0, 0);
+            $t->point(self::SIZE, 0);
+            $t->point(0 , self::SIZE / 2);
+            $t->color($this->fg());
+            $this->add($t);
+        }
+        // Big long triangle RIGHT
+        if($rank2 == 2)
+        {
+            $t = new Primitive\Triangle();
+            $t->point(self::SIZE / 2, 0);
+            $t->point(self::SIZE, 0);
+            $t->point(self::SIZE , self::SIZE);
+            $t->color($this->fg());
+            $this->add($t);
+        }
+        // Big long triangle BOTTOM
+        if($rank2 == 3)
+        {
+            $t = new Primitive\Triangle();
+            $t->point(self::SIZE, self::SIZE / 2);
+            $t->point(self::SIZE, self::SIZE);
+            $t->point(0, self::SIZE);
+            $t->color($this->fg());
+            $this->add($t);
+        }
+        // Same as 0, reversed colors
+        if($rank2 == 4)
+        {
+            $this->row1(1);
+            $this->row6(0);
+            $this->last()->color($this->bg());
+        }
+        // Same as 1, reversed colors
+        if($rank2 == 5)
+        {
+            $this->row1(1);
+            $this->row6(1);
+            $this->last()->color($this->bg());
+        }
+        // Same as 2, reversed colors
+        if($rank2 == 6)
+        {
+            $this->row1(1);
+            $this->row6(2);
+            $this->last()->color($this->bg());
+        }
+        // Same as 3, reversed colors
+        if($rank2 == 7)
+        {
+            $this->row1(1);
+            $this->row6(3);
+            $this->last()->color($this->bg());
+        }
+        // 2 long triangles LEFT
+        if($rank2 == 8)
+        {
+            $this->row6(0);
+            $t = new Primitive\Triangle();
+            $t->point(self::SIZE / 2, 0);
+            $t->point(self::SIZE, self::SIZE);
+            $t->point(self::SIZE / 2, self::SIZE);
+            $t->color($this->fg());
+            $this->add($t);
+        }
+        // 2 long triangles TOP
+        if($rank2 == 9)
+        {
+            $this->row6(1);
+            $t = new Primitive\Triangle();
+            $t->point(0, self::SIZE / 2);
+            $t->point(self::SIZE, self::SIZE / 2);
+            $t->point(0, self::SIZE);
+            $t->color($this->fg());
+            $this->add($t);
+        }
+        // 2 long triangles RIGHT
+        if($rank2 == 10)
+        {
+            $this->row6(2);
+            $t = new Primitive\Triangle();
+            $t->point(0, 0);
+            $t->point(self::SIZE / 2, 0);
+            $t->point(self::SIZE / 2, self::SIZE);
+            $t->color($this->fg());
+            $this->add($t);
+        }
+        // 2 long triangles BOTTOM
+        if($rank2 == 11)
+        {
+            $this->row6(3);
+            $t = new Primitive\Triangle();
+            $t->point(0, self::SIZE / 2);
+            $t->point(self::SIZE, 0);
+            $t->point(self::SIZE, self::SIZE / 2);
+            $t->color($this->fg());
+            $this->add($t);
+        }
+        // 2 long crossed triangles
+        if($rank2 == 12)
+        {
+            $t = new Primitive\Triangle();
+            $t->point(0, self::SIZE / 2);
+            $t->point(self::SIZE, 0);
+            $t->point(0, self::SIZE);
+            $t->color($this->fg());
+            $this->add($t);
+
+            $t = new Primitive\Triangle();
+            $t->point(0, 0);
+            $t->point(self::SIZE, self::SIZE / 2);
+            $t->point(self::SIZE, self::SIZE);
+            $t->color($this->fg());
+            $this->add($t);
+        }
+        // 2 big flat triangles
+        if($rank2 == 13)
+        {
+            $t = new Primitive\Triangle();
+            $t->point(0, 0);
+            $t->point(self::SIZE / 2,  self::SIZE / 2);
+            $t->point(0, self::SIZE);
+            $t->color($this->fg());
+            $this->add($t);
+            $t = new Primitive\Triangle();
+            $t->point(self::SIZE / 2, 0);
+            $t->point(self::SIZE,  self::SIZE / 2);
+            $t->point(self::SIZE / 2, self::SIZE);
+            $t->color($this->fg());
+            $this->add($t);
+        }
+        // 4 triangle in cross
+        if($rank2 == 14)
+        {
+            //TL
+            $t = new Primitive\Triangle();
+            $t->point(0, 0);
+            $t->point(self::SIZE / 2,  self::SIZE / 4);
+            $t->point(self::SIZE / 4, self::SIZE / 2);
+            $t->color($this->fg());
+            $this->add($t);
+            //TR
+            $t = new Primitive\Triangle();
+            $t->point(self::SIZE / 2, self::SIZE / 4);
+            $t->point(self::SIZE,  0);
+            $t->point(self::SIZE *(3/4), self::SIZE / 2);
+            $t->color($this->fg());
+            $this->add($t);
+            //BR
+            $t = new Primitive\Triangle();
+            $t->point(self::SIZE * (3/4), self::SIZE / 2);
+            $t->point(self::SIZE,  self::SIZE);
+            $t->point(self::SIZE / 2, self::SIZE * (3/4));
+            $t->color($this->fg());
+            $this->add($t);
+            //BL
+            $t = new Primitive\Triangle();
+            $t->point(self::SIZE / 2, self::SIZE * (3/4));
+            $t->point(0,  self::SIZE);
+            $t->point(self::SIZE / 4, self::SIZE / 2);
+            $t->color($this->fg());
+            $this->add($t);
+        }
+        // Same as previous, but reversed
+        if($rank2 == 15)
+        {
+            $this->row1(1);
+            $this->row6(14);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
+            $this->get(3)->color($this->bg());
+            $this->get(4)->color($this->bg());
+        }
+    }
+
 
     /**
      * Generates unit part by giving $rank1 and $rank2 to 
