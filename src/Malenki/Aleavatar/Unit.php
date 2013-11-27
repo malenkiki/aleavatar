@@ -1019,29 +1019,77 @@ class Unit
             $this->row5(3);
             $this->last()->color($this->bg());
         }
+        // 4 sides shape TL
         if($rank2 == 8)
         {
+            $c = new Primitive\Polygon();
+            $c->point(0, 0);
+            $c->point(self::SIZE / 2, 0);
+            $c->point(self::SIZE / 2, self::SIZE / 2);
+            $c->point(0, self::SIZE * (3/4));
+            $c->color($this->fg());
+            $this->add($c);
         }
+        // same as previous, in reversed colors
         if($rank2 == 9)
         {
+            $this->row1(1);
+            $this->row5(8);
+            $this->last()->color($this->bg());
         }
+        // 4 sides shape TR
         if($rank2 == 10)
         {
+            $c = new Primitive\Polygon();
+            $c->point(self::SIZE / 4, 0);
+            $c->point(self::SIZE, 0);
+            $c->point(self::SIZE, self::SIZE / 2);
+            $c->point(self::SIZE / 2, self::SIZE / 2);
+            $c->color($this->fg());
+            $this->add($c);
         }
+        // same as previous, in reversed colors
         if($rank2 == 11)
         {
+            $this->row1(1);
+            $this->row5(10);
+            $this->last()->color($this->bg());
         }
+        // 4 sides shape BR
         if($rank2 == 12)
         {
+            $c = new Primitive\Polygon();
+            $c->point(self::SIZE / 2, self::SIZE / 2);
+            $c->point(self::SIZE, self::SIZE / 4);
+            $c->point(self::SIZE, self::SIZE);
+            $c->point(self::SIZE / 2, self::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
         }
+        // same as previous, in reversed colors
         if($rank2 == 13)
         {
+            $this->row1(1);
+            $this->row5(12);
+            $this->last()->color($this->bg());
         }
+        // 4 sides shape BL
         if($rank2 == 14)
         {
+            $c = new Primitive\Polygon();
+            $c->point(0, self::SIZE / 2);
+            $c->point(self::SIZE / 2, self::SIZE / 2);
+            $c->point(self::SIZE * (3/4), self::SIZE);
+            $c->point(0, self::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
         }
+        // same as previous, in reversed colors
         if($rank2 == 15)
         {
+            $this->row1(1);
+            $this->row5(14);
+            $this->last()->color($this->bg());
         }
     }
 
