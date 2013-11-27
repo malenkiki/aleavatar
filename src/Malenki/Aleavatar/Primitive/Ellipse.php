@@ -34,7 +34,7 @@ namespace Malenki\Aleavatar\Primitive;
  */
 class Ellipse
 {
-    protected $point = null;
+    protected $center = null;
     protected $radius = null;
     
     protected $color = null;
@@ -50,16 +50,26 @@ class Ellipse
      * @access public
      * @return void
      */
-    public function point($int_x, $int_y)
+    public function __construct($int_x, $int_y)
     {
+        if(is_double($int_x))
+        {
+            $int_x = (integer) $int_x;
+        }
+
+        if(is_double($int_y))
+        {
+            $int_y = (integer) $int_y;
+        }
+
         if((!is_integer($int_x) || !is_integer($int_y)) || $int_x < 0 || $int_y < 0)
         {
             throw new \InvalidArgumentException('Coordinates must be composed of two positive integers!');
         }
 
-        $this->point = new \stdClass();
-        $this->point->x = $int_x;
-        $this->point->y = $int_y;
+        $this->center = new \stdClass();
+        $this->center->x = $int_x;
+        $this->center->y = $int_y;
 
         return $this;
     }
@@ -160,15 +170,15 @@ class Ellipse
 
     public function png(&$img)
     {
-        if(is_null($this->point) || is_null($this->radius))
+        if(is_null($this->center) || is_null($this->radius))
         {
             throw new \RuntimeException('Before exporting to PNG, you must give center and radius!');
         }
 
         imagefilledellipse(
             $img,
-            $this->point->x,
-            $this->point->y,
+            $this->center->x,
+            $this->center->y,
             $this->radius->w,
             $this->radius->h,
             $this->color->gd($img)
@@ -179,7 +189,7 @@ class Ellipse
 
     public function svg()
     {
-        if(is_null($this->point) || is_null($this->radius))
+        if(is_null($this->center) || is_null($this->radius))
         {
             throw new \RuntimeException('Before exporting to SVG, you must give center and radius!');
         }
@@ -188,8 +198,8 @@ class Ellipse
         {
             return sprintf(
                 '<circle cx="%d" cy="%d" r="%d" fill="%s" />',
-                $this->point->x,
-                $this->point->y,
+                $this->center->x,
+                $this->center->y,
                 $this->radius->r,
                 $this->color
             );
@@ -197,8 +207,8 @@ class Ellipse
         
         return sprintf(
             '<ellipse cx="%d" cy="%d" rx="%d" ry="%d" fill="%s" />',
-            $this->point->x,
-            $this->point->y,
+            $this->center->x,
+            $this->center->y,
             $this->radius->rx,
             $this->radius->ry,
             $this->color

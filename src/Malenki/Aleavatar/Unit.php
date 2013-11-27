@@ -91,18 +91,14 @@ class Unit
         if($rank2 == 0)
         {
             $c = new Primitive\Square();
-            $c->point(0, 0);
-            $c->size(Unit::SIZE);
-            $c->color($this->bg());
+            $c->point(0, 0)->size(Unit::SIZE)->color($this->bg());
             $this->add($c);
         }
         // As plain square
         if($rank2 == 1)
         {
             $c = new Primitive\Square();
-            $c->point(0, 0);
-            $c->size(Unit::SIZE);
-            $c->color($this->fg());
+            $c->point(0, 0)->size(Unit::SIZE)->color($this->fg());
             $this->add($c);
         }
         // Mid sized suare TL
@@ -543,32 +539,179 @@ class Unit
         // 2 Long rectangles TOP and BOTTOM
         if($rank2 == 12)
         {
-            $c = new Primitive\Rectangle();
-            $c->point(0, 0);
-            $c->size(Unit::SIZE, Unit::SIZE / 4);
-            $c->color($this->fg());
-            $this->add($c);
-            $c = new Primitive\Rectangle();
-            $c->point(0, Unit::SIZE * (3/4));
-            $c->size(Unit::SIZE, Unit::SIZE / 4);
-            $c->color($this->fg());
-            $this->add($c);
+            $this->row3(8);
+            $this->row3(9);
         }
 
         // 2 long rectangles LEFT and RIGHT
         if($rank2 == 13)
         {
+            $this->row3(10);
+            $this->row3(11);
+        }
+        // small TL
+        if($rank2 == 14)
+        {
             $c = new Primitive\Rectangle();
-            $c->point(0, 0);
-            $c->size(Unit::SIZE / 4, Unit::SIZE);
-            $c->color($this->fg());
-            $this->add($c);
-            $c = new Primitive\Rectangle();
-            $c->point(Unit::SIZE * (3/4), 0);
-            $c->size(Unit::SIZE / 4, Unit::SIZE);
+            $c->point(0, 0)->size(Unit::SIZE / 2, Unit::SIZE / 4);
             $c->color($this->fg());
             $this->add($c);
         }
+        // small BR
+        if($rank2 == 15)
+        {
+            $c = new Primitive\Rectangle();
+            $c->point(Unit::SIZE / 2, Unit::SIZE * (3/4));
+            $c->size(Unit::SIZE / 2, Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+    }
+    
+    
+    /**
+     * Shapes with circles 
+     *
+     * @param integer $rank2 
+     * @access protected
+     * @return void
+     */
+    protected function row4($rank2)
+    {
+        // Mid sizes TL
+        if($rank2 == 0)
+        {
+            $el = new Primitive\Ellipse(self::SIZE / 4, self::SIZE / 4);
+            $el->radius(self::SIZE / 4);
+            $el->color($this->fg());
+            $this->add($el);
+        }
+        // Mid sizes TR
+        if($rank2 == 1)
+        {
+            $el = new Primitive\Ellipse(self::SIZE * (3/4), self::SIZE / 4);
+            $el->radius(self::SIZE / 4);
+            $el->color($this->fg());
+            $this->add($el);
+        }
+        // Mid sizes BR
+        if($rank2 == 2)
+        {
+            $el = new Primitive\Ellipse(self::SIZE * (3/4), self::SIZE * (3/4));
+            $el->radius(self::SIZE / 4);
+            $el->color($this->fg());
+            $this->add($el);
+        }
+        // Mid sizes BL
+        if($rank2 == 3)
+        {
+            $el = new Primitive\Ellipse(self::SIZE / 4, self::SIZE * (3/4));
+            $el->radius(self::SIZE / 4);
+            $el->color($this->fg());
+            $this->add($el);
+        }
+        if($rank2 == 4)
+        {
+            $el = new Primitive\Ellipse(self::SIZE / 4, self::SIZE / 4);
+            $el->radius(self::SIZE / 4);
+            $el->color($this->fg());
+            $this->add($el);
+            $el = new Primitive\Ellipse(self::SIZE / 4, self::SIZE / 4);
+            $el->radius(self::SIZE / 8);
+            $el->color($this->bg());
+            $this->add($el);
+        }
+        if($rank2 == 5)
+        {
+            $el = new Primitive\Ellipse(self::SIZE * (3/4), self::SIZE / 4);
+            $el->radius(self::SIZE / 4);
+            $el->color($this->fg());
+            $this->add($el);
+            $el = new Primitive\Ellipse(self::SIZE * (3/4), self::SIZE / 4);
+            $el->radius(self::SIZE / 8);
+            $el->color($this->bg());
+            $this->add($el);
+        }
+        if($rank2 == 6)
+        {
+            $el = new Primitive\Ellipse(self::SIZE * (3/4), self::SIZE * (3/4));
+            $el->radius(self::SIZE / 4);
+            $el->color($this->fg());
+            $this->add($el);
+            $el = new Primitive\Ellipse(self::SIZE * (3/4), self::SIZE * (3/4));
+            $el->radius(self::SIZE / 8);
+            $el->color($this->bg());
+            $this->add($el);
+        }
+        if($rank2 == 7)
+        {
+            $el = new Primitive\Ellipse(self::SIZE / 4, self::SIZE * (3/4));
+            $el->radius(self::SIZE / 4);
+            $el->color($this->fg());
+            $this->add($el);
+            $el = new Primitive\Ellipse(self::SIZE / 4, self::SIZE * (3/4));
+            $el->radius(self::SIZE / 8);
+            $el->color($this->bg());
+            $this->add($el);
+        }
+        if($rank2 == 8)
+        {
+            $el = new Primitive\Ellipse(self::SIZE / 2, self::SIZE / 2);
+            $el->radius(self::SIZE / 2);
+            $el->color($this->fg());
+            $this->add($el);
+        }
+        if($rank2 == 9)
+        {
+            $this->row0(1);
+            $el = new Primitive\Ellipse(self::SIZE / 2, self::SIZE / 2);
+            $el->radius(self::SIZE / 2);
+            $el->color($this->bg());
+            $this->add($el);
+        }
+        if($rank2 == 10)
+        {
+            $this->row4(8);
+            $el = new Primitive\Ellipse(self::SIZE / 2, self::SIZE / 2);
+            $el->radius(self::SIZE / 4);
+            $el->color($this->bg());
+            $this->add($el);
+        }
+        if($rank2 == 11)
+        {
+            $this->row4(9);
+            $el = new Primitive\Ellipse(self::SIZE / 2, self::SIZE / 2);
+            $el->radius(self::SIZE / 4);
+            $el->color($this->fg());
+            $this->add($el);
+        }
+        if($rank2 == 12)
+        {
+            $this->row4(10);
+            $el = new Primitive\Ellipse(self::SIZE / 2, self::SIZE / 2);
+            $el->radius(self::SIZE / 8);
+            $el->color($this->fg());
+            $this->add($el);
+        }
+        if($rank2 == 13)
+        {
+            $this->row4(11);
+            $el = new Primitive\Ellipse(self::SIZE / 2, self::SIZE / 2);
+            $el->radius(self::SIZE / 8);
+            $el->color($this->bg());
+            $this->add($el);
+        }
+        if($rank2 == 14)
+        {
+            $this->row4(0);
+            $this->row4(2);
+        }
+        if($rank2 == 15)
+        {
+            $this->row4(1);
+            $this->row4(3);
+        }
+
     }
 
 
