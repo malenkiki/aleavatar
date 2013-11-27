@@ -45,6 +45,16 @@ class Unit
         $this->arr_primitives[] = $p;
     }
 
+    protected function get($int_pos = 0)
+    {
+        return $this->arr_primitives[$int_pos];
+    }
+
+    protected function last()
+    {
+        return $this->arr_primitives[count($this->arr_primitives) - 1];
+    }
+
     public function bg()
     {
         return $this->arr_colors[0];
@@ -285,14 +295,14 @@ class Unit
         // Mid sized squares TL + BR
         if($rank2 == 6)
         {
-            $this->row0(2);
-            $this->row0(4);
+            $this->row1(2);
+            $this->row1(4);
         }
         // Mid sized squares TR + BL
         if($rank2 == 7)
         {
-            $this->row0(3);
-            $this->row0(5);
+            $this->row1(3);
+            $this->row1(5);
         }
         // Little small square diagonal TL BR
         if($rank2 == 8)
@@ -875,7 +885,7 @@ class Unit
         }
         if($rank2 == 9)
         {
-            $this->row0(1);
+            $this->row1(1);
             $el = new Primitive\Ellipse(self::SIZE / 2, self::SIZE / 2);
             $el->radius(self::SIZE / 2);
             $el->color($this->bg());
@@ -981,17 +991,33 @@ class Unit
             $c->color($this->fg());
             $this->add($c);
         }
+        // same as row5 for 0
         if($rank2 == 4)
         {
+            $this->row1(1);
+            $this->row5(0);
+            $this->last()->color($this->bg());
         }
+        // same as row5 for 1
         if($rank2 == 5)
         {
+            $this->row1(1);
+            $this->row5(1);
+            $this->last()->color($this->bg());
         }
+        // same as row5 for 2
         if($rank2 == 6)
         {
+            $this->row1(1);
+            $this->row5(2);
+            $this->last()->color($this->bg());
         }
+        // same as row5 for 3
         if($rank2 == 7)
         {
+            $this->row1(1);
+            $this->row5(3);
+            $this->last()->color($this->bg());
         }
         if($rank2 == 8)
         {
@@ -1027,8 +1053,8 @@ class Unit
      * 
      * Parameters are both integers from 0 to 15 inclusive.
      *
-     * @uses Unit::row0 Square shapes DONE
-     * @uses Unit::row1 Arc shapes
+     * @uses Unit::row0 Arc shapes
+     * @uses Unit::row1 Square shapes DONE
      * @uses Unit::row2 Triangle shapes DONE
      * @uses Unit::row3 Rectangle shapes DONE
      * @uses Unit::row4 Circle shapes DONE
