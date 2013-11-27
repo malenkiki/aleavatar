@@ -927,6 +927,99 @@ class Unit
     }
 
 
+    public function row5($rank2)
+    {
+        // "squared" arrow TL
+        if($rank2 == 0)
+        {
+            $c = new Primitive\Polygon();
+            $c->point(0, 0);
+            $c->point(self::SIZE / 2, 0);
+            $c->point(self::SIZE / 2, self::SIZE / 4);
+            $c->point(self::SIZE * (3/4), self::SIZE * (3/4));
+            $c->point(self::SIZE / 4, self::SIZE / 2);
+            $c->point(0, self::SIZE / 2);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // "squared" arrow TR
+        if($rank2 == 1)
+        {
+            $c = new Primitive\Polygon();
+            $c->point(self::SIZE / 2, 0);
+            $c->point(self::SIZE, 0);
+            $c->point(self::SIZE, self::SIZE / 2);
+            $c->point(self::SIZE * (3/4), self::SIZE / 2);
+            $c->point(self::SIZE / 4, self::SIZE * (3/4));
+            $c->point(self::SIZE / 2, self::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // "squared" arrow BR
+        if($rank2 == 2)
+        {
+            $c = new Primitive\Polygon();
+            $c->point(self::SIZE / 4, self::SIZE / 4);
+            $c->point(self::SIZE * (3/4), self::SIZE / 2);
+            $c->point(self::SIZE, self::SIZE / 2);
+            $c->point(self::SIZE, self::SIZE);
+            $c->point(self::SIZE / 2, self::SIZE);
+            $c->point(self::SIZE / 2, self::SIZE * (3/4));
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // "squared" arrow BL
+        if($rank2 == 3)
+        {
+            $c = new Primitive\Polygon();
+            $c->point(0, self::SIZE / 2);
+            $c->point(self::SIZE / 4, self::SIZE / 2);
+            $c->point(self::SIZE *(3/4), self::SIZE / 4);
+            $c->point(self::SIZE / 2, self::SIZE * (3/4));
+            $c->point(self::SIZE / 2, self::SIZE);
+            $c->point(0, self::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        if($rank2 == 4)
+        {
+        }
+        if($rank2 == 5)
+        {
+        }
+        if($rank2 == 6)
+        {
+        }
+        if($rank2 == 7)
+        {
+        }
+        if($rank2 == 8)
+        {
+        }
+        if($rank2 == 9)
+        {
+        }
+        if($rank2 == 10)
+        {
+        }
+        if($rank2 == 11)
+        {
+        }
+        if($rank2 == 12)
+        {
+        }
+        if($rank2 == 13)
+        {
+        }
+        if($rank2 == 14)
+        {
+        }
+        if($rank2 == 15)
+        {
+        }
+    }
+
+
 
     /**
      * Generates unit part by giving $rank1 and $rank2 to 
