@@ -385,7 +385,7 @@ class Unit
             $c = new Primitive\Triangle();
             $c->point(0, 0);
             $c->point(Unit::SIZE, 0);
-            $c->point(Unit::SIZE, Unit::SIZE);
+            $c->point(0, Unit::SIZE);
             $c->color($this->fg());
             $this->add($c);
         }
@@ -416,6 +416,119 @@ class Unit
             $c->point(0, 0);
             $c->point(Unit::SIZE, Unit::SIZE);
             $c->point(0, Unit::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+
+        // triangle TL
+        if($rank2 == 4)
+        {
+            $c = new Primitive\Triangle();
+            $c->point(0, 0);
+            $c->point(Unit::SIZE / 2, 0);
+            $c->point(0, Unit::SIZE / 2);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // triangle TR
+        if($rank2 == 5)
+        {
+            $c = new Primitive\Triangle();
+            $c->point(Unit::SIZE / 2, 0);
+            $c->point(Unit::SIZE, Unit::SIZE / 2);
+            $c->point(Unit::SIZE, 0);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // triangle BR
+        if($rank2 == 6)
+        {
+            $c = new Primitive\Triangle();
+            $c->point(Unit::SIZE, Unit::SIZE / 2);
+            $c->point(Unit::SIZE, Unit::SIZE);
+            $c->point(Unit::SIZE / 2, Unit::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // triangle BL
+        if($rank2 == 7)
+        {
+            $c = new Primitive\Triangle();
+            $c->point(0, Unit::SIZE / 2);
+            $c->point(Unit::SIZE / 2, Unit::SIZE);
+            $c->point(0, Unit::SIZE);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+
+
+        // 2  triangles TL BR
+        if($rank2 == 8)
+        {
+            $this->row2(4);
+            $this->row2(6);
+        }
+        // 2  triangles TR BL
+        if($rank2 == 9)
+        {
+            $this->row2(5);
+            $this->row2(7);
+        }
+        
+        // 2  triangles TL TR
+        if($rank2 == 10)
+        {
+            $this->row2(4);
+            $this->row2(5);
+        }
+        // 2  triangles BL BR
+        if($rank2 == 11)
+        {
+            $this->row2(6);
+            $this->row2(7);
+        }
+        
+        // 2  triangles TL BL
+        if($rank2 == 12)
+        {
+            $this->row2(4);
+            $this->row2(7);
+        }
+        // 2  triangles TR BR
+        if($rank2 == 13)
+        {
+            $this->row2(5);
+            $this->row2(6);
+        }
+        // 2 triangles CENTER TOP and BOTTOM
+        if($rank2 == 14)
+        {
+            $c = new Primitive\Triangle();
+            $c->point(Unit::SIZE / 4, 0);
+            $c->point(Unit::SIZE * (3/4), 0);
+            $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
+            $c->color($this->fg());
+            $this->add($c);
+            $c = new Primitive\Triangle();
+            $c->point(Unit::SIZE / 4, Unit::SIZE);
+            $c->point(Unit::SIZE * (3/4), Unit::SIZE);
+            $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
+            $c->color($this->fg());
+            $this->add($c);
+        }
+        // 2 triangles CENTER LEFT and RIGHT
+        if($rank2 == 15)
+        {
+            $c = new Primitive\Triangle();
+            $c->point(0, Unit::SIZE / 4);
+            $c->point(0, Unit::SIZE * (3/4));
+            $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
+            $c->color($this->fg());
+            $this->add($c);
+            $c = new Primitive\Triangle();
+            $c->point(Unit::SIZE, Unit::SIZE / 4);
+            $c->point(Unit::SIZE, Unit::SIZE * (3/4));
+            $c->point(Unit::SIZE / 2, Unit::SIZE / 2);
             $c->color($this->fg());
             $this->add($c);
         }

@@ -50,6 +50,16 @@ class Polygon
      */
     public function point($int_x, $int_y)
     {
+        if(is_double($int_x))
+        {
+            $int_x = (integer) $int_x;
+        }
+
+        if(is_double($int_y))
+        {
+            $int_y = (integer) $int_y;
+        }
+
         if((!is_integer($int_x) || !is_integer($int_y)) || $int_x < 0 || $int_y < 0)
         {
             throw new \InvalidArgumentException('Coordinates must be composed of two positive integers!');
