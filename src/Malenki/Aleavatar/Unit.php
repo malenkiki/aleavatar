@@ -1572,8 +1572,18 @@ class Unit
             $this->add($d);
         }
 
+        // small TL
         if($rank2 == 1)
         {
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 4, 0)
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->point(0, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($d);
         }
 
         if($rank2 == 2)
