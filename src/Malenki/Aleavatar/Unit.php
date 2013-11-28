@@ -2036,30 +2036,210 @@ class Unit
         }
         if($rank2 == 7)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, self::SIZE)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 8)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, self::SIZE)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 9)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 10)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 11)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE, self::SIZE)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE * (3/4), self::SIZE * (3/4))
+                ->point(self::SIZE / 4, self::SIZE * (3/4))
+                ->color($this->bg());
+
+            $this->add($t);
         }
         if($rank2 == 12)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 4, self::SIZE / 4)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE / 4, self::SIZE * (3/4))
+                ->color($this->bg());
+
+            $this->add($t);
         }
         if($rank2 == 13)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 4, self::SIZE / 4)
+                ->point(self::SIZE * (3/4), self::SIZE / 4)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->color($this->bg());
+
+            $this->add($t);
         }
         if($rank2 == 14)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE * (3/4), self::SIZE / 4)
+                ->point(self::SIZE * (3/4), self::SIZE * (3/4))
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->color($this->bg());
+
+            $this->add($t);
         }
         if($rank2 == 15)
         {
+            $this->row1(1);
+            $this->row6(12);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
         }
     }
 
