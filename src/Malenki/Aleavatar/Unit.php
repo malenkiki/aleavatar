@@ -2244,6 +2244,170 @@ class Unit
     }
 
 
+    public function row11($rank2)
+    {
+        if($rank2 == 0)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE / 2 , 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 1)
+        {
+            $this->row1(1);
+            $this->row11(0);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 2)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE / 2 , 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(0, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 3)
+        {
+            $this->row1(1);
+            $this->row11(2);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 4)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE / 2 , self::SIZE / 2)
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 5)
+        {
+            $this->row1(1);
+            $this->row11(4);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 6)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE / 2 , 0)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->point(0, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 7)
+        {
+            $this->row1(1);
+            $this->row11(6);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 8)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, self::SIZE)
+                ->point(self::SIZE / 4 , self::SIZE / 4)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 9)
+        {
+            $this->row1(1);
+            $this->row11(8);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 10)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE * (3/4) , self::SIZE / 4)
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 11)
+        {
+            $this->row1(1);
+            $this->row11(10);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 12)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE * (3/4), self::SIZE * (3/4))
+                ->point(0, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 13)
+        {
+            $this->row1(1);
+            $this->row11(12);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 14)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE / 4, self::SIZE * (3/4))
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 15)
+        {
+            $this->row1(1);
+            $this->row11(14);
+            $this->last()->color($this->bg());
+        }
+    }
+
 
     /**
      * Generates unit part by giving $rank1 and $rank2 to 
@@ -2261,7 +2425,7 @@ class Unit
      * @uses Unit::row7 Circle shapes part 2 DONE 
      * @uses Unit::row8 Diamond shapes 1 DONE
      * @uses Unit::row9 Polygon shapes part 2 DONE
-     * @uses Unit::row10 Triangle shapes part 3
+     * @uses Unit::row10 Triangle shapes part 3 DONE
      * @uses Unit::row11 Polygon shapes part 3
      * @uses Unit::row12 Mixed shapes part 1
      * @uses Unit::row13 Mixed shapes part 2
