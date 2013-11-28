@@ -269,8 +269,22 @@ class Aleavatar
 
     public function svg($str_filename = null)
     {
+        $str_svg = $this->svgForHtml5();
+        $str_svg = '<?xml version="1.0" encoding="utf-8"?>'. "\n". $str_svg;
+
+        if(!is_null($str_filename))
+        {
+            file_put_contents($str_filename, $str_svg);
+        }
+
+        return $str_svg;
+    }
+
+
+
+    public function svgForHtml5()
+    {
         $arr_svg = array();
-        $arr_svg[] = '<?xml version="1.0" encoding="utf-8"?>';
         $arr_svg[] = sprintf('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="%1$d" height="%1$d">', self::SIZE);
         $arr_svg[] = sprintf('<title>Identicon of %s</title>', $this->seed->str);
         $arr_svg[] = sprintf('<desc>The hash string used to generate this identicon is %s.</desc>', $this->seed->hash);
@@ -283,11 +297,6 @@ class Aleavatar
         $arr_svg[] = '</svg>';
 
         $str_svg = implode("\n", $arr_svg);
-
-        if(!is_null($str_filename))
-        {
-            file_put_contents($str_filename, $str_svg);
-        }
 
         return $str_svg;
     }
