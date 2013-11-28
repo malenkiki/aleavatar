@@ -2426,7 +2426,7 @@ class Unit
      * @uses Unit::row8 Diamond shapes 1 DONE
      * @uses Unit::row9 Polygon shapes part 2 DONE
      * @uses Unit::row10 Triangle shapes part 3 DONE
-     * @uses Unit::row11 Polygon shapes part 3
+     * @uses Unit::row11 Polygon shapes part 3 DONE
      * @uses Unit::row12 Mixed shapes part 1
      * @uses Unit::row13 Mixed shapes part 2
      * @uses Unit::row14 Mixed shapes part 3
