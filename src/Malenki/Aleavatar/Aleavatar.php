@@ -179,6 +179,53 @@ class Aleavatar
     }
 
 
+    public static function mapSvg($bool_for_html5 = false)
+    {
+        $background = new Primitive\Color('FFFFFF');
+        $foreground = new Primitive\Color('000000');
+
+        $arr_out = array();
+
+        if(!$bool_for_html5)
+        {
+            $arr_out[] = '<?xml version="1.0" encoding="utf-8"?>';
+        }
+
+        $arr_out[] = sprintf('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="%1$d" height="%1$d">', 16 * Unit::SIZE);
+        $arr_out[] = '<title>All available units to create identicons</title>';
+        $arr_out[] = '<desc>To learn more about this identicons, please visit https://github.com/malenkiki/aleavatar</desc>';
+
+        foreach(range(0, 15) as $row)
+        {
+            foreach(range(0, 15) as $col)
+            {
+                $u = new Unit();
+                $u->background($background);
+                $u->foreground($foreground);
+
+                try
+                {
+                    $u->generate($row, $col);
+                    $arr_out[] = sprintf(
+                        '<g transform="translate(%d, %d)">%s</g>',
+                        $col * Unit::SIZE,
+                        $row * Unit::SIZE,
+                        $u->svg()
+                    );
+                }
+                catch(\Exception $e)
+                {
+                    echo $e->getMessage() . "\n";
+                }
+            }
+        }
+
+        $arr_out[] = '</svg>';
+
+        return implode("\n", $arr_out);
+    }
+
+
     
     public function png($str_filename = null)
     {

@@ -1580,64 +1580,138 @@ class Unit
                 ->point(self::SIZE / 4, 0)
                 ->point(self::SIZE / 2, self::SIZE / 4)
                 ->point(self::SIZE / 4, self::SIZE / 2)
-                ->point(0, self::SIZE / 2)
+                ->point(0, self::SIZE / 4)
                 ->color($this->fg());
 
             $this->add($d);
         }
 
+        // small TR
         if($rank2 == 2)
         {
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE * (3/4), 0)
+                ->point(self::SIZE, self::SIZE / 4)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->color($this->fg());
+
+            $this->add($d);
         }
 
+        // small BR
         if($rank2 == 3)
         {
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE * (3/4))
+                ->point(self::SIZE * (3/4), self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->color($this->fg());
+
+            $this->add($d);
         }
 
+        // small BL
         if($rank2 == 4)
         {
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(self::SIZE / 4, self::SIZE)
+                ->point(0, self::SIZE * (3/4))
+                ->color($this->fg());
+
+            $this->add($d);
         }
 
+        // Small CENTER
         if($rank2 == 5)
         {
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($d);
         }
 
+        // reversed small TL
         if($rank2 == 6)
         {
+            $this->row1(1);
+            $this->row8(1);
+            $this->last()->color($this->bg());
         }
 
+        // reversed small TR
         if($rank2 == 7)
         {
+            $this->row1(1);
+            $this->row8(2);
+            $this->last()->color($this->bg());
         }
 
+        // reversed small BR
         if($rank2 == 8)
         {
+            $this->row1(1);
+            $this->row8(3);
+            $this->last()->color($this->bg());
         }
 
+        // reversed small BL
         if($rank2 == 9)
         {
+            $this->row1(1);
+            $this->row8(4);
+            $this->last()->color($this->bg());
         }
 
+        // Big and center reversed
         if($rank2 == 10)
         {
+            $this->row8(0);
+            $this->row8(5);
+            $this->last()->color($this->bg());
         }
 
+        // Lang VERTICAL CENTER
         if($rank2 == 11)
         {
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($d);
         }
 
+        // Lang HORIZONTAL CENTER
         if($rank2 == 12)
         {
         }
 
+        // Long DIAGONAL TL BR
         if($rank2 == 13)
         {
         }
 
+        // Long DIAGONAL TR BL
         if($rank2 == 14)
         {
         }
 
+        // 4 littles
         if($rank2 == 15)
         {
         }
@@ -1674,8 +1748,14 @@ class Unit
     public function generate($rank1, $rank2)
     {
         $str_method_name = 'row' . $rank1;
-        $this->$str_method_name($rank2);
-
+        if(method_exists($this,$str_method_name))
+        {
+            $this->$str_method_name($rank2);
+        }
+        else
+        {
+            throw new \RuntimeException('Not implemented yet!');
+        }
         return $this;
     }
 
