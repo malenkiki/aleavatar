@@ -67,13 +67,6 @@ class Unit
 
 
 
-    public function __construct($id)
-    {
-        $this->id = $id;
-    }
-
-
-
     public function background(\Malenki\Aleavatar\Primitive\Color $color)
     {
         $this->arr_colors[0] = $color;
@@ -1682,7 +1675,7 @@ class Unit
             $this->last()->color($this->bg());
         }
 
-        // Lang VERTICAL CENTER
+        // Long VERTICAL CENTER
         if($rank2 == 11)
         {
             $d = new Primitive\Diamond();
@@ -1696,24 +1689,55 @@ class Unit
             $this->add($d);
         }
 
-        // Lang HORIZONTAL CENTER
+        // Long HORIZONTAL CENTER
         if($rank2 == 12)
         {
+            $d = new Primitive\Diamond();
+            $d
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->color($this->fg());
+
+            $this->add($d);
         }
 
         // Long DIAGONAL TL BR
         if($rank2 == 13)
         {
+            $d = new Primitive\Diamond();
+            $d
+                ->point(0, 0)
+                ->point(self::SIZE * (3/4), self::SIZE / 4)
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE / 4, self::SIZE * (3/4))
+                ->color($this->fg());
+
+            $this->add($d);
         }
 
         // Long DIAGONAL TR BL
         if($rank2 == 14)
         {
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 4, self::SIZE / 4)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE *(3/4), self::SIZE * (3/4))
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($d);
         }
 
         // 4 littles
         if($rank2 == 15)
         {
+            $this->row8(1);
+            $this->row8(2);
+            $this->row8(3);
+            $this->row8(4);
         }
     }
 
