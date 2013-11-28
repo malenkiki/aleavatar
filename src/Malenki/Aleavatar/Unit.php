@@ -1286,6 +1286,170 @@ class Unit
     }
 
 
+    public function row7($rank2)
+    {
+        // Circle inside other TOP
+        if($rank2 == 0)
+        {
+            $this->row4(8);
+            $c = new Primitive\Ellipse(self::SIZE / 2, self::SIZE / 4);
+            $c->radius(self::SIZE / 4)->color($this->bg());
+            $this->add($c);
+        }
+        // Same as previous bu reversed
+        if($rank2 == 1)
+        {
+            $this->row1(1);
+            $this->row7(0);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->fg());
+        }
+        // Circle inside other RIGHT
+        if($rank2 == 2)
+        {
+            $this->row4(8);
+            $c = new Primitive\Ellipse(self::SIZE * (3/4), self::SIZE / 2);
+            $c->radius(self::SIZE / 4)->color($this->bg());
+            $this->add($c);
+        }
+        // Same as previous but reversed
+        if($rank2 == 3)
+        {
+            $this->row1(1);
+            $this->row7(2);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->fg());
+        }
+        // Circle inside other BOTTOM
+        if($rank2 == 4)
+        {
+            $this->row4(8);
+            $c = new Primitive\Ellipse(self::SIZE /2, self::SIZE * (3/4));
+            $c->radius(self::SIZE / 4)->color($this->bg());
+            $this->add($c);
+        }
+        // Same as previous but reversed
+        if($rank2 == 5)
+        {
+            $this->row1(1);
+            $this->row7(4);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->fg());
+        }
+        // Circle inside other LEFT
+        if($rank2 == 6)
+        {
+            $this->row4(8);
+            $c = new Primitive\Ellipse(self::SIZE / 4, self::SIZE / 2);
+            $c->radius(self::SIZE / 4)->color($this->bg());
+            $this->add($c);
+        }
+        // Same as previous but reversed
+        if($rank2 == 7)
+        {
+            $this->row1(1);
+            $this->row7(6);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->fg());
+        }
+        if($rank2 == 8)
+        {
+            // Moyen central
+            $c = new Primitive\Ellipse(self::SIZE / 2, self::SIZE / 2);
+            $c->radius(self::SIZE / 4)->color($this->fg());
+            $this->add($c);
+            //satellite TL
+            $c = new Primitive\Ellipse(self::SIZE / 4, self::SIZE / 4);
+            $c->radius(self::SIZE / 4)->color($this->fg());
+            $this->add($c);
+            //satellite TR
+            $c = new Primitive\Ellipse(self::SIZE * (3/4), self::SIZE / 4);
+            $c->radius(self::SIZE / 4)->color($this->fg());
+            $this->add($c);
+            //satellite BR
+            $c = new Primitive\Ellipse(self::SIZE * (3/4), self::SIZE * (3/4));
+            $c->radius(self::SIZE / 4)->color($this->fg());
+            $this->add($c);
+            //satellite BL
+            $c = new Primitive\Ellipse(self::SIZE / 4, self::SIZE * (3/4));
+            $c->radius(self::SIZE / 4)->color($this->fg());
+            $this->add($c);
+        }
+        // same as previous but with central as negative
+        if($rank2 == 9)
+        {
+            $this->row7(8);
+            $this->add($this->get(0)->color($this->bg()));
+        }
+        // same as 8, but satellites in negative
+        if($rank2 == 10)
+        {
+            $this->row7(8);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
+            $this->get(3)->color($this->bg());
+            $this->get(4)->color($this->bg());
+        }
+        // Same as 8 with inside additionnal circles
+        if($rank2 == 11)
+        {
+            $this->row7(8);
+            // small at center
+            $c = new Primitive\Ellipse(self::SIZE / 2, self::SIZE / 2);
+            $c->radius(self::SIZE / 8)->color($this->bg());
+            $this->add($c);
+            //satellite TL
+            $c = new Primitive\Ellipse(self::SIZE / 4, self::SIZE / 4);
+            $c->radius(self::SIZE / 8)->color($this->bg());
+            $this->add($c);
+            //satellite TR
+            $c = new Primitive\Ellipse(self::SIZE * (3/4), self::SIZE / 4);
+            $c->radius(self::SIZE / 8)->color($this->bg());
+            $this->add($c);
+            //satellite BR
+            $c = new Primitive\Ellipse(self::SIZE * (3/4), self::SIZE * (3/4));
+            $c->radius(self::SIZE / 8)->color($this->bg());
+            $this->add($c);
+            //satellite BL
+            $c = new Primitive\Ellipse(self::SIZE / 4, self::SIZE * (3/4));
+            $c->radius(self::SIZE / 8)->color($this->bg());
+            $this->add($c);
+        }
+        if($rank2 == 12)
+        {
+            $this->row4(8);
+            $s = new Primitive\Rectangle();
+            $s->point(0, self::SIZE / 2)->size(self::SIZE, self::SIZE / 2);
+            $s->color($this->bg());
+            $this->add($s);
+        }
+        if($rank2 == 13)
+        {
+            $this->row4(8);
+            $s = new Primitive\Rectangle();
+            $s->point(0, 0)->size(self::SIZE, self::SIZE / 2);
+            $s->color($this->bg());
+            $this->add($s);
+        }
+        if($rank2 == 14)
+        {
+            $this->row4(8);
+            $s = new Primitive\Rectangle();
+            $s->point(0, 0)->size(self::SIZE / 2, self::SIZE);
+            $s->color($this->bg());
+            $this->add($s);
+        }
+        if($rank2 == 15)
+        {
+            $this->row4(8);
+            $s = new Primitive\Rectangle();
+            $s->point(self::SIZE / 2, 0)->size(self::SIZE / 2, self::SIZE);
+            $s->color($this->bg());
+            $this->add($s);
+        }
+    }
+
+
     /**
      * Generates unit part by giving $rank1 and $rank2 to 
      * choose the shapes to populate with. 
@@ -1297,17 +1461,17 @@ class Unit
      * @uses Unit::row2 Triangle shapes DONE
      * @uses Unit::row3 Rectangle shapes DONE
      * @uses Unit::row4 Circle shapes DONE
-     * @uses Unit::row5 Polygon shapes
-     * @uses Unit::row6 Triangle shapes part 2
-     * @uses Unit::row7 Circle shapes part 2
+     * @uses Unit::row5 Polygon shapes DONE
+     * @uses Unit::row6 Triangle shapes part 2 DONE
+     * @uses Unit::row7 Circle shapes part 2 DONE 
      * @uses Unit::row8 Polygon shapes part 2
      * @uses Unit::row9 Square shapes part 2
-     * @uses Unit::row10 Mixed shapes part 1
-     * @uses Unit::row11 Mixed shapes part 2
-     * @uses Unit::row12 Mixed shapes part 3
-     * @uses Unit::row13 Mixed shapes part 4
-     * @uses Unit::row14 Mixed shapes part 5
-     * @uses Unit::row15 Mixed shapes part 6
+     * @uses Unit::row10 Diamond shapes 1
+     * @uses Unit::row11 Mixed shapes part 1
+     * @uses Unit::row12 Mixed shapes part 2
+     * @uses Unit::row13 Mixed shapes part 3
+     * @uses Unit::row14 Mixed shapes part 4
+     * @uses Unit::row15 Mixed shapes part 5
      * @param integer $rank1
      * @param inteer $rank2 
      * @access public
