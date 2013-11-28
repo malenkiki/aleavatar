@@ -1467,11 +1467,11 @@ class Unit
      * @uses Unit::row8 Polygon shapes part 2
      * @uses Unit::row9 Square shapes part 2
      * @uses Unit::row10 Diamond shapes 1
-     * @uses Unit::row11 Mixed shapes part 1
-     * @uses Unit::row12 Mixed shapes part 2
-     * @uses Unit::row13 Mixed shapes part 3
-     * @uses Unit::row14 Mixed shapes part 4
-     * @uses Unit::row15 Mixed shapes part 5
+     * @uses Unit::row11 Triangle shapes part 3
+     * @uses Unit::row12 Mixed shapes part 1
+     * @uses Unit::row13 Mixed shapes part 2
+     * @uses Unit::row14 Mixed shapes part 3
+     * @uses Unit::row15 Mixed shapes part 4
      * @param integer $rank1
      * @param inteer $rank2 
      * @access public
