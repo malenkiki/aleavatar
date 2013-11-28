@@ -1918,6 +1918,153 @@ class Unit
     }
 
 
+
+    public function row10($rank2)
+    {
+        if($rank2 == 0)
+        {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+        }
+
+        if($rank2 == 1)
+        {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+        }
+        if($rank2 == 2)
+        {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(0, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
+            
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+        }
+        if($rank2 == 3)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE, self::SIZE)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 4)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 5)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 6)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, self::SIZE)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 7)
+        {
+        }
+        if($rank2 == 8)
+        {
+        }
+        if($rank2 == 9)
+        {
+        }
+        if($rank2 == 10)
+        {
+        }
+        if($rank2 == 11)
+        {
+        }
+        if($rank2 == 12)
+        {
+        }
+        if($rank2 == 13)
+        {
+        }
+        if($rank2 == 14)
+        {
+        }
+        if($rank2 == 15)
+        {
+        }
+    }
+
+
+
     /**
      * Generates unit part by giving $rank1 and $rank2 to 
      * choose the shapes to populate with. 
@@ -1933,9 +2080,9 @@ class Unit
      * @uses Unit::row6 Triangle shapes part 2 DONE
      * @uses Unit::row7 Circle shapes part 2 DONE 
      * @uses Unit::row8 Diamond shapes 1 DONE
-     * @uses Unit::row9 Polygon shapes part 2
-     * @uses Unit::row10 Square shapes part 2
-     * @uses Unit::row11 Triangle shapes part 3
+     * @uses Unit::row9 Polygon shapes part 2 DONE
+     * @uses Unit::row10 Triangle shapes part 3
+     * @uses Unit::row11 Polygon shapes part 3
      * @uses Unit::row12 Mixed shapes part 1
      * @uses Unit::row13 Mixed shapes part 2
      * @uses Unit::row14 Mixed shapes part 3
