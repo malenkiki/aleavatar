@@ -722,54 +722,160 @@ class Unit
             $c->color($this->fg());
             $this->add($c);
         }
-        // Long rectangle TOP
+        // medium BL
         if($rank2 == 8)
         {
-            $c = new Primitive\Rectangle();
-            $c->point(0, 0);
-            $c->size(Unit::SIZE, Unit::SIZE / 4);
+            $c = new Primitive\Polygon();
+            $c->point(self::SIZE / 2, self::SIZE / 4);
+            $c->point(self::SIZE * (3/4), self::SIZE / 2);
+            $c->point(self::SIZE / 4, self::SIZE);
+            $c->point(0, self::SIZE * (3/4));
             $c->color($this->fg());
             $this->add($c);
         }
-        // Long rectangle BOTTOM
+        // medium TL
         if($rank2 == 9)
         {
-            $c = new Primitive\Rectangle();
-            $c->point(0, Unit::SIZE * (3/4));
-            $c->size(Unit::SIZE, Unit::SIZE / 4);
+            $c = new Primitive\Polygon();
+            $c->point(self::SIZE / 4, 0);
+            $c->point(self::SIZE * (3/4), self::SIZE / 2);
+            $c->point(self::SIZE / 2, self::SIZE * (3/4));
+            $c->point(0, self::SIZE / 4);
             $c->color($this->fg());
             $this->add($c);
         }
-        // Long rectangle LEFT
+        // vertical grill of small rectangles
         if($rank2 == 10)
         {
             $c = new Primitive\Rectangle();
-            $c->point(0, 0);
-            $c->size(Unit::SIZE / 4, Unit::SIZE);
-            $c->color($this->fg());
+            $c
+                ->point(0, self::SIZE / 2)
+                ->size(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c
+                ->point(self::SIZE / 4, 0)
+                ->size(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->size(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c
+                ->point(self::SIZE * (3/4), 0)
+                ->size(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
             $this->add($c);
         }
-        // Long rectangle RIGHT
+        // vertical grill of small rectangles, other position
         if($rank2 == 11)
         {
             $c = new Primitive\Rectangle();
-            $c->point(Unit::SIZE * (3/4), 0);
-            $c->size(Unit::SIZE / 4, Unit::SIZE);
-            $c->color($this->fg());
+            $c
+                ->point(0, 0)
+                ->size(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->size(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c
+                ->point(self::SIZE / 2, 0)
+                ->size(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->size(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+
             $this->add($c);
         }
-        // 2 Long rectangles TOP and BOTTOM
+
+        // horizontal grill of small rectngles
         if($rank2 == 12)
         {
-            $this->row3(8);
-            $this->row3(9);
+            $c = new Primitive\Rectangle();
+            $c
+                ->point(self::SIZE / 2, 0)
+                ->size(self::SIZE / 2, self::SIZE / 4)
+                ->color($this->fg());
+            
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c
+                ->point(0, self::SIZE / 4)
+                ->size(self::SIZE / 2, self::SIZE / 4)
+                ->color($this->fg());
+            
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->size(self::SIZE / 2, self::SIZE / 4)
+                ->color($this->fg());
+            
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c
+                ->point(0, self::SIZE * (3/4))
+                ->size(self::SIZE / 2, self::SIZE / 4)
+                ->color($this->fg());
+            
+            $this->add($c);
         }
 
-        // 2 long rectangles LEFT and RIGHT
+        // horizontal grill of small rectngles, other position
         if($rank2 == 13)
         {
-            $this->row3(10);
-            $this->row3(11);
+            $c = new Primitive\Rectangle();
+            $c->point(0, 0)->size(Unit::SIZE / 2, Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c->point(Unit::SIZE / 2, Unit::SIZE / 4);
+            $c->size(Unit::SIZE / 2, Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c->point(0, Unit::SIZE / 2);
+            $c->size(Unit::SIZE / 2, Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
+            
+            $c = new Primitive\Rectangle();
+            $c->point(Unit::SIZE / 2, Unit::SIZE * (3/4));
+            $c->size(Unit::SIZE / 2, Unit::SIZE / 4);
+            $c->color($this->fg());
+            $this->add($c);
         }
         // small TL
         if($rank2 == 14)
@@ -1450,6 +1556,84 @@ class Unit
     }
 
 
+    public function row8($rank2)
+    {
+        // big diamond
+        if($rank2 == 0)
+        {
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->point(0, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($d);
+        }
+
+        if($rank2 == 1)
+        {
+        }
+
+        if($rank2 == 2)
+        {
+        }
+
+        if($rank2 == 3)
+        {
+        }
+
+        if($rank2 == 4)
+        {
+        }
+
+        if($rank2 == 5)
+        {
+        }
+
+        if($rank2 == 6)
+        {
+        }
+
+        if($rank2 == 7)
+        {
+        }
+
+        if($rank2 == 8)
+        {
+        }
+
+        if($rank2 == 9)
+        {
+        }
+
+        if($rank2 == 10)
+        {
+        }
+
+        if($rank2 == 11)
+        {
+        }
+
+        if($rank2 == 12)
+        {
+        }
+
+        if($rank2 == 13)
+        {
+        }
+
+        if($rank2 == 14)
+        {
+        }
+
+        if($rank2 == 15)
+        {
+        }
+    }
+
+
     /**
      * Generates unit part by giving $rank1 and $rank2 to 
      * choose the shapes to populate with. 
@@ -1464,9 +1648,9 @@ class Unit
      * @uses Unit::row5 Polygon shapes DONE
      * @uses Unit::row6 Triangle shapes part 2 DONE
      * @uses Unit::row7 Circle shapes part 2 DONE 
-     * @uses Unit::row8 Polygon shapes part 2
-     * @uses Unit::row9 Square shapes part 2
-     * @uses Unit::row10 Diamond shapes 1
+     * @uses Unit::row8 Diamond shapes 1
+     * @uses Unit::row9 Polygon shapes part 2
+     * @uses Unit::row10 Square shapes part 2
      * @uses Unit::row11 Triangle shapes part 3
      * @uses Unit::row12 Mixed shapes part 1
      * @uses Unit::row13 Mixed shapes part 2
