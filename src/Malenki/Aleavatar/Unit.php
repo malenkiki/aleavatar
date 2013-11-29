@@ -2877,48 +2877,208 @@ class Unit
         }
         if($rank2 == 1)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE / 2, 0)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE, self::SIZE)
+                ->point(0, 0)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 2)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE, self::SIZE)
+                ->point(0, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
+
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 3)
         {
+            $this->row1(1);
+            $this->row15(0);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
         }
         if($rank2 == 4)
         {
+            $this->row1(1);
+            $this->row15(1);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
         }
         if($rank2 == 5)
         {
+            $this->row1(1);
+            $this->row15(2);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
         }
         if($rank2 == 6)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(0, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 7)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 8)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($t);
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 9)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE, 0)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 10)
         {
+            $this->row1(1);
+            $this->row15(6);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
         }
         if($rank2 == 11)
         {
+            $this->row1(1);
+            $this->row15(7);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
         }
         if($rank2 == 12)
         {
+            $this->row1(1);
+            $this->row15(8);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
         }
         if($rank2 == 13)
         {
+            $this->row1(1);
+            $this->row15(9);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
         }
         if($rank2 == 14)
         {
+            $this->row8(11);
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+            $t = new Primitive\Triangle();
+            $t
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 15)
         {
+            $this->row8(12);
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->color($this->fg());
+
+            $this->add($t);
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, self::SIZE)
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->color($this->fg());
+
+            $this->add($t);
         }
     }
 

@@ -165,8 +165,7 @@ class Aleavatar
             
             $u->background($color_bg);
             $u->foreground($color_fg);
-            //$u->generate(hexdec($rank1), hexdec($rank2));
-            $u->generate(rand(0,14), rand(0,15)); //DEBUG
+            $u->generate(hexdec($rank1), hexdec($rank2));
 
             $q->add($u);
         }
@@ -307,7 +306,7 @@ class Aleavatar
                 
                 imagedestroy($img);
                 
-                return $content;
+                return $contents;
             }
         }
     } 
