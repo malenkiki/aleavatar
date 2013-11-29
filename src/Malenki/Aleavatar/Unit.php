@@ -82,146 +82,195 @@ class Unit
 
     
     /**
-     * Shapes with arcs 
+     * Various 
      *
-     * @todo Create true Arc primitive!
      * @param integer $rank2 
      * @access protected
      * @return void
      */
     protected function row0($rank2)
     {
-        /*
-        // Mid sizes arc TL
         if($rank2 == 0)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(0, 0);
-            $el->radius(self::SIZE / 2);
-            $el->color($this->fg());
-            $this->add($el);
+            $this->row9(0);
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE / 4, 0)
+                ->point(self::SIZE, self::SIZE)
+                ->point(0, self::SIZE / 4)
+                ->color($this->bg());
+
+            $this->add($p);
         }
-        // Mid sizes arc TR
         if($rank2 == 1)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(self::SIZE, 0);
-            $el->radius(self::SIZE / 2);
-            $el->color($this->fg());
-            $this->add($el);
+            $this->row9(1);
+            $p = new Primitive\Polygon();
+            $p
+                ->point(self::SIZE * (3/4), 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE / 4)
+                ->point(0, self::SIZE)
+                ->color($this->bg());
+
+            $this->add($p);
         }
-        // Mid sizes arc BR
         if($rank2 == 2)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(self::SIZE, self::SIZE);
-            $el->radius(self::SIZE / 2);
-            $el->color($this->fg());
-            $this->add($el);
+            $this->row9(2);
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE, self::SIZE * (3/4))
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE * (3/4), self::SIZE)
+                ->color($this->bg());
+
+            $this->add($p);
         }
-        // Mid sizes arc BL
         if($rank2 == 3)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(0, self::SIZE);
-            $el->radius(self::SIZE / 2);
-            $el->color($this->fg());
-            $this->add($el);
+            $this->row9(3);
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, self::SIZE * (3/4))
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE / 4, self::SIZE)
+                ->point(0, self::SIZE)
+                ->color($this->bg());
+
+            $this->add($p);
         }
-        // Big arc TL
         if($rank2 == 4)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(0, 0);
-            $el->radius(self::SIZE);
-            $el->color($this->fg());
-            $this->add($el);
+            $this->row9(8);
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE / 4, 0)
+                ->point(self::SIZE, self::SIZE)
+                ->point(0, self::SIZE / 4)
+                ->color($this->fg());
+
+            $this->add($p);
         }
-        // Big arc TR
         if($rank2 == 5)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(self::SIZE, 0);
-            $el->radius(self::SIZE);
-            $el->color($this->fg());
-            $this->add($el);
+            $this->row9(9);
+            $p = new Primitive\Polygon();
+            $p
+                ->point(self::SIZE * (3/4), 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE / 4)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
         }
-        // Big arc BR
         if($rank2 == 6)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(self::SIZE, self::SIZE);
-            $el->radius(self::SIZE);
-            $el->color($this->fg());
-            $this->add($el);
+            $this->row9(10);
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE, self::SIZE * (3/4))
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE * (3/4), self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
         }
-        // Big arc BL
         if($rank2 == 7)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(0, self::SIZE);
-            $el->radius(self::SIZE);
-            $el->color($this->fg());
-            $this->add($el);
+            $this->row9(11);
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, self::SIZE * (3/4))
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE / 4, self::SIZE)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
         }
 
-        // compound mid-sized arc and big size arc TL
         if($rank2 == 8)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(0, 0);
-            $el->radius(self::SIZE);
-            $el->color($this->fg());
-            $this->add($el);
-            $el = new Primitive\Ellipse();
-            $el->point(0, 0);
-            $el->radius(self::SIZE / 2);
-            $el->color($this->bg());
-            $this->add($el);
+            $this->row1(8);
+            $this->row2(9);
         }
-        // compound mid-sized arc and big size arc TR
         if($rank2 == 9)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(self::SIZE, 0);
-            $el->radius(self::SIZE);
-            $el->color($this->fg());
-            $this->add($el);
-            $el = new Primitive\Ellipse();
-            $el->point(self::SIZE, 0);
-            $el->radius(self::SIZE / 2);
-            $el->color($this->bg());
-            $this->add($el);
+            $this->row1(9);
+            $this->row2(8);
         }
-        // compound mid-sized arc and big size arc BR
         if($rank2 == 10)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(self::SIZE, self::SIZE);
-            $el->radius(self::SIZE);
-            $el->color($this->fg());
-            $this->add($el);
-            $el = new Primitive\Ellipse();
-            $el->point(self::SIZE, self::SIZE);
-            $el->radius(self::SIZE / 2);
-            $el->color($this->bg());
-            $this->add($el);
+            $this->row1(10);
+            $this->row2(9);
+            $this->get(5)->color($this->bg());
+            $this->get(6)->color($this->bg());
         }
-        // compound mid-sized arc and big size arc BL
         if($rank2 == 11)
         {
-            $el = new Primitive\Ellipse();
-            $el->point(0, self::SIZE);
-            $el->radius(self::SIZE);
-            $el->color($this->fg());
-            $this->add($el);
-            $el = new Primitive\Ellipse();
-            $el->point(0, self::SIZE);
-            $el->radius(self::SIZE / 2);
-            $el->color($this->bg());
-            $this->add($el);
+            $this->row1(11);
+            $this->row2(8);
+            $this->get(5)->color($this->bg());
+            $this->get(6)->color($this->bg());
         }
-         */
+        if($rank2 == 12)
+        {
+            $this->row8(11);
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->bg());
+            
+            $this->add($d);
+        }
+        if($rank2 == 13)
+        {
+            $this->row8(12);
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->bg());
+            
+            $this->add($d);
+        }
+        if($rank2 == 14)
+        {
+            $this->row8(13);
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->bg());
+            
+            $this->add($d);
+        }
+        if($rank2 == 15)
+        {
+            $this->row8(14);
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->bg());
+            
+            $this->add($d);
+        }
     }
 
 
@@ -2409,13 +2458,418 @@ class Unit
     }
 
 
+    public function row12($rank2)
+    {
+        if($rank2 == 0)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(0, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 1)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 2)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(self::SIZE, 0)
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 3)
+        {
+            $this->row1(1);
+            $this->row12(0);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 4)
+        {
+            $this->row1(1);
+            $this->row12(1);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 5)
+        {
+            $this->row1(1);
+            $this->row12(2);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 6)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE /2)
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->color($this->fg());
+
+            $this->add($p);
+
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE* (3/4))
+                ->point(self::SIZE / 2, self::SIZE)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 7)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->point(0, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($p);
+
+            $p = new Primitive\Polygon();
+            $p
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 8)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($p);
+
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, self::SIZE / 2)
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->point(0, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 9)
+        {
+            $this->row1(1);
+            $this->row12(6);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
+        }
+        if($rank2 == 10)
+        {
+            $this->row1(1);
+            $this->row12(7);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
+        }
+        if($rank2 == 11)
+        {
+            $this->row1(1);
+            $this->row12(8);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
+        }
+        if($rank2 == 12)
+        {
+            $p = new Primitive\Polygon();
+            $p
+                ->point(0, 0)
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE / 4, self::SIZE * (3/4))
+                ->point(0, self::SIZE / 2)
+                ->color($this->fg());
+
+            $this->add($p);
+
+            $p = new Primitive\Polygon();
+            $p
+                ->point(self::SIZE / 2, self::SIZE / 2)
+                ->point(self::SIZE * (3/4), self::SIZE / 4)
+                ->point(self::SIZE, self::SIZE / 2)
+                ->point(self::SIZE, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($p);
+        }
+        if($rank2 == 13)
+        {
+            $this->row1(1);
+            $this->row12(12);
+            $this->get(1)->color($this->bg());
+            $this->get(2)->color($this->bg());
+        }
+        if($rank2 == 14)
+        {
+            $this->row12(0);
+            $this->row12(2);
+        }
+        if($rank2 == 15)
+        {
+            $this->row12(3);
+            $this->row12(2);
+            $this->last()->color($this->bg());
+        }
+    }
+
+
+    public function row13($rank2)
+    {
+        if($rank2 == 0)
+        {
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->fg());
+            
+            $this->add($d);
+        }
+        if($rank2 == 1)
+        {
+            $this->row1(1);
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->bg());
+            
+            $this->add($d);
+        }
+        if($rank2 == 2)
+        {
+            $this->row4(8);
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 2, self::SIZE / 4)
+                ->point(self::SIZE * (3/4), self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (3/4))
+                ->point(self::SIZE / 4, self::SIZE / 2)
+                ->color($this->bg());
+            
+            $this->add($d);
+        }
+        if($rank2 == 3)
+        {
+            $this->row4(9);
+            $this->row13(0);
+        }
+        if($rank2 == 4)
+        {
+            $this->row1(2);
+            $this->row13(0);
+        }
+        if($rank2 == 5)
+        {
+            $this->row1(3);
+            $this->row13(0);
+        }
+        if($rank2 == 6)
+        {
+            $this->row1(4);
+            $this->row13(0);
+        }
+        if($rank2 == 7)
+        {
+            $this->row1(5);
+            $this->row13(0);
+        }
+        if($rank2 == 8)
+        {
+            $this->row3(0);
+            $this->row13(0);
+        }
+        if($rank2 == 9)
+        {
+            $this->row3(1);
+            $this->row13(0);
+        }
+        if($rank2 == 10)
+        {
+            $this->row3(2);
+            $this->row13(0);
+        }
+        if($rank2 == 11)
+        {
+            $this->row3(3);
+            $this->row13(0);
+        }
+        if($rank2 == 12)
+        {
+            $this->row3(0);
+            $this->row13(0);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 13)
+        {
+            $this->row3(1);
+            $this->row13(0);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 14)
+        {
+            $this->row3(2);
+            $this->row13(0);
+            $this->last()->color($this->bg());
+        }
+        if($rank2 == 15)
+        {
+            $this->row3(3);
+            $this->row13(0);
+            $this->last()->color($this->bg());
+        }
+    }
+
+
+
+    public function row14($rank2)
+    {
+        if($rank2 == 0)
+        {
+        }
+        if($rank2 == 1)
+        {
+        }
+        if($rank2 == 2)
+        {
+        }
+        if($rank2 == 3)
+        {
+        }
+        if($rank2 == 4)
+        {
+        }
+        if($rank2 == 5)
+        {
+        }
+        if($rank2 == 6)
+        {
+        }
+        if($rank2 == 7)
+        {
+        }
+        if($rank2 == 8)
+        {
+        }
+        if($rank2 == 9)
+        {
+        }
+        if($rank2 == 10)
+        {
+        }
+        if($rank2 == 11)
+        {
+        }
+        if($rank2 == 12)
+        {
+        }
+        if($rank2 == 13)
+        {
+        }
+        if($rank2 == 14)
+        {
+        }
+        if($rank2 == 15)
+        {
+        }
+    }
+
+
+
+    public function row15($rank2)
+    {
+        if($rank2 == 0)
+        {
+        }
+        if($rank2 == 1)
+        {
+        }
+        if($rank2 == 2)
+        {
+        }
+        if($rank2 == 3)
+        {
+        }
+        if($rank2 == 4)
+        {
+        }
+        if($rank2 == 5)
+        {
+        }
+        if($rank2 == 6)
+        {
+        }
+        if($rank2 == 7)
+        {
+        }
+        if($rank2 == 8)
+        {
+        }
+        if($rank2 == 9)
+        {
+        }
+        if($rank2 == 10)
+        {
+        }
+        if($rank2 == 11)
+        {
+        }
+        if($rank2 == 12)
+        {
+        }
+        if($rank2 == 13)
+        {
+        }
+        if($rank2 == 14)
+        {
+        }
+        if($rank2 == 15)
+        {
+        }
+    }
+
     /**
      * Generates unit part by giving $rank1 and $rank2 to 
      * choose the shapes to populate with. 
      * 
      * Parameters are both integers from 0 to 15 inclusive.
      *
-     * @uses Unit::row0 Arc shapes
+     * @uses Unit::row0 Various shapes DONE
      * @uses Unit::row1 Square shapes DONE
      * @uses Unit::row2 Triangle shapes DONE
      * @uses Unit::row3 Rectangle shapes DONE
@@ -2427,10 +2881,10 @@ class Unit
      * @uses Unit::row9 Polygon shapes part 2 DONE
      * @uses Unit::row10 Triangle shapes part 3 DONE
      * @uses Unit::row11 Polygon shapes part 3 DONE
-     * @uses Unit::row12 Mixed shapes part 1
-     * @uses Unit::row13 Mixed shapes part 2
-     * @uses Unit::row14 Mixed shapes part 3
-     * @uses Unit::row15 Mixed shapes part 4
+     * @uses Unit::row12 Polygon shapes part 4 DONE
+     * @uses Unit::row13 Mixed shapes part 1
+     * @uses Unit::row14 Mixed shapes part 2
+     * @uses Unit::row15 Mixed shapes part 3
      * @param integer $rank1
      * @param inteer $rank2 
      * @access public
