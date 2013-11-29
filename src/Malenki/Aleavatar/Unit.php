@@ -1682,6 +1682,16 @@ class Unit
                 ->color($this->fg());
 
             $this->add($d);
+            
+            $d = new Primitive\Diamond();
+            $d
+                ->point(self::SIZE / 2, self::SIZE * (3/8))
+                ->point(self::SIZE * (5/8), self::SIZE / 2)
+                ->point(self::SIZE / 2, self::SIZE * (5/8))
+                ->point(self::SIZE * (3/8), self::SIZE / 2)
+                ->color($this->bg());
+
+            $this->add($d);
         }
 
         // reversed small TL
@@ -1720,7 +1730,7 @@ class Unit
         if($rank2 == 10)
         {
             $this->row8(0);
-            $this->row8(5);
+            $this->row13(0);
             $this->last()->color($this->bg());
         }
 
@@ -2761,51 +2771,83 @@ class Unit
     {
         if($rank2 == 0)
         {
+            $this->row2(0);
+            $this->row4(10);
         }
         if($rank2 == 1)
         {
+            $this->row2(1);
+            $this->row4(10);
         }
         if($rank2 == 2)
         {
+            $this->row2(2);
+            $this->row4(10);
         }
         if($rank2 == 3)
         {
+            $this->row2(3);
+            $this->row4(10);
         }
         if($rank2 == 4)
         {
+            $this->row13(12);
+            $this->row6(3);
         }
         if($rank2 == 5)
         {
+            $this->row13(13);
+            $this->row6(1);
         }
         if($rank2 == 6)
         {
+            $this->row13(14);
+            $this->row6(2);
         }
         if($rank2 == 7)
         {
+            $this->row13(15);
+            $this->row6(0);
         }
         if($rank2 == 8)
         {
+            $this->row8(12);
+            $this->row12(0);
         }
         if($rank2 == 9)
         {
+            $this->row8(12);
+            $this->row12(2);
         }
         if($rank2 == 10)
         {
+            $this->row8(11);
+            $this->row12(1);
         }
         if($rank2 == 11)
         {
+            $this->row8(11);
+            $this->row9(6);
         }
         if($rank2 == 12)
         {
+            $this->row2(0);
+            $this->row4(12);
         }
         if($rank2 == 13)
         {
+            $this->row2(1);
+            $this->row4(12);
         }
         if($rank2 == 14)
         {
+            $this->row2(2);
+            $this->row4(12);
         }
         if($rank2 == 15)
         {
+            $this->row2(3);
+            $this->row4(12);
         }
     }
 
@@ -2815,6 +2857,23 @@ class Unit
     {
         if($rank2 == 0)
         {
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, 0)
+                ->point(self::SIZE / 2, 0)
+                ->point(self::SIZE, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
+
+            $t = new Primitive\Triangle();
+            $t
+                ->point(0, self::SIZE)
+                ->point(self::SIZE, 0)
+                ->point(self::SIZE / 2, self::SIZE)
+                ->color($this->fg());
+
+            $this->add($t);
         }
         if($rank2 == 1)
         {

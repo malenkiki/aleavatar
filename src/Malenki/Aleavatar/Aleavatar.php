@@ -166,7 +166,7 @@ class Aleavatar
             $u->background($color_bg);
             $u->foreground($color_fg);
             //$u->generate(hexdec($rank1), hexdec($rank2));
-            $u->generate(rand(0,13), rand(0,15)); //DEBUG
+            $u->generate(rand(0,14), rand(0,15)); //DEBUG
 
             $q->add($u);
         }
