@@ -48,7 +48,7 @@ class Aleavatar
 
     protected $arr_colors = array();
     protected $arr_quarters = array();
-    protected $size = null;
+    protected $size = self::SIZE;
     protected $seed = null;
     
 
@@ -94,10 +94,6 @@ class Aleavatar
 
     public function __construct($str_seed = null)
     {
-        $this->size = new \stdClass();
-        $this->size->width = self::SIZE;
-        $this->size->height = self::SIZE;
-
         $this->seed = new \stdClass();
 
         if(is_null($str_seed))
@@ -129,10 +125,9 @@ class Aleavatar
 
 
 
-    public function generate($width = null, $height = null)
+    public function generate($size = self::SIZE)
     {
-        $this->size->width = $width;
-        $this->size->height = $height;
+        $this->size = $size;
 
         $str_base = '';
 
@@ -331,15 +326,20 @@ class Aleavatar
     public function svgForHtml5()
     {
         $arr_svg = array();
-        $arr_svg[] = sprintf('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="%1$d" height="%1$d">', self::SIZE);
+        $arr_svg[] = sprintf('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="%1$d" height="%1$d">', $this->size);
         $arr_svg[] = sprintf('<title>Identicon of %s</title>', $this->seed->str);
         $arr_svg[] = sprintf('<desc>The hash string used to generate this identicon is %s.</desc>', $this->seed->hash);
+
+        $arr_svg[] = sprintf(
+            '<g transform="scale(%d)">',
+            $this->size / self::SIZE
+        );
 
         foreach($this->arr_quarters as $k => $q)
         {
             $arr_svg[] = $q->svg();
         }
-
+        $arr_svg[] = '</g>';
         $arr_svg[] = '</svg>';
 
         $str_svg = implode("\n", $arr_svg);
