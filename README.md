@@ -14,8 +14,7 @@ For this 16 hexadecimal characters, we take the first 8 of them to choose basic 
 
 You get by default a picture of 128px × 128px. This picture can be SVG or PNG. For PNG, you must have one of this PHP modules: [ImageMagick](http://www.php.net/manual/en/book.imagick.php) or [GD](http://www.php.net/manual/en/book.image.php).
 
-I recommand you the first one. GD is a fallback.
-
+I recommand you the first one. GD is a fallback very poor (no scaling and antialias if you have PHP version prior to 5.5).
 
 You can display PNG images or store them. As you want.
 
@@ -54,10 +53,12 @@ echo $a->generate()->png();
 exit();
 ```
 
-You can change size in pixel too (but for SVG only, PNG is on the road…):
+You can change size in pixel too:
 ``` php
 $a = new Malenki\Aleavatar\Aleavatar();
 $a->generate(200)->svg('my_avatar.svg');
 ```
+
+__Note:__ If you have GD as fallback, and your PHP version is inferior to 5.5, then you have not scaling.
 
 Enjoy!
