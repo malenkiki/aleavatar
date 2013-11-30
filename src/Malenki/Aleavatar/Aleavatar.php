@@ -165,6 +165,8 @@ class Aleavatar
         $this->arr_quarters[] = $q->tr();
         $this->arr_quarters[] = $q->br();
         $this->arr_quarters[] = $q->bl();
+
+        return $this;
     }
 
 
