@@ -26,11 +26,6 @@ namespace Malenki\Aleavatar;
 
 
 
-if(!extension_loaded('gd'))
-{
-    throw new \RuntimeException('GD is not available! Aleavatar uses GD to work!');
-}
-
 
 
 /**
@@ -304,6 +299,11 @@ class Aleavatar
                 return $contents;
             }
         }
+        else
+        {
+            throw new \RuntimeException('GD is not available! Aleavatar uses at least GD to work, ImageMagick is recommanded!');
+        }
+
     } 
 
 
