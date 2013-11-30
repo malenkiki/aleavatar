@@ -333,7 +333,7 @@ class Aleavatar
         $arr_svg[] = sprintf('<desc>The hash string used to generate this identicon is %s.</desc>', $this->seed->hash);
 
         $arr_svg[] = sprintf(
-            '<g transform="scale(%d)">',
+            '<g transform="scale(%f)">',
             $this->size / self::SIZE
         );
 
