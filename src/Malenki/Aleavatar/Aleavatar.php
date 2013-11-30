@@ -100,12 +100,12 @@ class Aleavatar
         }
         else
         {
-            if(!is_string($str_seed))
+            if(!is_scalar($str_seed))
             {
                 throw new \InvalidArgumentException('The seed must be a valid string.');
             }
 
-            $str_seed = trim($str_seed);
+            $str_seed = trim((string) $str_seed);
 
             if(strlen($str_seed) == 0)
             {
@@ -252,6 +252,13 @@ class Aleavatar
             {
                 imageantialias($img, true);
             }
+            else
+            {
+                trigger_error(
+                    'Antialiasing is not available on your system!',
+                    E_USER_NOTICE
+                );
+            }
 
             $this->arr_colors[0]->gd($img);    
             $this->arr_colors[1]->gd($img);    
@@ -282,6 +289,22 @@ class Aleavatar
                 }
                 imagecopy($img, $img_q, $dst_x, $dst_y, 0, 0, Quarter::SIZE, Quarter::SIZE);
                 imagedestroy($img_q);
+            }
+            
+            if($this->size != self::SIZE)
+            {
+                if(function_exists('imagescale'))
+                {
+                    $img = imagescale($img, $this->size, $this->size,  IMG_BICUBIC_FIXED);
+                }
+                else
+                {
+                    trigger_error(
+                        'Scaling is not available on your system! '.
+                        sprintf('Size will be %dpx by side only!', self::SIZE),
+                            E_USER_WARNING
+                        );
+                }
             }
 
             if(!is_null($str_filename))
