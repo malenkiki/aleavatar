@@ -20,3 +20,44 @@ I recommand you the first one. GD is a fallback.
 You can display PNG images or store them. As you want.
 
 SVG can be used into HTML5 document or as standalone SVG file.
+
+## How to install it?
+
+Using composer it is very simple.
+
+Just put this into your `composer.json` file:
+
+``` json
+require: "malenki/aleavatar": "dev-master"
+```
+
+## Do you have some examples?
+
+Yes. The first, very simple, generates a (pseudo)random SVG avatar and save it into `my_avatar.svg` file:
+
+``` php
+$a = new Malenki\Aleavatar\Aleavatar();
+$a->generate()->svg('my_avatar.svg');
+```
+
+Now, this one generates one SVG avatar to display into HTML5 based on the string "My avatar is fun!":
+``` php
+$a = new Malenki\Aleavatar\Aleavatar("My avatar is fun!");
+$strSVG = $a->generate()->svgForHtml5();
+```
+
+The same but to generate PNG to display on browser :
+``` php
+$a = new Malenki\Aleavatar\Aleavatar("My avatar is fun!");
+header('Content-Type: image/png');
+echo $a->generate()->png();
+exit();
+```
+
+You can change size in pixel too (but for SVG only, PNG is on the road…):
+``` php
+$a = new Malenki\Aleavatar\Aleavatar();
+$a->generate(200)->svg('my_avatar.svg');
+```
+
+Enjoy!
