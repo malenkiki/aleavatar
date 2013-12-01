@@ -26,9 +26,8 @@ namespace Malenki\Aleavatar\Primitive;
 
 
 /**
- * Define diamond shapes. 
+ * Define triangles. 
  * 
- * @copyright 2013 Michel Petit
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
@@ -39,7 +38,7 @@ class Triangle extends Polygon
      * 
      * @param integer $int_x 
      * @param integer $int_y 
-     * @throws RuntimeException In you try to set fourth point.
+     * @throws \RuntimeException If you try to set 4th point.
      * @access public
      * @return void
      */
