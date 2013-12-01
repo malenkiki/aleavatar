@@ -27,14 +27,20 @@ namespace Malenki\Aleavatar\Primitive;
 
 
 /**
- * Define square shapes. 
+ * Defines square shapes. 
  * 
- * @copyright 2013 Michel Petit
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
 class Square extends Rectangle
 {
+    /**
+     * Stes square's size. 
+     * 
+     * @param integer $int_size The size
+     * @access public
+     * @return Square
+     */
     public function size($int_size)
     {
         return parent::size($int_size, $int_size);

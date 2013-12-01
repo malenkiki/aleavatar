@@ -34,19 +34,36 @@ namespace Malenki\Aleavatar\Primitive;
  */
 class Polygon
 {
+    /**
+     * Stores each point that polygon must contain. 
+     * 
+     * A point is an array of two integer elements, one for the X and one for 
+     * the Y.
+     *
+     * @var array
+     * @access protected
+     */
     protected $arr_points = array();
+
+
+    /**
+     * Polygon's foreground color. 
+     * 
+     * @var Color
+     * @access protected
+     */
     protected $color = null;
 
     
     
     /**
-     * Add one point by giving it x and y coordinates. 
+     * Adds one point by giving it x and y coordinates. 
      * 
      * @param integer $int_x 
      * @param integer $int_y 
-     * @throws InvalidArgumentException If coordinates are not positive integers.
+     * @throws \InvalidArgumentException If coordinates are not positive integers.
      * @access public
-     * @return void
+     * @return Polygon
      */
     public function point($int_x, $int_y)
     {
@@ -72,6 +89,13 @@ class Polygon
 
 
 
+    /**
+     * Sets foreground color to the polygon.
+     * 
+     * @param Color $color
+     * @access public
+     * @return Polygon
+     */
     public function color($color)
     {
         $this->color = $color;
@@ -81,9 +105,20 @@ class Polygon
 
 
 
+    /**
+     * Adds the current polygonal shape to the given GD resource image.
+     * 
+     * **Notes:** If you have ImageMagick module installed, then this method is 
+     * never used.
+     *
+     * @throws \RuntimeException If amount of point is less than 3.
+     * @param resource $img GD resource image.
+     * @access public
+     * @return void
+     */
     public function png(&$img)
     {
-        if(count($this->arr_points) == 0)
+        if(count($this->arr_points) < 3)
         {
             throw new \RuntimeException('Before exporting to PNG, you must give at least 3 points!');
         }
@@ -100,9 +135,16 @@ class Polygon
     }
     
 
+    /**
+     * Returns the SVG code part rendering the current polygon. 
+     * 
+     * @throws \RuntimeException If amount of point is less than 3.
+     * @access public
+     * @return void
+     */
     public function svg()
     {
-        if(count($this->arr_points) == 0)
+        if(count($this->arr_points) < 3)
         {
             throw new \RuntimeException('Before exporting to SVG, you must give at least 3 points!');
         }
@@ -120,6 +162,13 @@ class Polygon
     }
 
 
+    /**
+     * In string context, renders the SVG code part for the current polygon. 
+     * 
+     * @see Polygon::svg()
+     * @access public
+     * @return string
+     */
     public function __toString()
     {
         return $this->svg();

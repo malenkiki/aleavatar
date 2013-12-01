@@ -32,7 +32,6 @@ namespace Malenki\Aleavatar\Primitive;
  * @property-read integer $r Red channel, an integer value (0-255)
  * @property-read integer $g Green channel, an integer value (0-255)
  * @property-read integer $b Blue channel, an integer value (0-255)
- * @copyright 2013 Michel Petit
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */

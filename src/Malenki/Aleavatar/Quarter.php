@@ -26,26 +26,86 @@ namespace Malenki\Aleavatar;
 
 
 /**
- * Define a quarter part of the picture.
+ * Defines a quarter part of the picture.
  *
  * A Quarter is define by 4 Units.
+ *
+ * A quarter is defined by its position into the final picture and by its rotation way.
  *
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
 class Quarter
 {
+    /**
+     * Type top left quarter. 
+     */
     const TOP_LEFT = 0;
+
+
+    /**
+     * Type top right quarter. 
+     */
     const TOP_RIGHT = 1;
+
+    /**
+     * Type bottom right quarter.
+     */
     const BOTTOM_RIGHT = 2;
+
+    /**
+     * Type bottom left quarter.
+     */
     const BOTTOM_LEFT = 3;
+
+    /**
+     * The quarter default size, `Quarter::SIZE = Aleavatar::SIZE / 2 = Unit::SIZE * 2`
+     */
     const SIZE = 64;
-    
+
+    /**
+     * Type of the current quarter. By default, is set to Quarter::TOP_LEFT.
+     *
+     * @see Quarter::TOP_LEFT
+     * @see Quarter::TOP_RIGHT
+     * @see Quarter::BOTTOM_LEFT
+     * @see Quarter::BOTTOM_RIGHT
+     * @var integer 
+     */
     protected $type = self::TOP_LEFT;
+
+    /**
+     * Store the 4 units composing the quarter.
+     *
+     * @see Unit
+     * @var array
+     */
     protected $arr_units = array();
+
+    /**
+     * Rotation way to apply to the current Quarter. 
+     * 
+     * @var boolean
+     */
     protected $bool_rotate_way = true;
 
 
+    /**
+     * Constructor sets the rotation way and the type of quarter.
+     *
+     * Quarter type defines the position of the quarter into the final picture 
+     * of the rendered identicon. The rotation way is a boolean to define how 
+     * to rotate the quarter, counter clockwise or not. 
+     * 
+     * @see Quarter::TOP_LEFT
+     * @see Quarter::TOP_RIGHT
+     * @see Quarter::BOTTOM_LEFT
+     * @see Quarter::BOTTOM_RIGHT
+     * @param mixed $type 
+     * @param mixed $bool_rotate_way 
+     * @access public
+     * @return void
+     */
     public function __construct($type = self::TOP_LEFT, $bool_rotate_way)
     {
         $this->type = $type;
@@ -55,7 +115,8 @@ class Quarter
 
 
     /**
-     * Returns new quarter copied from current one and rotated for the top right corner. 
+     * Returns new quarter copied from current one and rotated for the top 
+     * right corner. 
      * 
      * @access public
      * @return Quarter
@@ -71,7 +132,8 @@ class Quarter
 
 
     /**
-     * Returns new quarter copied from current one and rotated for the bottom right corner. 
+     * Returns new quarter copied from current one and rotated for the bottom 
+     * right corner. 
      * 
      * @access public
      * @return Quarter
@@ -87,7 +149,8 @@ class Quarter
 
 
     /**
-     * Returns new quarter copied from current one and rotated for the bottom left corner. 
+     * Returns new quarter copied from current one and rotated for the bottom 
+     * left corner. 
      * 
      * @access public
      * @return Quarter
@@ -103,7 +166,7 @@ class Quarter
 
 
     /**
-     * Set all unit parts of the current quarter using an array.
+     * Sets all unit parts of the current quarter using an array.
      * 
      * @param array $arr 
      * @access public
@@ -130,6 +193,14 @@ class Quarter
 
 
 
+    /**
+     * PNG rendering using GD module.
+     *
+     * **Note:** If final rendering uses ImageMagick, then this method is never called.
+     * 
+     * @access public
+     * @return Resource GD resource image
+     */
     public function png()
     {
         $img = imagecreatetruecolor(self::SIZE, self::SIZE);
@@ -185,6 +256,15 @@ class Quarter
 
 
 
+    /**
+     * SVG rendering.
+     *
+     * If quarter's type is different of Quarter::TOP_LEFT, a translation and a 
+     * rotation are apply. 
+     * 
+     * @access public
+     * @return string SVG code
+     */
     public function svg()
     {
         $str_g = '';

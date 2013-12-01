@@ -28,15 +28,39 @@ namespace Malenki\Aleavatar\Primitive;
 /**
  * Define ellipses and circles. 
  * 
- * @copyright 2013 Michel Petit
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
 class Ellipse
 {
+    /**
+     * center point, as stdClass with properties `x` and `y`. 
+     * 
+     * @var stdClass
+     * @access protected
+     */
     protected $center = null;
+
+
+    /**
+     * Object that stores some information about the radius.
+     *
+     * If it is a circle, the properties will be `r` `w` `h` and if it is an 
+     * ellipse, will be `rx` `ry` `w` `h`. Both have `is_circle` property 
+     * boolean value. 
+     * 
+     * @var mixed
+     * @access protected
+     */
     protected $radius = null;
-    
+
+
+    /**
+     * Stores color object
+     * 
+     * @var Color
+     * @access protected
+     */
     protected $color = null;
 
 
@@ -46,9 +70,9 @@ class Ellipse
      * 
      * @param integer $int_x 
      * @param integer $int_y 
-     * @throws InvalidArgumentException If coordinates are not positive integers.
+     * @throws \InvalidArgumentException If coordinates are not positive integers.
      * @access public
-     * @return void
+     * @return Ellipse
      */
     public function __construct($int_x, $int_y)
     {
@@ -88,15 +112,15 @@ class Ellipse
     /**
      * Sets radius.
      *
-     * If two values are provided, then n ellipse is defined.
+     * If two values are provided, then an ellipse is defined.
      *
      * If only one value is given, then you get a circle. 
      * 
      * @param integer $int_rx 
      * @param integer $int_ry 
-     * @throws InvalidArgumentException If radius is not an integer.
+     * @throws \InvalidArgumentException If radius is not an integer.
      * @access public
-     * @return void
+     * @return Ellipse
      */
     public function radius($int_rx, $int_ry = 0)
     {
@@ -168,6 +192,14 @@ class Ellipse
 
 
 
+    /**
+     * puts the current shape into given GD image resource. 
+     * 
+     * @throws \RuntimeException If radius is not set.
+     * @param resource $img GD image
+     * @access public
+     * @return void
+     */
     public function png(&$img)
     {
         if(is_null($this->center) || is_null($this->radius))
@@ -187,6 +219,13 @@ class Ellipse
 
 
 
+    /**
+     * Returns current object as an Ellipse or Circle primitive SCVG shape. 
+     * 
+     * @throws \RuntimeException If radius is not defined.
+     * @access public
+     * @return string SVG code.
+     */
     public function svg()
     {
         if(is_null($this->center) || is_null($this->radius))
@@ -217,6 +256,12 @@ class Ellipse
 
 
 
+    /**
+     * In string context, returns the SVG rendering. 
+     * 
+     * @access public
+     * @return string
+     */
     public function __toString()
     {
         return $this->svg();

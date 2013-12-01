@@ -29,16 +29,51 @@ namespace Malenki\Aleavatar\Primitive;
 /**
  * Define rectangle shapes. 
  * 
+ * Unlike Polygon objects, Rectangle uses only one point. This single point is 
+ * used to position the top left corner. Other parts of the rectangle are created using the `Rectangle::size()` method.
+ *
  * @copyright 2013 Michel Petit
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
 class Rectangle
 {
+    /**
+     * Standard class with properties `x` and `y` to store the top left 
+     * corner's coordinates.
+     * 
+     * @var stdClass
+     * @access protected
+     */
     protected $point = null;
+
+
+
+    /**
+     * Stores rectangle's sizes width and height, into its properties `w` and `h`.
+     * 
+     * @var stdClass
+     * @access protected
+     */
     protected $size = null;
+
+
+    /**
+     * Foreground color object. 
+     * 
+     * @var Color
+     * @access protected
+     */
     protected $color = null;
 
+
+
+    /**
+     * Constructor. It initializes inside point and size objects. 
+     * 
+     * @access public
+     * @return void
+     */
     public function __construct()
     {
         $this->point = new \stdClass();
@@ -51,15 +86,21 @@ class Rectangle
 
 
     /**
-     * Set one point by giving its coordinates. 
+     * Sets one point by giving its coordinates. 
      * 
      * @param integer $int_x 
      * @param integer $int_y 
+     * @throws \InvalidArgumentException If one of the two coordinate is not a positive integer.
      * @access public
-     * @return void
+     * @return Rectangle
      */
     public function point($int_x, $int_y)
     {
+        if(!is_integer($int_x) || !is_integer($int_y) || $int_x < 0 || $int_y < 0)
+        {
+            throw new \InvalidArgumentException('Corrdinates must be valid positive integers!');
+        }
+
         $this->point->x = $int_x;
         $this->point->y = $int_y;
 
@@ -68,8 +109,22 @@ class Rectangle
 
 
 
+    /**
+     * Sets the size of the current rectangle. 
+     * 
+     * @param integer $int_width 
+     * @param integer $int_height 
+     * @throws \InvalidArgumentException If width or height is not a positive integer.
+     * @access public
+     * @return Rectangle
+     */
     public function size($int_width, $int_height)
     {
+        if(!is_integer($int_width) || !is_integer($int_height) || $int_width < 0 || $int_height < 0)
+        {
+            throw new \InvalidArgumentException('Width and height must be positive integers!');
+        }
+
         $this->size->w = $int_width;
         $this->size->h = $int_height;
 
@@ -78,6 +133,13 @@ class Rectangle
     
     
     
+    /**
+     * Sets foreground color. 
+     * 
+     * @param Color $color 
+     * @access public
+     * @return Rectangle
+     */
     public function color($color)
     {
         $this->color = $color;
@@ -87,6 +149,13 @@ class Rectangle
 
     
     
+    /**
+     * Adds the current shape to the given GD resource image. 
+     * 
+     * @param resource $img 
+     * @access public
+     * @return void
+     */
     public function png(&$img)
     {
         imagefilledrectangle(
@@ -100,6 +169,12 @@ class Rectangle
     }
     
 
+    /**
+     * Returns the current shape as a SVG primitive. 
+     * 
+     * @access public
+     * @return string
+     */
     public function svg()
     {
         return sprintf(
@@ -113,6 +188,13 @@ class Rectangle
     }
 
 
+    /**
+     * In string context, returns shape as SVG code. 
+     * 
+     * @access public
+     * @return string
+     * @see Rectangle::svg()
+     */
     public function __toString()
     {
         return $this->svg();

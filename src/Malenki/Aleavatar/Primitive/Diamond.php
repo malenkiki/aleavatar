@@ -29,20 +29,19 @@ namespace Malenki\Aleavatar\Primitive;
 /**
  * Define diamond shapes. 
  * 
- * @copyright 2013 Michel Petit
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
 class Diamond extends Polygon
 {
     /**
-     * Set one point by giving its coordinates. 
+     * Sets one point by giving its coordinates. 
      * 
      * @param integer $int_x 
      * @param integer $int_y 
-     * @throws RuntimeException In you try to set fifth point.
+     * @throws \RuntimeException If you try to set 5th point.
      * @access public
-     * @return void
+     * @return Diamond
      */
     public function point($x, $y)
     {
