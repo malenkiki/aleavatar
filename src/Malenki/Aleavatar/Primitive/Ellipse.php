@@ -100,6 +100,13 @@ class Ellipse
 
 
 
+    /**
+     * Sets the foreground color. 
+     * 
+     * @param Color $color 
+     * @access public
+     * @return Ellipse
+     */
     public function color($color)
     {
         $this->color = $color;

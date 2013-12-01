@@ -37,8 +37,28 @@ namespace Malenki\Aleavatar\Primitive;
  */
 class Color
 {
+    /**
+     * Stores the red value. 
+     * 
+     * @var integer
+     * @access protected
+     */
+    
     protected $r = null;
+    /**
+     * Stores the green value. 
+     * 
+     * @var integer
+     * @access protected
+     */
     protected $g = null;
+
+    /**
+     * Stores the blue value. 
+     * 
+     * @var integer
+     * @access protected
+     */
     protected $b = null;
 
 

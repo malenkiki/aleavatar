@@ -43,14 +43,14 @@ class Diamond extends Polygon
      * @access public
      * @return Diamond
      */
-    public function point($x, $y)
+    public function point($int_x, $int_y)
     {
         if(count($this->arr_points) >= 4)
         {
             throw new \RuntimeException('Diamond has only four points!');
         }
         
-        return parent::point($x, $y);
+        return parent::point($int_x, $int_y);
     }
 
 }
