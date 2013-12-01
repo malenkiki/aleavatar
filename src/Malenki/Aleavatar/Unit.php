@@ -756,7 +756,7 @@ class Unit
     /**
      * Selects one of the 16 units using rectangles
      * 
-     * @param mixed $rank2 Column index
+     * @param integer $rank2 Column index
      * @access public
      * @return void
      */
@@ -1017,7 +1017,6 @@ class Unit
      * Select one of the 16 units with circles 
      *
      * @param integer $rank2 Column index
-     * @access protected
      * @return void
      */
     protected function row4($rank2)
@@ -1693,6 +1692,13 @@ class Unit
     }
 
 
+    /**
+     * Various diamond shapes
+     * 
+     * @param integer $rank2 Column index
+     * @access public
+     * @return void
+     */
     public function row8($rank2)
     {
         // big diamond
@@ -1896,6 +1902,13 @@ class Unit
     }
 
 
+    /**
+     * Select one unit from a set of 16 polygons shapes. 
+     * 
+     * @param integer $rank2 Column index
+     * @access public
+     * @return void
+     */
     public function row9($rank2)
     {
         if($rank2 == 0)
@@ -2073,6 +2086,13 @@ class Unit
 
 
 
+    /**
+     * Select one unit of triangle shapes. 
+     * 
+     * @param integer $rank2 Column index
+     * @access public
+     * @return void
+     */
     public function row10($rank2)
     {
         if($rank2 == 0)
@@ -3178,8 +3198,8 @@ class Unit
     }
 
     /**
-     * Generates unit part by giving $rank1 and $rank2 to 
-     * choose the shapes to populate with. 
+     * Generates unit part by giving row index and column index to 
+     * choose the shapes to populate with.
      * 
      * Parameters are both integers from 0 to 15 inclusive.
      *
@@ -3220,6 +3240,13 @@ class Unit
 
 
 
+    /**
+     * PNG GD fallback used to compound final picture if ImageMagick module is 
+     * not installed. 
+     * 
+     * @access public
+     * @return resource
+     */
     public function png()
     {
         $img = imagecreatetruecolor(self::SIZE, self::SIZE);
@@ -3241,10 +3268,20 @@ class Unit
             $p->png($img);
         }
 
-        //imagepng($img, 'test.png');//DEBUG
         return $img;
     }
 
+
+
+
+    /**
+     * SVG output 
+     * 
+     * Outputs the primitive groups as SVG code.
+     *
+     * @access public
+     * @return string
+     */
     public function svg()
     {
         $str_g = '';
