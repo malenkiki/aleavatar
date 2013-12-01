@@ -28,7 +28,8 @@ namespace Malenki\Aleavatar;
 /**
  * Define a quarter part of the picture.
  *
- * @copyright 2013 Michel Petit
+ * A Quarter is define by 4 Units.
+ *
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */

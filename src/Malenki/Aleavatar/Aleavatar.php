@@ -31,18 +31,80 @@ namespace Malenki\Aleavatar;
 /**
  * Generate random avatar(s) to populate your websites!
  *
+ * This allows you to create **identicons**, like you can see on 
+ * [Stackoverflow](http://stackoverflow.com/questions) for example. When user 
+ * has not set his own avatar yet, an identicon has created.
+ *
+ * But *Aleavatar* are more primitive shapes to generate more beautifull pictures.
+ *
+ * *Aleavatar* run using 256 primitive squares containing shapes, called 
+ * *units*. When an Aleavatar is created, it creates an **md5 sum** from the **given string** 
+ * or from **random string** if no string is given.
+ *
+ * On this **32 characters**, *Aleavatar* takes only **16 of them** like fallow:
+ * 
+ * - the first is the index of the row to choose the **unit 1** ;
+ * 
+ * - the second is the index of the column of the previous row to choose **unit 1** ;
+ * 
+ * - the third and the fourth are like the two previous to choose **unit 2** ;
+ * 
+ * - 5th and 6th are like before but for the **unit 3** ;
+ * 
+ * - without surprise, 7th and 8th are for the **unit 4** :-)
+ * 
+ * - **foreground color** is defined from 9th to 14th characters,
+ * 
+ * - the last but one defines **how the 4 units take place into the first quarter** ;
+ * 
+ * - the last defines **how each quarter is rotated**. 
+ *
+ * Well, now you know the internal functionning, I can tell you it can output 
+ * picture like **SVG** or **PNG**. Please see this methods to learn more about how to 
+ * output your picture.
+ *
+ * One very important notice I have to tell you: If you want PNG outout, you 
+ * must have on your server 
+ * [ImageMagick](http://www.php.net/manual/fr/book.imagick.php) or 
+ * [GD](http://www.php.net/manual/fr/book.gmagick.php) PHP module. I 
+ * **strongly** recommand you the first one, **GD is used as fallback** 
+ * (Scaling and antialiasing are not available before PHP 5.5!).
+ *
  * @property-read string $seed Seed used to create avatar
  * @property-read string $hash Hash of the seed
- * @copyright 2013 Michel Petit
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
 class Aleavatar
 {
+    /**
+     * Default size of identicon 
+     */
     const SIZE = 128;
 
+    /**
+     * Store background and foreground color. 
+     * 
+     * @var array
+     * @access protected
+     */
     protected $arr_colors = array();
+
+    /**
+     * Store top left, top right, bottom right and bottom left quarter parts. 
+     * 
+     * @var array
+     * @access protected
+     */
     protected $arr_quarters = array();
+
+
+    /**
+     * Store custom size.  
+     * 
+     * @var integer
+     * @access protected
+     */
     protected $size = self::SIZE;
     protected $seed = null;
     
@@ -87,6 +149,15 @@ class Aleavatar
     }
 
 
+    /**
+     * Constructor, it generates the "seed" used to create identicon later. 
+     * 
+     * If no string given, a random seed is created.
+     *
+     * @param string $str_seed The string used to create the seed.
+     * @access public
+     * @return void
+     */
     public function __construct($str_seed = null)
     {
         $this->seed = new \stdClass();
@@ -120,6 +191,17 @@ class Aleavatar
 
 
 
+    /**
+     * Generate identicon internally.
+     *
+     * No image yet, but units are chosen, the way to place them and how to 
+     * rotate quarters too. The color is fixed, and an optional size can be set 
+     * here. If not set, the size will be 128 px. 
+     * 
+     * @param integer $size Size in pixels of the identicon
+     * @access public
+     * @return Aleavatar
+     */
     public function generate($size = self::SIZE)
     {
         $this->size = $size;
@@ -170,6 +252,17 @@ class Aleavatar
     }
 
 
+
+    /**
+     * Output SVG map of all available units.
+     * 
+     * Image output is a square of 16 × 16 units.
+     *
+     * @param boolean $bool_for_html5 If true, output SVG string ready to be included into HTML5 document (without XML header)
+     * @static
+     * @access public
+     * @return string
+     */
     public static function mapSvg($bool_for_html5 = false)
     {
         $background = new Primitive\Color('FFFFFF');
@@ -218,6 +311,27 @@ class Aleavatar
 
 
     
+    /**
+     * Output PNG image of the generated identicon. 
+     * 
+     * This method creates PNG you can display into browser by printing the 
+     * output or you can store the PNG into file if yoy give the filename.
+     *
+     * **Notes:**
+     *
+     * - If you have not **ImageMagick**, but only GD and you have PHP 
+     * version before PHP 5.5, then you will get a *Notice Error* informing you 
+     * that antialiasing is not available
+     * 
+     * - Like previous case, but if you want other size, then an *Warning 
+     *  Error* is raised to inform you that the image cannot be scaled because 
+     *  image scaling feature is not available in PHP < 5.5.
+     *
+     * @throws \RuntimeException If ImageMagick and GD are not available.
+     * @param string $str_filename If given, save as PNG file
+     * @access public
+     * @return mixed PNG data or void
+     */
     public function png($str_filename = null)
     {
         if(extension_loaded('imagick'))
@@ -333,6 +447,15 @@ class Aleavatar
 
 
 
+    /**
+     * Outputs identicon has SVG string, to be used standalone.
+     *
+     * This can create a file too, but in all case output SVG with XML header.
+     * 
+     * @param string $str_filename Filename where to store it
+     * @access public
+     * @return string SVG code
+     */
     public function svg($str_filename = null)
     {
         $str_svg = $this->svgForHtml5();
@@ -348,6 +471,14 @@ class Aleavatar
 
 
 
+    /**
+     * Outputs SVG string to used it into HTML5 document.
+     * 
+     * Generated SVG is without XML header.
+     *
+     * @access public
+     * @return string SVG code
+     */
     public function svgForHtml5()
     {
         $arr_svg = array();
@@ -373,6 +504,12 @@ class Aleavatar
     }
 
 
+    /**
+     * In string context, output full SVG code. 
+     * 
+     * @access public
+     * @return string
+     */
     public function __toString()
     {
         return $this->svg();

@@ -28,7 +28,10 @@ namespace Malenki\Aleavatar;
 /**
  * Define one of the sixteen areas of the final avatar picture.
  * 
- * @copyright 2013 Michel Petit
+ * At the identicon creation time, 4 of them are selected to populate the first 
+ * quarter, this quarter is then copied 3 times (with various rotation).
+ *
+ *
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
@@ -40,26 +43,72 @@ class Unit
     protected $arr_primitives = array();
 
 
+    /**
+     * Add a primitive shape to the current unit. 
+     *
+     *
+     * @see Primitive\Diamond 
+     * @see Primitive\Ellipse 
+     * @see Primitive\Polygon 
+     * @see Primitive\Rectangle 
+     * @see Primitive\Square 
+     * @see Primitive\Triangle 
+     *
+     * @param mixed $p One object from the following classes: `Primitive\Diamond`, `Primitive\Ellipse`, `Primitive\Poligon`, `Primitive\Rectangle`, `Primitive\Square`, `Primitive\Triangle`.
+     * @access protected
+     * @return void
+     */
     protected function add($p)
     {
         $this->arr_primitives[] = $p;
     }
 
+    /**
+     * Gets one already added primitive shape by giving its index. 
+     * 
+     * @param int $int_pos Position index of the primitive to get.
+     * @access protected
+     * @return Object
+     */
     protected function get($int_pos = 0)
     {
         return $this->arr_primitives[$int_pos];
     }
 
+
+    /**
+     * Shorthand for Unit::get() method to get the last primitive shape of the 
+     * current unit. 
+     * 
+     * @access protected
+     * @return Object
+     */
     protected function last()
     {
         return $this->arr_primitives[count($this->arr_primitives) - 1];
     }
 
+
+
+    /**
+     * Get the background color of the current Unit. 
+     * 
+     * @access public
+     * @return Primitive\Color
+     */
     public function bg()
     {
         return $this->arr_colors[0];
     }
 
+    
+    
+    /**
+     * Get the foreground color of the current Unit. 
+     * 
+     * @access public
+     * @return Primitive\Color
+     */
     public function fg()
     {
         return $this->arr_colors[1];
@@ -67,6 +116,15 @@ class Unit
 
 
 
+    /**
+     * Set the Unit background color.
+     *
+     * The color is set by using Primitive\Color object. 
+     * 
+     * @param \Malenki\Aleavatar\Primitive\Color $color 
+     * @access public
+     * @return void
+     */
     public function background(\Malenki\Aleavatar\Primitive\Color $color)
     {
         $this->arr_colors[0] = $color;
@@ -74,6 +132,15 @@ class Unit
 
 
 
+    /**
+     * Set the Unit foreground color.
+     *
+     * The color is set by using Primitive\Color object. 
+     * 
+     * @param \Malenki\Aleavatar\Primitive\Color $color 
+     * @access public
+     * @return void
+     */
     public function foreground(\Malenki\Aleavatar\Primitive\Color $color)
     {
         $this->arr_colors[1] = $color;
@@ -82,9 +149,9 @@ class Unit
 
     
     /**
-     * Various 
+     * Selects one of the 16 units using various shapes.
      *
-     * @param integer $rank2 
+     * @param integer $rank2 Column index
      * @access protected
      * @return void
      */
@@ -276,9 +343,9 @@ class Unit
 
 
     /**
-     * Shapes with squares.
+     * Select one of the 16 shapes with squares.
      * 
-     * @param inteer $rank2 
+     * @param integer $rank2 Column index 
      * @access protected
      * @return void
      */
@@ -522,9 +589,9 @@ class Unit
 
 
     /**
-     * Shapes with triangles.
+     * Selects one of the 16 shapes with triangles.
      * 
-     * @param inteer $rank2 
+     * @param integer $rank2 Column index
      * @access protected
      * @return void
      */
@@ -686,6 +753,13 @@ class Unit
     }
 
 
+    /**
+     * Selects one of the 16 units using rectangles
+     * 
+     * @param mixed $rank2 Column index
+     * @access public
+     * @return void
+     */
     public function row3($rank2)
     {
         // Big rectangle TOP
@@ -940,9 +1014,9 @@ class Unit
     
     
     /**
-     * Shapes with circles 
+     * Select one of the 16 units with circles 
      *
-     * @param integer $rank2 
+     * @param integer $rank2 Column index
      * @access protected
      * @return void
      */
@@ -1085,6 +1159,13 @@ class Unit
     }
 
 
+    /**
+     * Select one of 16 units containing various polygons shapes. 
+     * 
+     * @param integer $rank2 Column index
+     * @access public
+     * @return void
+     */
     public function row5($rank2)
     {
         // "squared" arrow TL
@@ -1242,6 +1323,13 @@ class Unit
     }
 
 
+    /**
+     * Selects one unit from 16 with various triangle shapes. 
+     * 
+     * @param integer $rank2 Column index
+     * @access public
+     * @return void
+     */
     public function row6($rank2)
     {
         // Big long triangle LEFT
@@ -1434,6 +1522,13 @@ class Unit
     }
 
 
+    /**
+     * Select one unit from 16 containing circle shapes. 
+     * 
+     * @param integer $rank2 Column index
+     * @access public
+     * @return void
+     */
     public function row7($rank2)
     {
         // Circle inside other TOP
