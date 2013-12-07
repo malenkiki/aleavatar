@@ -315,18 +315,23 @@ class Aleavatar
      * Output PNG image of the generated identicon. 
      * 
      * This method creates PNG you can display into browser by printing the 
-     * output or you can store the PNG into file if yoy give the filename.
+     * output or you can store the PNG into file if you give the filename.
      *
      * **Notes:**
      *
-     * - If you have not **ImageMagick**, but only GD and you have PHP 
+     * - If you have not **ImageMagick** PHP module, then *Aleavatar* tries to 
+     * run **convert** application. If convert is not found, then GD is used. 
+     * If GD is not found too, then raises an Runtime Exception.
+     *
+     * - If you have not **ImageMagick** at all, but only GD and you have PHP 
      * version before PHP 5.5, then you will get a *Notice Error* informing you 
-     * that antialiasing is not available
+     * that antialiasing is not available.
      * 
-     * - Like previous case, but if you want other size, then an *Warning 
+     * - Like previous case, but if you want other size, then a *Warning 
      *  Error* is raised to inform you that the image cannot be scaled because 
      *  image scaling feature is not available in PHP < 5.5.
      *
+     * @throws \RuntimeException If ImageMagick Application cannot write into temporary directory.
      * @throws \RuntimeException If ImageMagick and GD are not available.
      * @param string $str_filename If given, save as PNG file
      * @access public
@@ -357,90 +362,152 @@ class Aleavatar
                 return $contents;
             }
         }
-        elseif(extension_loaded('gd'))
+        else
         {
-            $img = imagecreatetruecolor(self::SIZE, self::SIZE);
-            // Even if GD is installed, some systems have not this function
-            // See http://stackoverflow.com/questions/5756144/imageantialias-call-to-undefined-function-error-with-gd-installed
-            if(function_exists('imageantialias'))
+            $bool_has_imagick = false;
+
+            if(function_exists('exec'))
             {
-                imageantialias($img, true);
+                if(is_writable(sys_get_temp_dir()))
+                {
+                    $int_return_code = null;
+                    $arr_out = array();
+                    exec("convert -version", $arr_out, $int_return_code);
+
+                    $bool_has_imagick = $int_return_code == 0;
+                }
+                else
+                {
+                    throw new \RuntimeException('Cannot write to the temporary directory!');
+                }
             }
-            else
+
+            // ImageMagick software is available! yes!
+            if($bool_has_imagick)
             {
-                trigger_error(
-                    'Antialiasing is not available on your system!',
-                    E_USER_NOTICE
+                $bool_as_output = false;
+                $str_exec = 'convert %s %s';
+
+                // Generates temporary SVG file
+                $str_tmp_file = tempnam(sys_get_temp_dir(), 'aleavatar');
+                $this->svg($str_tmp_file);
+
+                // Convert temporary file to PNG temporary file of wanted file
+
+                if(is_null($str_filename))
+                {
+                    $bool_as_output = true;
+                    $str_filename = sys_get_temp_dir() . DIRECTORY_SEPARATOR. uniqid() . '.png';
+                }
+                
+                $int_return_code = null;
+                $arr_out = array();
+                exec(
+                    sprintf($str_exec, $str_tmp_file, $str_filename),
+                    $arr_out,
+                    $int_return_code
                 );
+
+                if($int_return_code != 0)
+                {
+                    throw \RuntimeException('Can not creating PNG file!');
+                }
+
+                if($bool_as_output)
+                {
+                    ob_start();
+                    readfile($str_filename);
+                    $contents =  ob_get_contents();
+                    ob_end_clean();
+                    return $contents;
+                }
             }
 
-            $this->arr_colors[0]->gd($img);    
-            $this->arr_colors[1]->gd($img);    
-
-            foreach($this->arr_quarters as $k => $q)
+            elseif(extension_loaded('gd'))
             {
-                $img_q = $q->png();
-                $this->arr_colors[0]->gd($img_q);    
-                $this->arr_colors[1]->gd($img_q);    
-
-                $dst_x = 0;
-                $dst_y = 0;
-
-                if($k == 1)
+                $img = imagecreatetruecolor(self::SIZE, self::SIZE);
+                // Even if GD is installed, some systems have not this function
+                // See http://stackoverflow.com/questions/5756144/imageantialias-call-to-undefined-function-error-with-gd-installed
+                if(function_exists('imageantialias'))
                 {
-                    $dst_x = Quarter::SIZE;
-                    $dst_y = 0;
-                }
-                if($k == 2)
-                {
-                    $dst_x = Quarter::SIZE;
-                    $dst_y = Quarter::SIZE;
-                }
-                if($k == 3)
-                {
-                    $dst_x = 0;
-                    $dst_y = Quarter::SIZE;
-                }
-                imagecopy($img, $img_q, $dst_x, $dst_y, 0, 0, Quarter::SIZE, Quarter::SIZE);
-                imagedestroy($img_q);
-            }
-            
-            if($this->size != self::SIZE)
-            {
-                if(function_exists('imagescale'))
-                {
-                    $img = imagescale($img, $this->size, $this->size,  IMG_BICUBIC_FIXED);
+                    imageantialias($img, true);
                 }
                 else
                 {
                     trigger_error(
-                        'Scaling is not available on your system! '.
-                        sprintf('Size will be %dpx by side only!', self::SIZE),
-                            E_USER_WARNING
-                        );
+                        'Antialiasing is not available on your system!',
+                        E_USER_NOTICE
+                    );
                 }
-            }
 
-            if(!is_null($str_filename))
-            {
-                imagepng($img, $str_filename);
-                imagedestroy($img);
+                $this->arr_colors[0]->gd($img);    
+                $this->arr_colors[1]->gd($img);    
+
+                foreach($this->arr_quarters as $k => $q)
+                {
+                    $img_q = $q->png();
+                    $this->arr_colors[0]->gd($img_q);    
+                    $this->arr_colors[1]->gd($img_q);    
+
+                    $dst_x = 0;
+                    $dst_y = 0;
+
+                    if($k == 1)
+                    {
+                        $dst_x = Quarter::SIZE;
+                        $dst_y = 0;
+                    }
+                    if($k == 2)
+                    {
+                        $dst_x = Quarter::SIZE;
+                        $dst_y = Quarter::SIZE;
+                    }
+                    if($k == 3)
+                    {
+                        $dst_x = 0;
+                        $dst_y = Quarter::SIZE;
+                    }
+                    imagecopy($img, $img_q, $dst_x, $dst_y, 0, 0, Quarter::SIZE, Quarter::SIZE);
+                    imagedestroy($img_q);
+                }
+
+                if($this->size != self::SIZE)
+                {
+                    if(function_exists('imagescale'))
+                    {
+                        $img = imagescale($img, $this->size, $this->size,  IMG_BICUBIC_FIXED);
+                    }
+                    else
+                    {
+                        trigger_error(
+                            'Scaling is not available on your system! '.
+                            sprintf('Size will be %dpx by side only!', self::SIZE),
+                                E_USER_WARNING
+                            );
+                    }
+                }
+
+                if(!is_null($str_filename))
+                {
+                    imagepng($img, $str_filename);
+                    imagedestroy($img);
+                }
+                else
+                {
+                    ob_start();
+                    imagepng($img);
+                    $contents =  ob_get_contents();
+                    ob_end_clean();
+
+                    imagedestroy($img);
+
+                    return $contents;
+                }
             }
             else
             {
-                ob_start();
-                imagepng($img);
-                $contents =  ob_get_contents();
-                ob_end_clean();
-                
-                imagedestroy($img);
-                
-                return $contents;
+                throw new \RuntimeException('GD is not available! Aleavatar uses at least GD to work, ImageMagick is recommanded!');
             }
-        }
-        else
-        {
-            throw new \RuntimeException('GD is not available! Aleavatar uses at least GD to work, ImageMagick is recommanded!');
         }
 
     } 
