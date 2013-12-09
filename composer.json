@@ -4,6 +4,10 @@
     "require": {
         "php": ">=5.3.0"
     },
+    "suggest": {
+        "ext-imagick": "One of the way to render identicons…",
+        "ext-gd": "The last way to render identicons, used as fallback."
+    },
     "license": "MIT",
     "authors": [
         {
