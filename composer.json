@@ -1,6 +1,7 @@
 {
     "name": "malenki/aleavatar",
     "type": "library",
+    "keywords": ["identicon","avatar", "svg", "png", "picture", "generator"],
     "support": {
         "issues": "https://github.com/malenkiki/aleavatar/issues"
     },
