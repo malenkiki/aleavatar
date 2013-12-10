@@ -1,6 +1,9 @@
 {
     "name": "malenki/aleavatar",
     "type": "library",
+    "support": {
+        "issues": "https://github.com/malenkiki/aleavatar/issues"
+    },
     "require": {
         "php": ">=5.3.0"
     },
