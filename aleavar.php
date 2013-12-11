@@ -37,9 +37,25 @@ $opt = \Malenki\Argile\Options::getInstance();
 $opt->addUsage("--output FILE");
 $opt->addUsage("--seed STRING --output FILE");
 $opt->addUsage("--seed STRING --png --output FILE");
+$opt->addUsage("--seed STRING --size SIZE --output FILE");
 
 $opt->description('Create identicon ala "StackOverflow" for given string.');
-$opt->version('Aleavar CLI version 1.0');
+$opt->version(
+    'Aleavar CLI version 1.1'.
+    "\n".
+    "\n".
+    "\n".
+'Copyright (c) 2013 Michel Petit <petit.michel@gmail.com>'.
+"\n".
+    "\n".
+'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:'.
+"\n".
+    "\n".
+'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'.
+"\n".
+    "\n".
+'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'
+);
 
 $opt->flexible();
 
@@ -51,14 +67,24 @@ $opt->newValue('seed')
     ->help('Give string to generate unique identicon with it.', 'STRING')
     ;
 
+$opt->newValue('size')
+    ->required()
+    ->long('size')
+    ->help('File size in pixel. By default square size is 128px.', 'SIZE')
+    ;
+
 $opt->newValue('output')
     ->required()
     ->short('o')
     ->long('output')
     ->help('File name to save identicon', 'FILE')
     ;
+$opt->newSwitch('force')
+    ->long('force')
+    ->help('Allow overwriting while outputing image if a file has the same name.')
+    ;
+
 $opt->newSwitch('png')
-    ->required()
     ->long('png')
     ->help('Output file as a PNG image instead using SVG.')
     ;
@@ -71,7 +97,7 @@ if($opt->has('output'))
     
     if(is_writable(dirname($strFile)))
     {
-        if(file_exists($strFile))
+        if(file_exists($strFile) && !$opt->has('force'))
         {
             fwrite(STDERR, 'Cannot write output file, file already exists!');
             fwrite(STDERR, "\n");
@@ -94,14 +120,34 @@ if($opt->has('output'))
         $a = new \Malenki\Aleavatar\Aleavatar();
     }
 
-    $a->generate();
+    try
+    {
+        if($opt->has('size'))
+        {
+            $a->generate((integer) $opt->get('size'));
+        }
+        else
+        {
+            $a->generate();
+        }
 
-    if($opt->has('png'))
-    {
-        $a->png($strFile);
+        if($opt->has('png'))
+        {
+            $a->png($strFile);
+        }
+        else
+        {
+            $a->svg($strFile);
+        }
     }
-    else
+    catch(\Exception $e)
     {
-        $a->svg($strFile);
+        fwrite(STDERR, 'An error occrued!');
+        fwrite(STDERR, "\n");
+        fwrite(STDERR, $e->getMessage());
+        fwrite(STDERR, "\n");
+        exit(1);
     }
+
+    exit(0);
 }
