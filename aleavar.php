@@ -44,20 +44,20 @@ $opt->version('Aleavar CLI version 1.0');
 $opt->flexible();
 
 
-$opt->addValue('seed')
+$opt->newValue('seed')
     ->required()
     ->short('s')
     ->long('seed')
     ->help('Give string to generate unique identicon with it.', 'STRING')
     ;
 
-$opt->addValue('output')
+$opt->newValue('output')
     ->required()
     ->short('o')
     ->long('output')
     ->help('File name to save identicon', 'FILE')
     ;
-$opt->addSwitch('png')
+$opt->newSwitch('png')
     ->required()
     ->long('png')
     ->help('Output file as a PNG image instead using SVG.')
@@ -67,7 +67,7 @@ $opt->parse();
 
 if($opt->has('output'))
 {
-    $strFile = $this->get('output');
+    $strFile = $opt->get('output');
     
     if(is_writable(dirname($strFile)))
     {
@@ -87,12 +87,14 @@ if($opt->has('output'))
 
     if($opt->has('seed'))
     {
-        $a = new \Malenki\Aleavatar($opt->get('seed'));
+        $a = new \Malenki\Aleavatar\Aleavatar($opt->get('seed'));
     }
     else
     {
-        $a = new \Malenki\Aleavatar();
+        $a = new \Malenki\Aleavatar\Aleavatar();
     }
+
+    $a->generate();
 
     if($opt->has('png'))
     {

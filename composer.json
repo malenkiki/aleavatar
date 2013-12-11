@@ -6,7 +6,8 @@
         "issues": "https://github.com/malenkiki/aleavatar/issues"
     },
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "malenki/argile": "*"
     },
     "suggest": {
         "ext-imagick": "One of the way to render identicons…",
