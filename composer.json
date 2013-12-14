@@ -21,6 +21,7 @@
             "role": "Developer"
         }
     ],
+    "bin": ["bin/aleavatar"],    
     "autoload": {
         "psr-0": {
             "Malenki\\Aleavatar": "src/"
