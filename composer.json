@@ -10,8 +10,7 @@
         "malenki/argile": "*"
     },
     "suggest": {
-        "ext-imagick": "One of the way to render identicons…",
-        "ext-gd": "The last way to render identicons, used as fallback."
+        "ext-imagick": "One of the way to render identicons…"
     },
     "license": "MIT",
     "authors": [

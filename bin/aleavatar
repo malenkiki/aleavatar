@@ -29,7 +29,7 @@ namespace Malenki\Fictif;
 
 if(phpversion() >= '5.5.0')
 {
-    cli_set_process_title('aleavar');
+    cli_set_process_title('aleavatar');
 }
 
 $opt = \Malenki\Argile\Options::getInstance();
@@ -142,7 +142,7 @@ if($opt->has('output'))
     }
     catch(\Exception $e)
     {
-        fwrite(STDERR, 'An error occrued!');
+        fwrite(STDERR, 'An error occured!');
         fwrite(STDERR, "\n");
         fwrite(STDERR, $e->getMessage());
         fwrite(STDERR, "\n");
