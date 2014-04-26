@@ -25,78 +25,58 @@ namespace Malenki\Aleavatar;
 
 (@include_once __DIR__ . '/vendor/autoload.php') || @include_once __DIR__ . '/../../autoload.php';
 
-
 $size = Aleavatar::SIZE;
 
-if(isset($_GET['size']))
-{
+if (isset($_GET['size'])) {
     $size = (integer) $_GET['size'];
 }
 
-if(isset($_GET['map']))
-{
-    $map = Aleavatar::mapSvg(true);    
-}
-else
-{
+if (isset($_GET['map'])) {
+    $map = Aleavatar::mapSvg(true);
+} else {
 
     $seed = '';
 
-    if(isset($_GET['key']))
-    {
+    if (isset($_GET['key'])) {
         $seed = trim($_GET['key']);
         $a = new Aleavatar($seed);
         $a->generate($size);
 
-        if(isset($_GET['png']))
-        {
+        if (isset($_GET['png'])) {
             header('Content-Type: image/png');
             echo $a->png();
             exit();
-        }
-        else
-        {
+        } else {
             $key = $a->svgForHtml5();
         }
-    }
-    elseif(isset($_GET['alpha']))
-    {
+    } elseif (isset($_GET['alpha'])) {
         $arr = array_merge(range('A', 'Z'), range('a', 'z'));
-    }
-    elseif(isset($_GET['num']))
-    {
+    } elseif (isset($_GET['num'])) {
         $arr = range(0, 15);
-    }
-    else
-    {
-        $arr = array_map(function($v){return uniqid();}, range(0,19));
+    } else {
+        $arr = array_map(function ($v) {return uniqid();}, range(0,19));
     }
 
-    if(isset($arr))
-    {
-        foreach($arr as $k => $l)
-        {
+    if (isset($arr)) {
+        foreach ($arr as $k => $l) {
             $a = new Aleavatar($l);
             $a->generate($size);
 
             $data = new \stdClass();
             $data->seed = $l;
-            
+
             $data->url = sprintf(
                 'index.php?%s',
                 http_build_query(array('key' => $l, 'size' => $size))
             );
 
-            if(isset($_GET['png']))
-            {
+            if (isset($_GET['png'])) {
                 $data->img = sprintf(
                     '<img src="index.php?key=%s&amp;png&amp;size=%d" />',
                     $l,
                     $size
                 );
-            }
-            else
-            {
+            } else {
                 $data->img = $a->svgForHtml5();
             }
 
@@ -116,7 +96,7 @@ div.key {margin:30px auto; box-shadow:0 0 10px silver;}
 </style>
 <body>
 <div>
-Size <a href="index.php?size=64">64</a> -  <a href="index.php?size=128">128</a> - <a href="index.php?size=256">256</a> - <a href="index.php?size=512">512</a> 
+Size <a href="index.php?size=64">64</a> -  <a href="index.php?size=128">128</a> - <a href="index.php?size=256">256</a> - <a href="index.php?size=512">512</a>
 A-Za-z <a href="index.php?alpha&amp;size=<?= $size ?>">svg</a> - <a href="index.php?alpha&amp;png&amp;size=<?= $size ?>">png</a>
 0-15 <a href="index.php?num&amp;size=<?= $size ?>">svg</a> - <a href="index.php?num&amp;png&amp;size=<?= $size ?>">png</a>
 Random <a href="index.php?size=<?= $size ?>">svg</a> - <a href="index.php?png&amp;size=<?= $size ?>">png</a>

@@ -24,31 +24,29 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 namespace Malenki\Aleavatar\Primitive;
 
-
 /**
- * Define triangles. 
- * 
- * @author Michel Petit <petit.michel@gmail.com> 
+ * Define triangles.
+ *
+ * @author Michel Petit <petit.michel@gmail.com>
  * @license MIT
  */
 class Triangle extends Polygon
 {
     /**
-     * Set one point by giving its coordinates. 
-     * 
-     * @param integer $int_x 
-     * @param integer $int_y 
+     * Set one point by giving its coordinates.
+     *
+     * @param  integer           $int_x
+     * @param  integer           $int_y
      * @throws \RuntimeException If you try to set 4th point.
      * @access public
      * @return void
      */
     public function point($int_x, $int_y)
     {
-        if(count($this->arr_points) >= 3)
-        {
+        if (count($this->arr_points) >= 3) {
             throw new \RuntimeException('Triangle has only three points!');
         }
-        
+
         return parent::point($int_x, $int_y);
     }
 

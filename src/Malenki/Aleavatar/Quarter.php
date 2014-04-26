@@ -24,7 +24,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 namespace Malenki\Aleavatar;
 
-
 /**
  * Defines a quarter part of the picture.
  *
@@ -32,19 +31,18 @@ namespace Malenki\Aleavatar;
  *
  * A quarter is defined by its position into the final picture and by its rotation way.
  *
- * @author Michel Petit <petit.michel@gmail.com> 
+ * @author Michel Petit <petit.michel@gmail.com>
  * @license MIT
  */
 class Quarter
 {
     /**
-     * Type top left quarter. 
+     * Type top left quarter.
      */
     const TOP_LEFT = 0;
 
-
     /**
-     * Type top right quarter. 
+     * Type top right quarter.
      */
     const TOP_RIGHT = 1;
 
@@ -70,7 +68,7 @@ class Quarter
      * @see Quarter::TOP_RIGHT
      * @see Quarter::BOTTOM_LEFT
      * @see Quarter::BOTTOM_RIGHT
-     * @var integer 
+     * @var integer
      */
     protected $type = self::TOP_LEFT;
 
@@ -83,26 +81,25 @@ class Quarter
     protected $arr_units = array();
 
     /**
-     * Rotation way to apply to the current Quarter. 
-     * 
+     * Rotation way to apply to the current Quarter.
+     *
      * @var boolean
      */
     protected $bool_rotate_way = true;
 
-
     /**
      * Constructor sets the rotation way and the type of quarter.
      *
-     * Quarter type defines the position of the quarter into the final picture 
-     * of the rendered identicon. The rotation way is a boolean to define how 
-     * to rotate the quarter, counter clockwise or not. 
-     * 
+     * Quarter type defines the position of the quarter into the final picture
+     * of the rendered identicon. The rotation way is a boolean to define how
+     * to rotate the quarter, counter clockwise or not.
+     *
      * @see Quarter::TOP_LEFT
      * @see Quarter::TOP_RIGHT
      * @see Quarter::BOTTOM_LEFT
      * @see Quarter::BOTTOM_RIGHT
-     * @param mixed $type 
-     * @param mixed $bool_rotate_way 
+     * @param  mixed $type
+     * @param  mixed $bool_rotate_way
      * @access public
      * @return void
      */
@@ -112,12 +109,10 @@ class Quarter
         $this->bool_rotate_way = $bool_rotate_way;
     }
 
-
-
     /**
-     * Returns new quarter copied from current one and rotated for the top 
-     * right corner. 
-     * 
+     * Returns new quarter copied from current one and rotated for the top
+     * right corner.
+     *
      * @access public
      * @return Quarter
      */
@@ -129,12 +124,10 @@ class Quarter
         return $q;
     }
 
-
-
     /**
-     * Returns new quarter copied from current one and rotated for the bottom 
-     * right corner. 
-     * 
+     * Returns new quarter copied from current one and rotated for the bottom
+     * right corner.
+     *
      * @access public
      * @return Quarter
      */
@@ -146,12 +139,10 @@ class Quarter
         return $q;
     }
 
-
-
     /**
-     * Returns new quarter copied from current one and rotated for the bottom 
-     * left corner. 
-     * 
+     * Returns new quarter copied from current one and rotated for the bottom
+     * left corner.
+     *
      * @access public
      * @return Quarter
      */
@@ -163,12 +154,10 @@ class Quarter
         return $q;
     }
 
-
-
     /**
      * Sets all unit parts of the current quarter using an array.
-     * 
-     * @param array $arr 
+     *
+     * @param  array $arr
      * @access public
      * @return void
      */
@@ -177,11 +166,10 @@ class Quarter
         $this->arr_units = $arr;
     }
 
-
     /**
-     * Adds one unit to the current quarter. 
-     * 
-     * @param Unit $unit 
+     * Adds one unit to the current quarter.
+     *
+     * @param  Unit $unit
      * @access public
      * @return void
      */
@@ -190,14 +178,11 @@ class Quarter
         $this->arr_units[] = $unit;
     }
 
-
-
-
     /**
      * PNG rendering using GD module.
      *
      * **Note:** If final rendering uses ImageMagick, then this method is never called.
-     * 
+     *
      * @access public
      * @return Resource GD resource image
      */
@@ -207,33 +192,28 @@ class Quarter
 
         // Even if GD is installed, some systems have not this function
         // See http://stackoverflow.com/questions/5756144/imageantialias-call-to-undefined-function-error-with-gd-installed
-        if(function_exists('imageantialias'))
-        {
+        if (function_exists('imageantialias')) {
             imageantialias($img, true);
         }
-        
+
         $this->arr_units[0]->bg()->gd($img);
         $this->arr_units[0]->fg()->gd($img);
-        
-        foreach($this->arr_units as $k => $u)
-        {
+
+        foreach ($this->arr_units as $k => $u) {
             $img_u = $u->png();
-            
+
             $dst_x = 0;
             $dst_y = 0;
 
-            if($k == 1)
-            {
+            if ($k == 1) {
                 $dst_x = Unit::SIZE;
                 $dst_y = 0;
             }
-            if($k == 2)
-            {
+            if ($k == 2) {
                 $dst_x = Unit::SIZE;
                 $dst_y = Unit::SIZE;
             }
-            if($k == 3)
-            {
+            if ($k == 3) {
                 $dst_x = 0;
                 $dst_y = Unit::SIZE;
             }
@@ -241,50 +221,40 @@ class Quarter
             imagedestroy($img_u);
         }
 
-        if($this->type != self::TOP_LEFT)
-        {
+        if ($this->type != self::TOP_LEFT) {
             $int_way = $this->bool_rotate_way ? 1 : -1;
             $img2 =  imagerotate($img, $this->type * 90 * $int_way, 0);
             imagedestroy($img);
+
             return $img2;
-        }
-        else
-        {
+        } else {
             return $img;
         }
     }
 
-
-
     /**
      * SVG rendering.
      *
-     * If quarter's type is different of Quarter::TOP_LEFT, a translation and a 
-     * rotation are apply. 
-     * 
+     * If quarter's type is different of Quarter::TOP_LEFT, a translation and a
+     * rotation are apply.
+     *
      * @access public
      * @return string SVG code
      */
     public function svg()
     {
         $str_g = '';
-        
-        foreach($this->arr_units as $k => $u)
-        {
+
+        foreach ($this->arr_units as $k => $u) {
             $int_dx = 0;
             $int_dy = 0;
 
-            if($k == self::TOP_RIGHT)
-            {
+            if ($k == self::TOP_RIGHT) {
                 $int_dx = Unit::SIZE;
-            }
-            elseif($k == self::BOTTOM_RIGHT)
-            {
+            } elseif ($k == self::BOTTOM_RIGHT) {
                 $int_dx = Unit::SIZE;
                 $int_dy = Unit::SIZE;
-            }
-            elseif($k == self::BOTTOM_LEFT)
-            {
+            } elseif ($k == self::BOTTOM_LEFT) {
                 $int_dy = Unit::SIZE;
             }
 
@@ -294,34 +264,25 @@ class Quarter
                 $int_dy
             );
 
-            if($int_dx || $int_dy)
-            {
+            if ($int_dx || $int_dy) {
                 $str_g .= sprintf('<g%s>%s</g>', $str_attr_translate, $u->svg()) . "\n";
-            }
-            else
-            {
+            } else {
                 $str_g .= $u->svg() . "\n";
             }
         }
 
         $str_attr = '';
 
-        if($this->type != self::TOP_LEFT)
-        {
+        if ($this->type != self::TOP_LEFT) {
             $int_dx = 0;
             $int_dy = 0;
 
-            if($this->type == self::TOP_RIGHT)
-            {
+            if ($this->type == self::TOP_RIGHT) {
                 $int_dx = self::SIZE;
-            }
-            elseif($this->type == self::BOTTOM_RIGHT)
-            {
+            } elseif ($this->type == self::BOTTOM_RIGHT) {
                 $int_dx = self::SIZE;
                 $int_dy = self::SIZE;
-            }
-            elseif($this->type == self::BOTTOM_LEFT)
-            {
+            } elseif ($this->type == self::BOTTOM_LEFT) {
                 $int_dy = self::SIZE;
             }
 
