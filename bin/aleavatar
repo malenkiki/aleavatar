@@ -89,6 +89,11 @@ $opt->newSwitch('png')
     ->help('Output file as a PNG image instead using SVG.')
     ;
 
+$opt->newValue('jpg')
+    ->long('jpg')
+    ->help('Output file as a JPEG image using optional compression quality LEVEL instead using SVG.', 'LEVEL')
+    ;
+
 $opt->parse();
 
 if($opt->has('output'))
@@ -134,6 +139,23 @@ if($opt->has('output'))
         if($opt->has('png'))
         {
             $a->png($strFile);
+        }
+        elseif($opt->has('jpg'))
+        {
+            if(is_numeric($opt->get('jpg'))) {
+                $int_level = (integer) $opt->get('jpg');
+
+                try {
+                    $a->jpeg($strFile, $int_level);
+                } catch(\InvalidArgumentException $e){
+                    fwrite(STDERR, $e->getMessage());
+                    fwrite(STDERR, "\n");
+                    exit(1);
+                }
+
+            } else {
+                $a->jpeg($strFile);
+            }
         }
         else
         {

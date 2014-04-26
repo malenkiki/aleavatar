@@ -279,30 +279,38 @@ class Aleavatar
         return implode("\n", $arr_out);
     }
 
-    /**
-     * Output PNG image of the generated identicon.
-     *
-     * This method creates PNG you can display into browser by printing the
-     * output or you can store the PNG into file if you give the filename.
-     *
-     * **Note:**
-     *
-     * If you have not **ImageMagick** PHP module, then *Aleavatar* tries to
-     * run **convert** application. If convert is not found, then raises an 
-     * Runtime Exception.
-     *
-     * @throws \RuntimeException If ImageMagick Application cannot write into temporary directory.
-     * @throws \RuntimeException If ImageMagick is not available.
-     * @param  string            $str_filename If given, save as PNG file
-     * @access public
-     * @return mixed             PNG data or void
-     */
-    public function png($str_filename = null)
+    protected function toJpegOrPng($str_type = 'png', $str_filename = null, $int_quality = 90)
     {
+        if(!in_array($str_type, array('png', 'jpeg', 'jpg')))
+        {
+            throw new \InvalidArgumentException('Type of format must be either png, jpeg or jpg.');
+        }
+
+        if($str_type == 'jpg')
+        {
+            $str_type = 'jpeg';
+        }
+
         if (extension_loaded('imagick')) {
             $img = new \Imagick();
             $img->readImageBlob($this->svg());
-            $img->setImageFormat("png24");
+            $img->setImageFormat($str_type == 'png' ? 'png24' : 'jpeg');
+
+            if($str_type == 'jpeg')
+            {
+                if(
+                    $int_quality < 0
+                    ||
+                    $int_quality > 100
+                    ||
+                    !is_integer($int_quality)
+                )
+                {
+                    throw new \InvalidArgumentException('Compression quality must be a valid integer from 0 to 100.');
+                }
+
+                $img->setImageCompressionQuality($int_quality);
+            }
 
             if (!is_null($str_filename)) {
                 $img->writeImage($str_filename);
@@ -346,7 +354,7 @@ class Aleavatar
 
                 if (is_null($str_filename)) {
                     $bool_as_output = true;
-                    $str_filename = sys_get_temp_dir() . DIRECTORY_SEPARATOR. uniqid() . '.png';
+                    $str_filename = sys_get_temp_dir() . DIRECTORY_SEPARATOR. uniqid() . '.' . $str_type;
                 }
 
                 $int_return_code = null;
@@ -373,7 +381,56 @@ class Aleavatar
                 throw new \RuntimeException('Imagick extension is not available!');
             }
         }
+    }
 
+    /**
+     * Output PNG image of the generated identicon.
+     *
+     * This method creates PNG you can display into browser by printing the
+     * output or you can store the PNG into file if you give the filename.
+     *
+     * **Note:**
+     *
+     * If you have not **ImageMagick** PHP module, then *Aleavatar* tries to
+     * run **convert** application. If convert is not found, then raises an 
+     * Runtime Exception.
+     *
+     * @throws \RuntimeException If ImageMagick Application cannot write into temporary directory.
+     * @throws \RuntimeException If ImageMagick is not available.
+     * @param  string            $str_filename If given, save as PNG file
+     * @access public
+     * @return mixed             PNG data or void
+     */
+    public function png($str_filename = null)
+    {
+        return $this->toJpegOrPng('png', $str_filename);
+    }
+
+
+    /**
+     * Output JPEG image of the generated identicon.
+     *
+     * This method creates JPEG you can display into browser by printing the
+     * output or you can store the PNG into file if you give the filename.
+     *
+     * As second argument, you can set the compression level, with integer into 
+     * the range [0, 100].
+     *
+     * **Note:**
+     *
+     * If you have not **ImageMagick** PHP module, then *Aleavatar* tries to
+     * run **convert** application. If convert is not found, then raises an 
+     * Runtime Exception.
+     *
+     * @use toJpegOrPng()
+     * @param  string            $str_filename If given, save as JPEG file having this name
+     * @param  integer           $int_quality If given, save JPEG using this compression level
+     * @access public
+     * @return mixed             JPEG data or void
+     */
+    public function jpeg($str_filename = null, $int_quality = 90)
+    {
+        return $this->toJpegOrPng('jpg', $str_filename, $int_quality);
     }
 
     /**
