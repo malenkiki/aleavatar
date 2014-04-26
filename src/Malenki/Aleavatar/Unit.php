@@ -2941,35 +2941,6 @@ class Unit
     }
 
     /**
-     * PNG GD fallback used to compound final picture if ImageMagick module is
-     * not installed.
-     *
-     * @access public
-     * @return resource
-     */
-    public function png()
-    {
-        $img = imagecreatetruecolor(self::SIZE, self::SIZE);
-
-        // Even if GD is installed, some systems have not this function
-        // See http://stackoverflow.com/questions/5756144/imageantialias-call-to-undefined-function-error-with-gd-installed
-        if (function_exists('imageantialias')) {
-            imageantialias($img, true);
-        }
-
-        $this->bg()->gd($img);
-        $this->fg()->gd($img);
-
-        imagefill($img, 0, 0, $this->bg()->gd($img));
-
-        foreach ($this->arr_primitives as $p) {
-            $p->png($img);
-        }
-
-        return $img;
-    }
-
-    /**
      * SVG output
      *
      * Outputs the primitive groups as SVG code.

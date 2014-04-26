@@ -111,25 +111,4 @@ class Arc
         $this->start = $int_angle;
     }
 
-    public function png(&$img)
-    {
-        imagefilledarc(
-            $img ,
-            $this->center->x ,
-            $this->center->y ,
-            $this->radius->w ,
-            $this->radius->h ,
-            -1 * ($this->angle + $this->start),
-            -1 * $this->start,
-            $this->color,
-            IMG_ARC_PIE
-        );
-    }
-
-    public function svg()
-    {
-        // quarter TL
-        //<path d="M32,32 L0,32 A32,32 0 0,1 32,0 z" fill="#ff0000" />
-    }
-
 }

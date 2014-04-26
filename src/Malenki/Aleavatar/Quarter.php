@@ -178,59 +178,6 @@ class Quarter
         $this->arr_units[] = $unit;
     }
 
-    /**
-     * PNG rendering using GD module.
-     *
-     * **Note:** If final rendering uses ImageMagick, then this method is never called.
-     *
-     * @access public
-     * @return Resource GD resource image
-     */
-    public function png()
-    {
-        $img = imagecreatetruecolor(self::SIZE, self::SIZE);
-
-        // Even if GD is installed, some systems have not this function
-        // See http://stackoverflow.com/questions/5756144/imageantialias-call-to-undefined-function-error-with-gd-installed
-        if (function_exists('imageantialias')) {
-            imageantialias($img, true);
-        }
-
-        $this->arr_units[0]->bg()->gd($img);
-        $this->arr_units[0]->fg()->gd($img);
-
-        foreach ($this->arr_units as $k => $u) {
-            $img_u = $u->png();
-
-            $dst_x = 0;
-            $dst_y = 0;
-
-            if ($k == 1) {
-                $dst_x = Unit::SIZE;
-                $dst_y = 0;
-            }
-            if ($k == 2) {
-                $dst_x = Unit::SIZE;
-                $dst_y = Unit::SIZE;
-            }
-            if ($k == 3) {
-                $dst_x = 0;
-                $dst_y = Unit::SIZE;
-            }
-            imagecopy($img, $img_u, $dst_x, $dst_y, 0, 0, Unit::SIZE, Unit::SIZE);
-            imagedestroy($img_u);
-        }
-
-        if ($this->type != self::TOP_LEFT) {
-            $int_way = $this->bool_rotate_way ? 1 : -1;
-            $img2 =  imagerotate($img, $this->type * 90 * $int_way, 0);
-            imagedestroy($img);
-
-            return $img2;
-        } else {
-            return $img;
-        }
-    }
 
     /**
      * SVG rendering.

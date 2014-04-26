@@ -143,25 +143,6 @@ class Rectangle
     }
 
     /**
-     * Adds the current shape to the given GD resource image.
-     *
-     * @param  resource $img
-     * @access public
-     * @return void
-     */
-    public function png(&$img)
-    {
-        imagefilledrectangle(
-            $img,
-            $this->point->x,
-            $this->point->y,
-            $this->point->x + $this->size->w - 1,
-            $this->point->y + $this->size->h - 1,
-            $this->color->gd($img)
-        );
-    }
-
-    /**
      * Returns the current shape as a SVG primitive.
      *
      * @access public

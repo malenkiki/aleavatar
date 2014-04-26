@@ -101,34 +101,6 @@ class Polygon
 
 
     /**
-     * Adds the current polygonal shape to the given GD resource image.
-     *
-     * **Notes:** If you have ImageMagick module installed, then this method is
-     * never used.
-     *
-     * @throws \RuntimeException If amount of point is less than 3.
-     * @param  resource          $img GD resource image.
-     * @access public
-     * @return void
-     */
-    public function png(&$img)
-    {
-        if (count($this->arr_points) < 3) {
-            throw new \RuntimeException('Before exporting to PNG, you must give at least 3 points!');
-        }
-
-        $arr= array();
-
-        foreach ($this->arr_points as $xy) {
-            $arr[] = $xy[0];
-            $arr[] = $xy[1];
-        }
-
-        imagefilledpolygon($img, $arr, count($this->arr_points), $this->color->gd($img));
-    }
-
-
-    /**
      * Returns the SVG code part rendering the current polygon.
      *
      * @throws \RuntimeException If amount of point is less than 3.
