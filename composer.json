@@ -1,8 +1,16 @@
 {
     "name": "malenki/aleavatar",
     "type": "library",
+    "keywords": ["identicon","avatar", "svg", "png", "picture", "generator"],
+    "support": {
+        "issues": "https://github.com/malenkiki/aleavatar/issues"
+    },
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "malenki/argile": "*"
+    },
+    "suggest": {
+        "ext-imagick": "One of the way to render identicons…"
     },
     "license": "MIT",
     "authors": [
@@ -12,6 +20,7 @@
             "role": "Developer"
         }
     ],
+    "bin": ["bin/aleavatar"],    
     "autoload": {
         "psr-0": {
             "Malenki\\Aleavatar": "src/"

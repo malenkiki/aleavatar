@@ -24,20 +24,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 namespace Malenki\Aleavatar\Primitive;
 
-
-
 /**
- * Defines square shapes. 
- * 
- * @author Michel Petit <petit.michel@gmail.com> 
+ * Defines square shapes.
+ *
+ * @author Michel Petit <petit.michel@gmail.com>
  * @license MIT
  */
 class Square extends Rectangle
 {
     /**
-     * Stes square's size. 
-     * 
-     * @param integer $int_size The size
+     * Stes square's size.
+     *
+     * @param  integer $int_size The size
      * @access public
      * @return Square
      */
